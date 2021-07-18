@@ -3,6 +3,22 @@ An open source long form strategy, tactics, and logistics war game, heavily insp
 
 Check out the "Sample Game" vignette for basics.
 
+## To Do
+
+* Move these to issues
+* Map legal moves and territories bordering each other
+  * Static file, loaded on package load
+* Attributes of different types
+  * Static file, loaded on package load
+* Mutable attributes of units. Stats. Stuff.
+* testthat. 
+  * new_game
+  * move_unit
+  * reconcile_player_orders
+* Roxygen docs
+* Getters in reconcile map private?
+* Reorganize and rename stuff in reconcile-map.R and turn.R
+
 ## Development
 
 `MundusCentrum` uses [pkgr](https://github.com/metrumresearchgroup/pkgr) to manage
