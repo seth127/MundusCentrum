@@ -8,6 +8,8 @@
 #'
 #' * `team` -- One of the legal teams. See list with `teams()`.
 #'
+#' * `units` -- Path to a units.csv file to load.
+#'
 #' * `points` (optional) -- how many points to start the game with. Overriden if
 #' anything is passed to `points` argument of the function.
 #'
@@ -22,8 +24,11 @@ new_game <- function(name, players, points = NULL) {
   assert_string(name)
   assert_list(players)
 
-  # check player names
+  # check player names and necessary fields
   players <- map(players, function(.p) {
+    assert_string(.p[["name"]])
+    assert_string(.p[["team"]])
+    assert_string(.p[["units"]])
     .p[["id"]] <- sanitize_name(.p[["name"]])
     .p
   })
@@ -41,13 +46,14 @@ new_game <- function(name, players, points = NULL) {
     if (any(map_lgl(players, ~ is.null(.x[["points"]])))) abort("Must either pass new_game(points) or specify points for each player")
   }
 
-  game <- list()
+  game <- list(players = ids)
   game[["game_root"]] <- setup_game_dir(name, players)
   list_to_json(BLANK_MAP, file.path(game[["game_root"]], glue("{name}_MAP.json")))
 
   return(game)
 }
 
+#' @importFrom uuid UUIDgenerate
 #' @keywords internal
 setup_game_dir <- function(name, players) {
   game_root <- file.path(GAME_ROOT_DIR, sanitize_name(name))
@@ -58,7 +64,16 @@ setup_game_dir <- function(name, players) {
     player_dir <- file.path(game_root, .p[["id"]])
     dir_create(player_dir)
     list_to_json(.p, file.path(player_dir, paste0(.p[["id"]], ".json")))
-    player_dir
+
+    # load input units file
+    if (!file_exists(.p[["units"]])) abort(glue("{.p[['name']]} passed {.p[['units']]} but that file doesn't exist."))
+    .u <- read_csv(.p[["units"]], col_types = "cccic")
+    .u %>%
+      mutate(unit_uuid = UUIDgenerate()) %>%
+      select(unit_uuid, everything()) %>%
+      write_csv(file.path(player_dir, paste0(.p[["id"]], ".csv")))
+
+    return(player_dir)
   })
   game_root
 }
@@ -67,3 +82,5 @@ setup_game_dir <- function(name, players) {
 sanitize_name <- function(.n) {
   tolower(str_replace_all(.n, "[^[:alnum:]]", "_"))
 }
+
+

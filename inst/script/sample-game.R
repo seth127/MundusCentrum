@@ -4,15 +4,18 @@ name = "Anno Uno"
 players = list(
   list(
     name = "Big Grizz",
-    team = "Space Marines"
+    team = "Space Marines",
+    units = system.file("extdata", "unit-templates", "big_grizz.csv", package = "MundusCentrum")
   ),
   list(
     name = "Eric",
-    team = "Space Orcs"
+    team = "Space Orcs",
+    units = system.file("extdata", "unit-templates", "eric.csv", package = "MundusCentrum")
   ),
   list(
     name = "Chris",
-    team = "Tyrannids"
+    team = "Tyrannids",
+    units = system.file("extdata", "unit-templates", "chris.csv", package = "MundusCentrum")
   )
 )
 points = 2000

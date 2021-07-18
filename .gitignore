@@ -1,5 +1,6 @@
 .Rprofile
 renv/*
+inst/games/anno_uno/*
 
 # History files
 .Rhistory

@@ -11,5 +11,6 @@
 #' @importFrom fs file_exists dir_exists file_create dir_create file_delete dir_delete
 #' @importFrom stringr str_subset str_detect str_replace str_replace_all
 #' @importFrom readr read_lines write_lines read_csv write_csv
+#' @importFrom digest digest
 #' @name MundusCentrum
 NULL
