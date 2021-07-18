@@ -48,8 +48,8 @@ new_game <- function(name, players, points = NULL) {
 
   game <- list(players = ids)
   game[["game_root"]] <- setup_game_dir(name, players)
-  list_to_json(BLANK_MAP, file.path(game[["game_root"]], glue("{name}_MAP.json")))
-
+  write_csv(BLANK_MAP, get_global_map_path(game))
+  reconcile_player_orders(game)
   return(game)
 }
 
@@ -69,7 +69,7 @@ setup_game_dir <- function(name, players) {
     if (!file_exists(.p[["units"]])) abort(glue("{.p[['name']]} passed {.p[['units']]} but that file doesn't exist."))
     .u <- read_csv(.p[["units"]], col_types = "cccic")
     .u %>%
-      mutate(unit_uuid = UUIDgenerate()) %>%
+      mutate(unit_uuid = UUIDgenerate(n = nrow(.u))) %>%
       select(unit_uuid, everything()) %>%
       write_csv(file.path(player_dir, paste0(.p[["id"]], ".csv")))
 
