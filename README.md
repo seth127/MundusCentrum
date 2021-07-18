@@ -10,6 +10,7 @@ Check out the "Sample Game" vignette for basics.
   * Static file, loaded on package load
 * Attributes of different types
   * Static file, loaded on package load
+  * class => legal movements (distance)
 * Mutable attributes of units. Stats. Stuff.
 * testthat. 
   * new_game
