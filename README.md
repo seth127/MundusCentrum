@@ -1,7 +1,7 @@
 # MundusCentrum
 An open source long form strategy, tactics, and logistics war game, heavily inspired by Warhammer 40k and the blog of Brett Devereux
 
-Check out the "Sample Game" vignette for basics.
+Check out [the "Sample Game" vignette](https://seth127.github.io/MundusCentrum/sample-game) for basics.
 
 ## To Do
 
@@ -11,7 +11,10 @@ Check out the "Sample Game" vignette for basics.
 * Attributes of different types
   * Static file, loaded on package load
   * class => legal movements (distance)
-* Mutable attributes of units. Stats. Stuff.
+* Mutable attributes of units. Stats. Stuff. **(Eric)**
+* Add map graphic
+  * for players and global
+  * need map from **Moby**
 * testthat. 
   * new_game
   * move_unit
