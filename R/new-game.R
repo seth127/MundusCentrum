@@ -61,6 +61,7 @@ setup_game_dir <- function(name, players) {
   if (dir_exists(game_root)) abort(glue("Sorry, {name} already exists in {GAME_ROOT_DIR}. Pick another name."))
   dir_create(game_root)
 
+  clear_used_names()
   player_dirs <- map_chr(players, function(.p) {
     player_dir <- file.path(game_root, .p[["id"]])
     dir_create(player_dir)
