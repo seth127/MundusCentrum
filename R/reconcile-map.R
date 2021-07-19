@@ -2,7 +2,7 @@
 
 #' Reconcile player maps with global map
 #' @importFrom purrr map_dfr
-#' @importFrom dplyr full_join group_by summarize filter pull
+#' @importFrom dplyr full_join left_join group_by summarize filter pull
 #'
 #' @keywords internal
 players_to_global_map <- function(game){
@@ -10,13 +10,15 @@ players_to_global_map <- function(game){
   new_map <- map_dfr(game[["players"]], function (.p) {
     .pm <- read_player_map(game, .p)
     ### TODO: probably need to check for mismatches before we return this
-    full_join(
-      select(.gm, unit_uuid),
-      select(.pm, unit_uuid, loc, action),
-      by = "unit_uuid"
-    ) %>%
+      full_join(
+        select(.gm, unit_name),
+        select(.pm, unit_name, unit_type, loc, action),
+        by = "unit_name"
+      ) %>%
+      left_join(select(UA, unit_type, force_org), by = "unit_type") %>%
       mutate(player = .p) %>%
-      select(unit_uuid, player, loc, action)
+      select(player, loc, action, unit_name, unit_type, force_org) %>%
+      arrange(loc, player, action, force_org, unit_type, unit_name)
   })
 
   # return any disputed lands
@@ -38,7 +40,7 @@ players_to_global_map <- function(game){
 
 #' @export
 get_global_map_path <- function(game) {
-  file.path(game[["game_root"]], glue("{basename(game[['game_root']])}_MAP.csv"))
+  file.path(game[["game_root"]], glue("{basename(game[['game_root']])}.csv"))
 }
 
 #' @export
@@ -48,7 +50,7 @@ get_player_map_path <- function(game, player) {
 
 #' @export
 read_player_map <- function(game, player) {
-  read_csv(get_player_map_path(game, player), col_types = "ccccic")
+  read_csv(get_player_map_path(game, player), col_types = "cccc")
 }
 
 #' @export

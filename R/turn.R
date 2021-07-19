@@ -20,8 +20,8 @@ move_unit <- function(game, player, .u, .a, .l1, .l2) {
   # TODO: should check if it's a legal move first. Boring...
   .pm <- read_player_map(game, player) %>%
     mutate(
-      loc = ifelse(unit_uuid == .u, .l2, loc),
-      action = ifelse(unit_uuid == .u, .a, action)
+      loc = ifelse(unit_name == .u, .l2, loc),
+      action = ifelse(unit_name == .u, .a, action)
     )
    write_player_map(game, player, .pm)
 }

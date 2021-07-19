@@ -16,9 +16,11 @@ Check out the "Sample Game" vignette for basics.
   * new_game
   * move_unit
   * reconcile_player_orders
+  * build_name
 * Roxygen docs
 * Getters in reconcile map private?
 * Reorganize and rename stuff in reconcile-map.R and turn.R
+* Put filelock on `inst/extdata/name-files/USED.txt` (and probably some others: player files, map, etc.)
 
 ## Development
 

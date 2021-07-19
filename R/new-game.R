@@ -19,6 +19,7 @@
 #'   will look for a `points` element in each player data element.
 #'
 #' @importFrom checkmate assert_string assert_list
+#' @importFrom dplyr left_join
 #' @export
 new_game <- function(name, players, points = NULL) {
   assert_string(name)
@@ -67,10 +68,11 @@ setup_game_dir <- function(name, players) {
 
     # load input units file
     if (!file_exists(.p[["units"]])) abort(glue("{.p[['name']]} passed {.p[['units']]} but that file doesn't exist."))
-    .u <- read_csv(.p[["units"]], col_types = "cccic")
+    .u <- read_csv(.p[["units"]], col_types = "ccc")
     .u %>%
-      mutate(unit_uuid = UUIDgenerate(n = nrow(.u))) %>%
-      select(unit_uuid, everything()) %>%
+      left_join(select(UA, unit_type, force_org), by = "unit_type") %>%
+      mutate(unit_name = map_chr(force_org, ~ build_name(.x))) %>%
+      select(unit_name, everything(), -force_org) %>%
       write_csv(file.path(player_dir, paste0(.p[["id"]], ".csv")))
 
     return(player_dir)

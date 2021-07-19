@@ -13,7 +13,7 @@ This just shows a brief example of how you can start a game and trigger turns to
 
 ```{r, include=FALSE}
 devtools::load_all()
-fs::dir_delete(file.path(GAME_ROOT_DIR, "anno_uno"))
+if (fs::dir_exists(file.path(GAME_ROOT_DIR, "anno_uno"))) fs::dir_delete(file.path(GAME_ROOT_DIR, "anno_uno"))
 ```
 ```{r}
 library(MundusCentrum)
@@ -58,9 +58,9 @@ reconcile_player_orders(game) %>%
 Get a list of unit ID's to easily make the `move_unit()` calls below.
 
 ```{r}
-moby_units <- read_player_map(game, "big_grizz") %>% pull(unit_uuid)
-eric_units <- read_player_map(game, "eric") %>% pull(unit_uuid)
-chris_units <- read_player_map(game, "chris") %>% pull(unit_uuid)
+moby_units <- read_player_map(game, "big_grizz") %>% pull(unit_name)
+eric_units <- read_player_map(game, "eric") %>% pull(unit_name)
+chris_units <- read_player_map(game, "chris") %>% pull(unit_name)
 ```
 
 # TURN 1

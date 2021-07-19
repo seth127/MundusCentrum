@@ -4,7 +4,7 @@
 \alias{move_unit}
 \title{Move a unit}
 \usage{
-move_unit(game, player, .u, .l1, .l2)
+move_unit(game, player, .u, .a, .l1, .l2)
 }
 \description{
 Move a unit
