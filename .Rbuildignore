@@ -2,3 +2,4 @@
 ^renv\.lock$
 ^MundusCentrum\.Rproj$
 ^\.Rproj\.user$
+^data-raw$
