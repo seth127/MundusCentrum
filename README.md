@@ -12,9 +12,11 @@ Check out [the "Sample Game" vignette](https://seth127.github.io/MundusCentrum/s
   * Static file, loaded on package load
   * class => legal movements (distance)
 * Mutable attributes of units. Stats. Stuff. **(Eric)**
-* Add map graphic
-  * for players and global
-  * need map from **Moby**
+* Finish map graphic
+  * Make "for players" version (will need to implement vision)
+  * Get map attrs from **Moby**
+  * Finish map coords
+* Document data
 * testthat. 
   * new_game
   * move_unit
