@@ -4,7 +4,7 @@
 \alias{draw_map}
 \title{Draw the game map}
 \usage{
-draw_map(game_df)
+draw_map(game_df, .p = NULL)
 }
 \arguments{
 \item{game_df}{Takes a tibble output from \code{\link[=reconcile_player_orders]{reconcile_player_orders()}}}

@@ -1,15 +1,20 @@
+X_MULT <- 7
+Y_MULT <- 10
 
 #' Draw the game map
-#' @importFrom ggplot2 ggplot geom_point geom_jitter theme coord_cartesian annotation_custom aes element_blank scale_size_area scale_colour_manual
+#' @importFrom ggplot2 ggplot geom_point geom_jitter theme coord_cartesian
+#'   annotation_custom aes element_blank element_text scale_size_area
+#'   scale_colour_manual scale_fill_manual ggtitle
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom grid rasterGrob unit
-#' @importFrom dplyr count full_join
+#' @importFrom dplyr count full_join rename
 #' @param game_df Takes a tibble output from [reconcile_player_orders()]
 #' @return Returns a ggplot object of the map
 #' @export
-draw_map <- function(game_df) {
+draw_map <- function(game_df, .p = NULL) {
   map_img <- jpeg::readJPEG(system.file("extdata", "img", "MundusCentrumAlpha.jpeg", package = "MundusCentrum"))
 
+  # get static map coordinates
   map_data <- map_dfr(names(MAP), ~{
     .m <- MAP[[.x]]
     list(
@@ -20,32 +25,44 @@ draw_map <- function(game_df) {
     )
   })
 
-  plot_data <- full_join(
+  # get control and visibility
+  map_data <- left_join(
+      map_data,
+      game_df %>% filter(action == "control") %>% select(player, loc) %>% unique() %>% rename(control = player),
+      by = "loc"
+    ) %>%
+    mutate(
+      visible = loc %in% player_vision(game_df, .p),
+      loc_fill =  ifelse(!visible, "DARK", ifelse(!is.na(control), control, "FREE"))
+    )
+
+  visible_loc <- map_data %>%
+    filter(visible) %>%
+    pull(loc)
+
+  # get units
+  unit_data <- full_join(
     map_data,
     count(game_df, loc, player),
     by = "loc"
   ) %>%
-    filter(!is.na(x_), !is.na(player)) %>%
+    filter(!is.na(player), loc %in% visible_loc) %>%
     mutate(point_size = pmin(ifelse(n < 5, n^1.2, ifelse(n > 5, n^0.8, n)), 15))
 
-  x_mult <- 7
-  y_mult <- 10
-
-  ###### TODO: change this to be dynamic
-  myColors <- brewer.pal(3, "Spectral")
-  names(myColors) <- c("big_grizz", "eric", "chris")
-  custom_colors <- scale_colour_manual(name = "Species Names", values = myColors)
+  ###### TODO: change this to be dynamic (or just set to a flat file at beginning of game, and loaded here)
+  player_colors <- brewer.pal(3, "Spectral")
+  names(player_colors) <- c("big_grizz", "eric", "chris")
   #########
 
-  ggplot(map_data, aes(x = x_*x_mult, y = y_*y_mult)) +
-    coord_cartesian(xlim = c(0,1)*x_mult, ylim = c(0,1)*y_mult) +
+  ggplot(map_data, aes(x = x_*X_MULT, y = y_*Y_MULT)) +
+    coord_cartesian(xlim = c(0,1)*X_MULT, ylim = c(0,1)*Y_MULT) +
     annotation_custom(rasterGrob(map_img,
                                        width = unit(1,"npc"),
                                        height = unit(1,"npc")),
-                      0, 1*x_mult, 0, 1*y_mult) +
-    geom_point(size = 3, shape = 1) +
-    geom_jitter(data = plot_data, aes(size = point_size, color = player), alpha = 0.82, width = 0.15, height = 0.15) +
-    ggplot2::scale_size_area(guide = "none") +
+                      0, 1*X_MULT, 0, 1*Y_MULT) +
+    geom_point(size = 3, shape = 21, aes(fill = loc_fill)) +
+    geom_point(data = filter(map_data, !is.na(control)), size = 2, shape = 8) +
+    geom_jitter(data = unit_data, aes(size = point_size, color = player), alpha = 0.82, width = 0.15, height = 0.15) +
     theme(
       axis.title.x=element_blank(),
       axis.text.x=element_blank(),
@@ -54,8 +71,37 @@ draw_map <- function(game_df) {
       axis.text.y=element_blank(),
       axis.ticks.y=element_blank(),
       panel.grid.major = element_blank(),
-      panel.grid.minor = element_blank()
+      panel.grid.minor = element_blank(),
+      plot.title = element_text(hjust = 0.5)
     ) +
-    custom_colors
+    scale_size_area(guide = "none") +
+    scale_colour_manual(values = player_colors) +
+    scale_fill_manual(values = c(player_colors, "FREE" = "#00000000", "DARK" = "#000000"), guide = "none") + # visibility and control
+    ggtitle(.p %||% "GLOBAL")
 
+}
+
+
+player_vision <- function(game_df, .p) {
+  if (is.null(.p)) return(names(MAP))
+  if (.p == "CONFLICT!") return(unique(game_df$loc))
+
+  occ_loc <- game_df %>%
+    filter(player == .p) %>%
+    pull(loc) %>%
+    unique()
+
+  borders <- map(occ_loc, ~ {
+    c(
+      MAP[[.x]][["borders"]],
+      MAP[[.x]][["rivers"]]
+    )
+  }) %>%
+    unlist() %>%
+    unique() %>%
+    sort()
+
+  ### TODO: add territories moved through by flyers and fast ones?
+
+  c(occ_loc, borders)
 }
