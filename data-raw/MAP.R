@@ -16,7 +16,7 @@ MAP <- list(
   ),
   A3 = list(
     name = "Evendim Hills",
-    borders = c("A2", "A5", "D2"),
+    borders = c("A2", "A5", "B2"),
     x_ = 0.26,
     y_ = 0.845
   ),
