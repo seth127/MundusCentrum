@@ -213,7 +213,9 @@ MAP <- list(
     name = "Minhiriath",
     borders = c("B11"),
     rivers = c("A7", "A8", "E3", "E4"),
-    power = TRUE
+    power = TRUE,
+    x_ = 0.240,
+    y_ = 0.555
   ),
   E2 = list(
     name = "Eregion",
@@ -228,12 +230,16 @@ MAP <- list(
     name = "Dunland",
     borders = c("E4"),
     rivers = c("B11", "E1", "E2"),
-    mountains = c("E5", "F2", "F3")
+    mountains = c("E5", "F2", "F3"),
+    x_ = 0.395,
+    y_ = 0.52
   ),
   E4 = list(
     name = "Enedwaith",
     borders = c("E3"),
-    rivers = c("E1", "E5", "E6", "E7")
+    rivers = c("E1", "E5", "E6", "E7"),
+    x_ = 0.35,
+    y_ = 0.435
   ),
   E5 = list(
     name = "Fangorn",
@@ -247,7 +253,9 @@ MAP <- list(
     name = "West Rohan",
     borders = c("E7", "G1"),
     rivers = c("E4"),
-    mountains = c("G3", "G4")
+    mountains = c("G3", "G4"),
+    x_ = 0.295,
+    y_ = 0.30
   ),
   E7 = list(
     name = "Gap of Rohan",
@@ -323,116 +331,158 @@ MAP <- list(
   G1 = list(
     name = "Druwaith Iaur",
     borders = c("E6", "G3"),
-    mountains = c("G2", "G4")
+    mountains = c("G2", "G4"),
+    x_ = 0.18,
+    y_ = 0.225
   ),
   G2 = list(
     name = "Andrast",
     borders = c("G3"),
-    mountains = c("G1")
+    mountains = c("G1"),
+    x_ = 0.175,
+    y_ = 0.175
   ),
   G3 = list(
     name = "Anfalas",
     borders = c("G1", "G2", "G4"),
-    mountains = c("E6")
+    mountains = c("E6"),
+    x_ = 0.265,
+    y_ = 0.19
   ),
   G4 = list(
     name = "Vale of Erech",
     borders = c("G3", "G5"),
     mountains = c("E6", "E7", "G1"),
-    power = TRUE
+    power = TRUE,
+    x_ = 0.330,
+    y_ = 0.205
   ),
   G5 = list(
     name = "Lamedon",
     borders = c("G4", "G6", "G9"),
-    mountains = c("E7", "G4")
+    mountains = c("E7", "G4"),
+    x_ = 0.395,
+    y_ = 0.21
   ),
   G6 = list(
     name = "Lebennin",
     borders = c("G5", "G7", "G9"),
     rivers = c("G8"),
     mountains = c("E7"),
-    power = TRUE
+    power = TRUE,
+    x_ = 0.48,
+    y_ = 0.16
   ),
   G7 = list(
     name = "Minas Tirith",
     borders = c("E7", "G5"),
-    rivers = c("G8")
+    rivers = c("G8"),
+    x_ = 0.54,
+    y_ = 0.195
   ),
   G8 = list(
     name = "Ithilien",
     borders = c("F8", "G10", "H4"),
     rivers = c("G6", "G7"),
     mountains = c("H1", "H3"),
-    power = TRUE
+    power = TRUE,
+    x_ = 0.605,
+    y_ = 0.15
   ),
   G9 = list(
     name = "Belfalas",
     borders = c("G5", "G6"),
-    power = TRUE
+    power = TRUE,
+    x_ = 0.43,
+    y_ = 0.11
   ),
   G10 = list(
     name = "South Ithilien",
     borders = c("G8", "I1"),
-    mountains = c("H4", "H5", "H6")
+    mountains = c("H4", "H5", "H6"),
+    x_ = 0.585,
+    y_ = 0.1
   ),
   H1 = list(
     name = "Udun Vale",
     borders = c("F8", "H3"),
-    mountains = c("G8", "H2")
+    mountains = c("G8", "H2"),
+    x_ = 0.745,
+    y_ = 0.2
   ),
   H2 = list(
     name = "Barad Dur",
     borders = c("H3", "H5"),
-    mountains = c("F5", "F8", "H1")
+    mountains = c("F5", "F8", "H1"),
+    x_ = 0.92,
+    y_ = 0.21
   ),
   H3 = list(
     name = "Mount Doom",
     borders = c("H1", "H2", "H5"),
     mountains = c("F5", "F8", "G8"),
-    power = TRUE
+    power = TRUE,
+    x_ = 0.8,
+    y_ = 0.175
   ),
   H4 = list(
     name = "Minas Morgul",
     borders = c("G8", "H5"),
-    mountains = c("G10", "H3", "H6")
+    mountains = c("G10", "H3", "H6"),
+    x_ = 0.695,
+    y_ = 0.14
   ),
   H5 = list(
     name = "Gorgoroth",
     borders = c("H2", "H3", "H4", "H6"),
-    mountains = c("G10", "I5")
+    mountains = c("G10", "I5"),
+    x_ = 0.92,
+    y_ = 0.135
   ),
   H6 = list(
     name = "Nurn",
     borders = c("H5"),
-    mountains = c("G10", "H4", "I1", "I3", "I4", "I5")
+    mountains = c("G10", "H4", "I1", "I3", "I4", "I5"),
+    x_ = 0.775,
+    y_ = 0.09
   ),
   I1 = list(
     name = "Harondor",
     borders = c("G10"),
     rivers = c("I2", "I3"),
-    mountains = c("H6")
+    mountains = c("H6"),
+    x_ = 0.52,
+    y_ = 0.05
   ),
   I2 = list(
     name = "Umbar",
     borders = c("I3"),
-    rivers = c("I1")
+    rivers = c("I1"),
+    x_ = 0.425,
+    y_ = 0.015
   ),
   I3 = list(
     name = "Harad",
     borders = c("I2", "I4"),
     rivers = c("I1"),
-    mountains = c("H6")
+    mountains = c("H6"),
+    x_ = 0.645,
+    y_ = 0.03
   ),
   I4 = list(
     name = "Near Harad",
     borders = c("I3", "I4"),
-    mountains = c("H6")
+    mountains = c("H6"),
+    x_ = 0.81,
+    y_ = 0.035
   ),
   I5 = list(
     name = "Khand",
     borders = c("I4"),
     mountains = c("H5", "H6"),
-    power = TRUE
+    power = TRUE,
+    x_ = 0.9,
+    y_ = 0.05
   )
 )
 
