@@ -2,7 +2,7 @@
 #'
 #' An open source long form strategy, tactics, and logistics war game, heavily
 #' inspired by Warhammer 40k and the blog of Brett Devereux.
-#' @importFrom checkmate assert_string assert_list assert_numeric
+#' @importFrom checkmate assert_string assert_list assert_numeric assert_character
 #' @importFrom glue glue
 #' @importFrom rlang abort warn inform
 #' @importFrom purrr map map_chr map_lgl walk

@@ -1,19 +1,3 @@
-#' Process a game turn
-#'
-#' Run after players have updated their maps
-#' @importFrom dplyr arrange
-#' @export
-reconcile_player_orders <- function(game) {
-  .m <- players_to_global_map(game)
-  if (nrow(.m[["conflict"]]) > 0) {
-    message("CONFLICT(s):")
-    warn("Conflict is at hand! Please resolve territorial disputes.", "map_conflict_warning")
-    return(.m[["conflict"]])
-  }
-  message("All units resolved.")
-  return(.m[["resolved"]])
-}
-
 #' Move a unit
 #' @importFrom purrr walk
 #' @export

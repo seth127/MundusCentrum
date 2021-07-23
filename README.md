@@ -6,26 +6,37 @@ Check out [the "Sample Game" vignette](https://seth127.github.io/MundusCentrum/s
 ## To Do
 
 * Move these to issues
-* Map legal moves and territories bordering each other
-  * Static file, loaded on package load
-* Attributes of different types
-  * Static file, loaded on package load
-  * class => legal movements (distance)
-* Mutable attributes of units. Stats. Stuff. **(Eric)**
-* Finish map graphic
-  * Make "for players" version (will need to implement vision)
-  * Get map attrs from **Moby**
-  * Finish map coords
+* Change move unit to optionally accept a loc instead unit names (for moving everyone in that loc)
+* Check legal moves
+  * inside move_unit() need to check the unit's movement and location and MAP borders
+  * also need to check keywords to see what's legal
+    * soaring/flying penalty
+    * transports
+    * deep
+    * what are the options for actions? (move, defend, control, soar, others?)
+* Vision
+  * sneaking  
+  * vision of spaces passed through? (maybe only relevant to soaring?)
+* Control and Comms
+  * do you lose control if you leave or stop controlling (this is how it's coded now)
+    * maybe add a fake "unit" that's like a flag for controlling, once it's been established
+  * what's up with comm relays? Should we add them like units?
+  * make sure flags and comms don't show up as units on map (or maybe they show as something else?)
 * Document data
 * testthat. 
   * new_game
   * move_unit
   * reconcile_player_orders
   * build_name
+  * others
 * Roxygen docs
 * Getters in reconcile map private?
-* Reorganize and rename stuff in reconcile-map.R and turn.R
 * Put filelock on `inst/extdata/name-files/USED.txt` (and probably some others: player files, map, etc.)
+* Consider UI
+  * shiny stuff
+  * move files to database so they persist across shiny sessions
+  * users and passwords so each player gets different UI
+  * emails to players on turn advance and conflict
 
 ## Development
 

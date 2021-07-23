@@ -7,7 +7,7 @@ Y_MULT <- 10
 #'   scale_colour_manual scale_fill_manual ggtitle
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom grid rasterGrob unit
-#' @importFrom dplyr count full_join rename
+#' @importFrom dplyr count full_join rename summarise group_by
 #' @param game_df Takes a tibble output from [reconcile_player_orders()]
 #' @return Returns a ggplot object of the map
 #' @export
@@ -43,11 +43,14 @@ draw_map <- function(game_df, .p = NULL) {
   # get units
   unit_data <- full_join(
     map_data,
-    count(game_df, loc, player),
+    #count(game_df, loc, player),
+    game_df %>% group_by(loc, player) %>% summarise(total_folks = sum(size)),
     by = "loc"
   ) %>%
     filter(!is.na(player), loc %in% visible_loc) %>%
-    mutate(point_size = pmin(ifelse(n < 5, n^1.2, ifelse(n > 5, n^0.8, n)), 15))
+    mutate(
+      point_size = pmax(pmin(total_folks/3, 20), 2) #### TODO: adjust this once we get real army sizes
+    )
 
   ###### TODO: change this to be dynamic (or just set to a flat file at beginning of game, and loaded here)
   player_colors <- brewer.pal(3, "Spectral")

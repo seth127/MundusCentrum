@@ -1,15 +1,13 @@
-unit_type,loc,action
-lt_dan,C1,hold
-lt_dan,C1,hold
-lt_dan,C1,hold
-mule,C1,hold
-mule,C1,hold
-rambo,C1,hold
-ricky_bobby,C2,hold
-ricky_bobby,C2,hold
-charlie_kaufman,C3,hold
-steve_zissou,C4,hold
-maverick,C4,hold
-rocketman,C5,hold
-rocketman,C5,hold
+unit_type,size,loc,action
+lt_dan,20,C1,hold
+lt_dan,20,C1,hold
+lt_dan,20,C1,hold
+mule,3,C1,hold
+rambo,10,C1,hold
+ricky_bobby,10,C2,hold
+ricky_bobby,10,C2,hold
+keyser_soze,5,C3,hold
+steve_zissou,10,C4,hold
+rocketman,10,C5,hold
+rocketman,10,C5,hold
 
