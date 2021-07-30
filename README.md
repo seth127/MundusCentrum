@@ -6,14 +6,19 @@ Check out [the "Sample Game" vignette](https://seth127.github.io/MundusCentrum/s
 ## To Do
 
 * Move these to issues
-* Change move unit to optionally accept a loc instead unit names (for moving everyone in that loc)
+* s3 classes for game and game_df and maybe others (player?)
 * Check legal moves
   * inside move_unit() need to check the unit's movement and location and MAP borders
   * also need to check keywords to see what's legal
     * soaring/flying penalty
     * transports
     * deep
-    * what are the options for actions? (move, defend, control, soar, others?)
+    * what are the options for actions? (move, attack, control, soar, others?)
+* Battles when crossing paths
+  * need to keep track of paths on longer moves
+* Dropping comm relays and control flags as you go.
+* Make it so you don't have to do `draw_map(res, "CONFLICT!")` it just figures out there's conflict
+* Figure out an easy helper for splitting up forces with `modify_unit()`
 * Vision
   * sneaking  
   * vision of spaces passed through? (maybe only relevant to soaring?)

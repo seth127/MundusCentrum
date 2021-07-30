@@ -55,7 +55,7 @@ This is the state of the game at the beginning
 ```{r}
 res <- reconcile_player_orders(game)
 print(draw_map(res))
-knitr::kable(res)
+knitr::kable(add_keywords(res))
 ```
 
 ## Turn play
@@ -72,16 +72,21 @@ chris_units <- read_player_map(game, "chris") %>% pull(unit_name)
 Players change their maps (making orders)
 
 ```{r}
-modify_unit(game, "big_grizz", moby_units[1:5],   "move",  "E2")
-modify_unit(game, "big_grizz", moby_units[6:7],   "control","A2")
-modify_unit(game, "big_grizz", moby_units[11:15], "control","A6")
-modify_unit(game, "eric",      eric_units[1:6],   "move",  "F7")
-modify_unit(game, "eric",      eric_units[9],     "control","C3")
-modify_unit(game, "eric",      eric_units[10:11], "control","C3")
-modify_unit(game, "chris",     chris_units[1:9],  "control","F1")
-modify_unit(game, "chris",     chris_units[10:18],"move",  "F3")
-modify_unit(game, "chris",     chris_units[19],   "sneak", "E5")
-modify_unit(game, "chris",     chris_units[20],   "soar",  "D4")
+modify_unit(game, "big_grizz", moby_units[1],     "control","B10")
+modify_unit(game, "big_grizz", moby_units[c(2:8, 14:18, 22, 23)], "move", "E2")
+modify_unit(game, "big_grizz", moby_units[9],     "control","B11")
+modify_unit(game, "big_grizz", moby_units[10:13], "move","E1")
+modify_unit(game, "big_grizz", moby_units[19:20], "move","B6")
+modify_unit(game, "big_grizz", moby_units[21],    "move","B8")
+modify_unit(game, "eric",      eric_units[1:9],   "move",  "C1")
+modify_unit(game, "eric",      eric_units[10:17], "move","F7")
+modify_unit(game, "eric",      eric_units[18:24], "control","C3")
+modify_unit(game, "eric",      eric_units[25:28], "control","C4")
+modify_unit(game, "chris",     chris_units[1:5],  "control","F1")
+modify_unit(game, "chris",     chris_units[6:9],  "control","F2")
+modify_unit(game, "chris",     chris_units[10:11],"move",  "F3")
+modify_unit(game, "chris",     chris_units[12],"move",  "E5")
+modify_unit(game, "chris",     chris_units[13],"move",  "F4")
 ```
 
 Reconcile moves.
@@ -89,7 +94,7 @@ Reconcile moves.
 ```{r}
 res <- reconcile_player_orders(game)
 print(draw_map(res))
-knitr::kable(res)
+knitr::kable(add_keywords(res))
 ```
 
 Take a look at what individual players can see. Here's Chris' map:
@@ -98,18 +103,31 @@ Take a look at what individual players can see. Here's Chris' map:
 draw_map(res, "chris")
 ```
 
-We're good! Move on to the next turn. _(Note: Moby managed to teleport from `A1` to `E2` aka The Gates of Moria on his first turn.)_
+We're good! Move on to the next turn. (Battle awaits!)
 
 
 # TURN 2
 Players change their maps (making orders)
 
 ```{r}
-modify_unit(game, "big_grizz", moby_units[1:5],   "move", "F1")
-modify_unit(game, "eric",      eric_units[1:6],   "move", "F4")
-modify_unit(game, "chris",     chris_units[10:18],"move", "F4")
-modify_unit(game, "chris",     chris_units[19],   "sneak","E7")
-modify_unit(game, "chris",     chris_units[20],   "soar", "B1")
+# uncomment to print the calls you would make to move all units
+#modify_unit_calls(res)
+```
+
+
+```{r}
+modify_unit(game, "big_grizz", "E2",   "attack",  "F1")
+modify_unit(game, "big_grizz", "B6",   "control", "B6")
+modify_unit(game, "big_grizz", "B11",  "attack",  "E3")
+modify_unit(game, "big_grizz", "B8",   "attack",  "B2")
+modify_unit(game, "big_grizz", "E1",   "attack",  "B2")
+modify_unit(game, "chris",     "E5",   "move",    "E5") # 1 units
+modify_unit(game, "chris",     "F1",   "control", "F1") # 5 units
+modify_unit(game, "chris",     "F2",   "control", "F2") # 4 units
+modify_unit(game, "chris",     "F3",   "move",    "F4") # 2 units
+modify_unit(game, "chris",     "F4",   "control", "F4") # 1 units
+modify_unit(game, "eric",      "F7",   "attack",  "F4") # 8 units
+modify_unit(game, "eric",      "C1",   "move",    "B4") # 9 units
 ```
 
 Attempt to reconcile moves.
@@ -117,7 +135,7 @@ Attempt to reconcile moves.
 ```{r}
 res <- reconcile_player_orders(game)
 print(draw_map(res, "CONFLICT!"))
-knitr::kable(res)
+knitr::kable(add_keywords(res))
 ```
 
 ### Fights are resolved
@@ -126,8 +144,8 @@ This is where the players would resolved fights however they see fit (e.g. Warha
 Then they adjust their maps accordingly for the outcome of the conflicts.
 
 ```{r}
-modify_unit(game, "eric",      eric_units[1:6],   "retreat", "F7")
-modify_unit(game, "chris",     chris_units[1:9],  "retreat", "F2")
+modify_unit(game, "eric",      "F4",  "retreat", "F7")
+modify_unit(game, "chris",     "F1",  "retreat", "F2")
 ```
 
 Now we reconcile again.
@@ -135,38 +153,62 @@ Now we reconcile again.
 ```{r}
 res <- reconcile_player_orders(game)
 print(draw_map(res))
-knitr::kable(res)
+knitr::kable(add_keywords(res))
 ```
 
 We're good. On to turn 3.
 
+### NOTE: Crossing Paths
+
+Notice that in this turn Chris and Eric sit across from each other in `F2` and `C3`, their respective starting spots. At this point they should fight, but the mechanic isn't clear. If `C4 attacks F2` and `F2 attacks C4` then, as it's currently coded, they would pass in the night. This is not right. 
+
+Unfortunately, this will be more complicated with longer moves, but we probably still need to trace the paths because, when paths cross, swords must cross.
+
 # TURN 3
 Players change their maps (making orders)
 
+
 ```{r}
-modify_unit(game, "big_grizz", moby_units[1:5], "defend", "F1")
-modify_unit(game, "big_grizz", moby_units[6:7],   "move", "A3")
-modify_unit(game, "big_grizz", moby_units[11:15], "move", "A7")
-modify_unit(game, "big_grizz", moby_units[11:15], "move", "A5")
-modify_unit(game, "eric",      eric_units[1:6], "defend", "F7")
-modify_unit(game, "eric",      eric_units[7:8],   "move", "C5")
-modify_unit(game, "eric",      eric_units[11:12], "move", "D2")
-modify_unit(game, "chris",     chris_units[10:17],"move", "F2")
-modify_unit(game, "chris",     chris_units[18],   "move", "E5")
-modify_unit(game, "chris",     chris_units[20],   "soar", "B6")
+modify_unit(game, "big_grizz",   "B2",   "move",    "B1") # 5 units
+modify_unit(game, "big_grizz",   "B6",   "move",    "C1") # 2 units
+modify_unit(game, "big_grizz",   "E3",   "move",    "E4") # 1 units
+modify_unit(game, "big_grizz",   "F1",   "control", "F1") # 14 units
+modify_unit(game, "chris",       "E5",   "move",    "E7") # 1 units
+modify_unit(game, "chris",       "F2",   "control", "F2") # 9 units
+modify_unit(game, "chris",       "F4",   "control", "F4") # 3 units
+modify_unit(game, "eric",        "B4",   "move",    "B1") # 9 units
+modify_unit(game, "eric",        "C3",   "control", "C3") # 7 units
+modify_unit(game, "eric",        "F7",   "control", "F7") # 8 units
+
 ```
 
 Attempt to reconcile moves.
 
 ```{r}
 res <- reconcile_player_orders(game)
-print(draw_map(res))
-knitr::kable(res)
+print(draw_map(res, "CONFLICT!"))
+knitr::kable(add_keywords(res))
 ```
+
+### Encounter battles
+
+Another fight, this time in `B1`, but neither force was attacking or controlling. They just ran into each other. Does this play differently? Bonuses or lack thereof?
+
+```{r}
+modify_unit(game, "big_grizz",  "B1", "retreat", "B2") # 5 units
+res <- reconcile_player_orders(game)
+```
+
+
+### Controlling? Healing?
+
+I have Chris here holding to control in both `F2` (instead of attacking `F1`) and `F4` (instead of pursuing Eric into `F7`), and Eric holding `C3` and `F7`. I'm thinking maybe there is some benefit to resting like this? Getting reinforcements? Heailing?
+
+(Mostly I just didn't want to process too many battles this turn)
 
 ### Vision
 
-No conflict here, but notice how everyone's vision changes... _[WORK IN PROGRESS]_
+Sidenote: notice how everyone's vision changes... 
 
 **Grizz**
 ```{r}
@@ -187,14 +229,15 @@ draw_map(res, "eric")
 Players change their maps (making orders). Renew the attack.
 
 ```{r}
-modify_unit(game, "big_grizz", moby_units[6:7],   "move", "B1")
-modify_unit(game, "big_grizz", moby_units[11:15], "move", "B5")
-modify_unit(game, "eric",      eric_units[7:8],   "move", "F3")
-modify_unit(game, "eric",      eric_units[11:12], "move", "E3")
-modify_unit(game, "chris",     chris_units[1:17],"attack","F1")
-modify_unit(game, "chris",     chris_units[18], "attack", "F7")
-modify_unit(game, "chris",     chris_units[19],   "sneak","F8")
-modify_unit(game, "chris",     chris_units[20],   "soar", "C3")
+modify_unit(game, "big_grizz",   "B2",   "control", "B2") # 5 units
+modify_unit(game, "big_grizz",   "C1",   "move",    "B4") # 2 units
+modify_unit(game, "big_grizz",   "E4",   "move",    "E6") # 1 units
+modify_unit(game, "big_grizz",   "F1",   "control", "F1") # 14 units
+modify_unit(game, "chris",       "E7",   "move",    "F8") # 1 units
+modify_unit(game, "chris",       "F2",   "attack",  "F1") # 9 units
+modify_unit(game, "chris",       "F4",   "attack",  "F7") # 3 units
+modify_unit(game, "eric",        "B1",   "attack",  "B2") # 9 units
+modify_unit(game, "eric",        "F7",   "control", "F7") # 8 units
 ```
 
 Attempt to reconcile moves.
@@ -202,16 +245,16 @@ Attempt to reconcile moves.
 ```{r}
 res <- reconcile_player_orders(game)
 print(draw_map(res, "CONFLICT!"))
-knitr::kable(res)
+knitr::kable(add_keywords(res))
 ```
 
 ### Fights are resolved
 We fight. Adjust maps accordingly for the outcome of the conflicts.
 
 ```{r}
-modify_unit(game, "big_grizz", moby_units[1:6], "retreat", "E2")
-modify_unit(game, "eric",      eric_units[1:6], "retreat", "F8")
-modify_unit(game, "chris",     chris_units[20], "retreat", "C5")
+modify_unit(game, "big_grizz",   "F1",   "retreat", "E2") # 14 units
+modify_unit(game, "eric",        "B2",   "retreat", "B1") # 9 units
+modify_unit(game, "eric",        "F7",   "retreat", "F8") # 8 units
 ```
 
 Now we reconcile again.
@@ -219,14 +262,30 @@ Now we reconcile again.
 ```{r}
 res <- reconcile_player_orders(game)
 print(draw_map(res, "CONFLICT!"))
-knitr::kable(res)
+knitr::kable(add_keywords(res))
 ```
 
 ### Retreats
 
 _Here's a good question: what happens here? A large army retreats into an area where a spy has been hiding. Do they fight? Do they take casualties?_
 
-# TURN 5
-Players change their maps (making orders)...
+```{r}
+modify_unit(game, "eric",  "F8", "retreat", "F5") # 5 units
+res <- reconcile_player_orders(game)
+```
 
+Until we decide on that, I just made Eric retreat to `F5` instead. Another question: could he have retreated to `C5`? It borders `F7` where the battle started, but _not_ `F8` where the retreat conflict happened. Not sure on this one...
+
+```{r}
+# sidenote: I originally did this by accident but I saved myself with this warning
+modify_unit(game, "big_grizz",  "F8", "retreat", "F5") # 5 units
+```
+
+# TURN 5
+Here's how the map stands at the beginning of Turn 5...
+
+```{r}
+print(draw_map(res))
+knitr::kable(add_keywords(res))
+```
 

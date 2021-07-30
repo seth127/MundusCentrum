@@ -55,3 +55,30 @@ kill_unit <- function(game, player, .u) {
     write_player_map(game, player, .pm)
   })
 }
+
+
+#' Print the calls players make to move units
+#' @importFrom purrr pwalk
+#' @export
+modify_unit_calls <- function(game_df, .p = NULL) {
+  check_player_name(game_df, .p)
+
+  if (!is.null(.p)) {
+    game_df <- filter(game_df, .data$player == .p)
+  }
+
+  game_df %>%
+    group_by(player, loc) %>%
+    count() %>%
+    pwalk(print_modify_unit_call)
+}
+
+
+#' pwalk iterator for modify_unit_calls()
+#' @keywords internal
+print_modify_unit_call <- function(...) {
+  .row <- list(...)
+  print(
+    glue('modify_unit(game, "{.row$player}",\t"{.row$loc}",\t"WHAT?",\t"WHERE?") # {.row$n} units')
+  )
+}
