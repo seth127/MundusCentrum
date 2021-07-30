@@ -6,3 +6,13 @@ BLANK_MAP <- data.frame(
   loc = character(),
   action = character()
 )
+
+UNIT_KEYWORDS <- c(
+  "control",
+  "transport",
+  "fast",
+  "fly",
+  "soar",
+  "deep",
+  "sneak"
+)
