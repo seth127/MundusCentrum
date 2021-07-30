@@ -1,0 +1,109 @@
+---
+title: "Sample Game"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  fig.width=8,
+  fig.height=8
+)
+```
+
+## Intro
+
+This just shows a brief example of how you can start a game and trigger turns to progress.
+
+```{r, include=FALSE}
+devtools::load_all()
+if (fs::dir_exists(file.path(GAME_ROOT_DIR, "anno_uno"))) fs::dir_delete(file.path(GAME_ROOT_DIR, "anno_uno"))
+```
+```{r}
+library(MundusCentrum)
+```
+
+### Setup the game
+
+```{r}
+game <- new_game(
+  name = "Anno Uno",
+  players = list(
+    list(
+      name = "Big Grizz",
+      team = "Space Marines",
+      units = system.file("extdata", "unit-templates", "big_grizz.csv", package = "MundusCentrum")
+    ),
+    list(
+      name = "Eric",
+      team = "Space Orcs",
+      units = system.file("extdata", "unit-templates", "eric.csv", package = "MundusCentrum")
+    ),
+    list(
+      name = "Chris",
+      team = "Tyrannids",
+      units = system.file("extdata", "unit-templates", "chris.csv", package = "MundusCentrum")
+    )
+  ),
+  points = 2000
+)
+```
+
+### see the starting point
+This is the state of the game at the beginning
+
+```{r}
+res <- reconcile_player_orders(game)
+#print(draw_map(res))
+knitr::kable(res)
+```
+
+## Turn play
+
+Get a list of unit ID's to easily make the `modify_unit()` calls below.
+
+```{r}
+moby_units <- read_player_map(game, "big_grizz") %>% pull(unit_name)
+eric_units <- read_player_map(game, "eric") %>% pull(unit_name)
+chris_units <- read_player_map(game, "chris") %>% pull(unit_name)
+```
+
+# TURN 1
+Players change their maps (making orders)
+
+```{r}
+modify_unit(game, "big_grizz", moby_units[1:5],   "move",  "E2")
+modify_unit(game, "big_grizz", moby_units[6:7],   "control","A2")
+modify_unit(game, "big_grizz", moby_units[11:15], "control","A6")
+modify_unit(game, "eric",      eric_units[1:6],   "move",  "F7")
+modify_unit(game, "eric",      eric_units[9],     "control","C3")
+modify_unit(game, "eric",      eric_units[10:11], "control","C3")
+modify_unit(game, "chris",     chris_units[1:9],  "control","F1")
+modify_unit(game, "chris",     chris_units[10:18],"move",  "F3")
+modify_unit(game, "chris",     chris_units[19],   "sneak", "E5")
+modify_unit(game, "chris",     chris_units[20],   "soar",  "D4")
+```
+
+Attempt to reconcile moves.
+
+```{r}
+res <- reconcile_player_orders(game)
+#print(draw_map(res))
+knitr::kable(res)
+```
+
+```{r}
+#print(draw_map(res))
+print(draw_map(res, "big_grizz"))
+# print(draw_map(res, "chris"))
+# print(draw_map(res, "eric"))
+
+```
+
+
+```{r}
+modify_unit(game, "big_grizz", "A2",   "control","A3")
+res <- reconcile_player_orders(game)
+print(draw_map(res, "big_grizz"))
+```
+

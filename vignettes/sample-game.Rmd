@@ -60,7 +60,7 @@ knitr::kable(res)
 
 ## Turn play
 
-Get a list of unit ID's to easily make the `move_unit()` calls below.
+Get a list of unit ID's to easily make the `modify_unit()` calls below.
 
 ```{r}
 moby_units <- read_player_map(game, "big_grizz") %>% pull(unit_name)
@@ -72,16 +72,16 @@ chris_units <- read_player_map(game, "chris") %>% pull(unit_name)
 Players change their maps (making orders)
 
 ```{r}
-move_unit(game, "big_grizz", moby_units[1:5],   "move",  "E2")
-move_unit(game, "big_grizz", moby_units[6:7],   "control","A2")
-move_unit(game, "big_grizz", moby_units[11:15], "control","A6")
-move_unit(game, "eric",      eric_units[1:6],   "move",  "F7")
-move_unit(game, "eric",      eric_units[9],     "control","C3")
-move_unit(game, "eric",      eric_units[10:11], "control","C3")
-move_unit(game, "chris",     chris_units[1:9],  "control","F1")
-move_unit(game, "chris",     chris_units[10:18],"move",  "F3")
-move_unit(game, "chris",     chris_units[19],   "sneak", "E5")
-move_unit(game, "chris",     chris_units[20],   "soar",  "D4")
+modify_unit(game, "big_grizz", moby_units[1:5],   "move",  "E2")
+modify_unit(game, "big_grizz", moby_units[6:7],   "control","A2")
+modify_unit(game, "big_grizz", moby_units[11:15], "control","A6")
+modify_unit(game, "eric",      eric_units[1:6],   "move",  "F7")
+modify_unit(game, "eric",      eric_units[9],     "control","C3")
+modify_unit(game, "eric",      eric_units[10:11], "control","C3")
+modify_unit(game, "chris",     chris_units[1:9],  "control","F1")
+modify_unit(game, "chris",     chris_units[10:18],"move",  "F3")
+modify_unit(game, "chris",     chris_units[19],   "sneak", "E5")
+modify_unit(game, "chris",     chris_units[20],   "soar",  "D4")
 ```
 
 Reconcile moves.
@@ -105,11 +105,11 @@ We're good! Move on to the next turn. _(Note: Moby managed to teleport from `A1`
 Players change their maps (making orders)
 
 ```{r}
-move_unit(game, "big_grizz", moby_units[1:5],   "move", "F1")
-move_unit(game, "eric",      eric_units[1:6],   "move", "F4")
-move_unit(game, "chris",     chris_units[10:18],"move", "F4")
-move_unit(game, "chris",     chris_units[19],   "sneak","E7")
-move_unit(game, "chris",     chris_units[20],   "soar", "B1")
+modify_unit(game, "big_grizz", moby_units[1:5],   "move", "F1")
+modify_unit(game, "eric",      eric_units[1:6],   "move", "F4")
+modify_unit(game, "chris",     chris_units[10:18],"move", "F4")
+modify_unit(game, "chris",     chris_units[19],   "sneak","E7")
+modify_unit(game, "chris",     chris_units[20],   "soar", "B1")
 ```
 
 Attempt to reconcile moves.
@@ -126,8 +126,8 @@ This is where the players would resolved fights however they see fit (e.g. Warha
 Then they adjust their maps accordingly for the outcome of the conflicts.
 
 ```{r}
-move_unit(game, "eric",      eric_units[1:6],   "retreat", "F7")
-move_unit(game, "chris",     chris_units[1:9],  "retreat", "F2")
+modify_unit(game, "eric",      eric_units[1:6],   "retreat", "F7")
+modify_unit(game, "chris",     chris_units[1:9],  "retreat", "F2")
 ```
 
 Now we reconcile again.
@@ -144,16 +144,16 @@ We're good. On to turn 3.
 Players change their maps (making orders)
 
 ```{r}
-move_unit(game, "big_grizz", moby_units[1:5], "defend", "F1")
-move_unit(game, "big_grizz", moby_units[6:7],   "move", "A3")
-move_unit(game, "big_grizz", moby_units[11:15], "move", "A7")
-move_unit(game, "big_grizz", moby_units[11:15], "move", "A5")
-move_unit(game, "eric",      eric_units[1:6], "defend", "F7")
-move_unit(game, "eric",      eric_units[7:8],   "move", "C5")
-move_unit(game, "eric",      eric_units[11:12], "move", "D2")
-move_unit(game, "chris",     chris_units[10:17],"move", "F2")
-move_unit(game, "chris",     chris_units[18],   "move", "E5")
-move_unit(game, "chris",     chris_units[20],   "soar", "B6")
+modify_unit(game, "big_grizz", moby_units[1:5], "defend", "F1")
+modify_unit(game, "big_grizz", moby_units[6:7],   "move", "A3")
+modify_unit(game, "big_grizz", moby_units[11:15], "move", "A7")
+modify_unit(game, "big_grizz", moby_units[11:15], "move", "A5")
+modify_unit(game, "eric",      eric_units[1:6], "defend", "F7")
+modify_unit(game, "eric",      eric_units[7:8],   "move", "C5")
+modify_unit(game, "eric",      eric_units[11:12], "move", "D2")
+modify_unit(game, "chris",     chris_units[10:17],"move", "F2")
+modify_unit(game, "chris",     chris_units[18],   "move", "E5")
+modify_unit(game, "chris",     chris_units[20],   "soar", "B6")
 ```
 
 Attempt to reconcile moves.
@@ -187,14 +187,14 @@ draw_map(res, "eric")
 Players change their maps (making orders). Renew the attack.
 
 ```{r}
-move_unit(game, "big_grizz", moby_units[6:7],   "move", "B1")
-move_unit(game, "big_grizz", moby_units[11:15], "move", "B5")
-move_unit(game, "eric",      eric_units[7:8],   "move", "F3")
-move_unit(game, "eric",      eric_units[11:12], "move", "E3")
-move_unit(game, "chris",     chris_units[1:17],"attack","F1")
-move_unit(game, "chris",     chris_units[18], "attack", "F7")
-move_unit(game, "chris",     chris_units[19],   "sneak","F8")
-move_unit(game, "chris",     chris_units[20],   "soar", "C3")
+modify_unit(game, "big_grizz", moby_units[6:7],   "move", "B1")
+modify_unit(game, "big_grizz", moby_units[11:15], "move", "B5")
+modify_unit(game, "eric",      eric_units[7:8],   "move", "F3")
+modify_unit(game, "eric",      eric_units[11:12], "move", "E3")
+modify_unit(game, "chris",     chris_units[1:17],"attack","F1")
+modify_unit(game, "chris",     chris_units[18], "attack", "F7")
+modify_unit(game, "chris",     chris_units[19],   "sneak","F8")
+modify_unit(game, "chris",     chris_units[20],   "soar", "C3")
 ```
 
 Attempt to reconcile moves.
@@ -209,9 +209,9 @@ knitr::kable(res)
 We fight. Adjust maps accordingly for the outcome of the conflicts.
 
 ```{r}
-move_unit(game, "big_grizz", moby_units[1:6], "retreat", "E2")
-move_unit(game, "eric",      eric_units[1:6], "retreat", "F8")
-move_unit(game, "chris",     chris_units[20], "retreat", "C5")
+modify_unit(game, "big_grizz", moby_units[1:6], "retreat", "E2")
+modify_unit(game, "eric",      eric_units[1:6], "retreat", "F8")
+modify_unit(game, "chris",     chris_units[20], "retreat", "C5")
 ```
 
 Now we reconcile again.

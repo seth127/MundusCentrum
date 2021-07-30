@@ -15,7 +15,7 @@ draw_map <- function(game_df, .p = NULL) {
   map_img <- jpeg::readJPEG(system.file("extdata", "img", "MundusCentrumAlpha.jpeg", package = "MundusCentrum"))
 
   if (!is.null(.p)) {
-    if (!(.p %in% game_df$player)) abort(glue("{.p} is not a valid player. Choose from {paste(unique(game_df$player), collapse = ', ')}"))
+    if (!(.p %in% c(game_df$player, "CONFLICT!"))) abort(glue("{.p} is not a valid player. Choose from {paste(unique(game_df$player), collapse = ', ')}"))
   }
 
   # get static map coordinates
