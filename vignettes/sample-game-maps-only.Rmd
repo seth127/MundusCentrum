@@ -1,5 +1,5 @@
 ---
-title: "Sample Game"
+title: "Sample Game - Maps Only"
 output: html_document
 ---
 
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 
 ## Intro
 
-This just shows a brief example of how you can start a game and trigger turns to progress.
+This is just the same thing as the ["Sample Game" vignette](https://seth127.github.io/MundusCentrum/sample-game), but with only the global maps (and player moves) shown. The idea is be able to more easily follow the flow of the game.
 
 ```{r, include=FALSE}
 devtools::load_all()
@@ -55,7 +55,6 @@ This is the state of the game at the beginning
 ```{r}
 res <- reconcile_player_orders(game)
 print(draw_map(res))
-knitr::kable(add_keywords(res))
 ```
 
 ## Turn play
@@ -87,33 +86,12 @@ modify_unit(game, "chris",     chris_units[6:9],  "control","F2")
 modify_unit(game, "chris",     chris_units[10:11],"move",  "F3")
 modify_unit(game, "chris",     chris_units[12],"move",  "E5")
 modify_unit(game, "chris",     chris_units[13],"move",  "F4")
-```
 
-Reconcile moves.
-
-```{r}
 res <- reconcile_player_orders(game)
 print(draw_map(res))
-knitr::kable(add_keywords(res))
 ```
-
-Take a look at what individual players can see. Here's Chris' map:
-
-```{r}
-draw_map(res, "chris")
-```
-
-We're good! Move on to the next turn. (Battle awaits!)
-
 
 # TURN 2
-Players change their maps (making orders)
-
-```{r}
-# uncomment to print the calls you would make to move all units
-#modify_unit_calls(res)
-```
-
 
 ```{r}
 modify_unit(game, "big_grizz", "E2",   "attack",  "F1")
@@ -128,45 +106,22 @@ modify_unit(game, "chris",     "F3",   "move",    "F4") # 2 units
 modify_unit(game, "chris",     "F4",   "control", "F4") # 1 units
 modify_unit(game, "eric",      "F7",   "attack",  "F4") # 8 units
 modify_unit(game, "eric",      "C1",   "move",    "B4") # 9 units
-```
 
-Attempt to reconcile moves.
-
-```{r}
 res <- reconcile_player_orders(game)
 print(draw_map(res, "CONFLICT!"))
-knitr::kable(add_keywords(res))
 ```
 
 ### Fights are resolved
-This is where the players would resolved fights however they see fit (e.g. Warhammer, chessboxing, what-have-you)
-
-Then they adjust their maps accordingly for the outcome of the conflicts.
 
 ```{r}
 modify_unit(game, "eric",      "F4",  "retreat", "F7")
 modify_unit(game, "chris",     "F1",  "retreat", "F2")
-```
 
-Now we reconcile again.
-
-```{r}
 res <- reconcile_player_orders(game)
 print(draw_map(res))
-knitr::kable(add_keywords(res))
 ```
 
-We're good. On to turn 3.
-
-### Crossing Paths
-
-Notice that in this turn Chris and Eric sit across from each other in `F2` and `C3`. At this point they should fight, but the mechanic isn't clear. If `C3 attacks F2` and `F2 attacks C3` then, as it's currently coded, they would pass in the night. This is not right. 
-
-Unfortunately, this will be more complicated with longer moves, but we probably still need to trace the paths because, when paths cross, swords must cross.
-
 # TURN 3
-Players change their maps (making orders)
-
 
 ```{r}
 modify_unit(game, "big_grizz",   "B2",   "move",    "B1") # 5 units
@@ -180,53 +135,17 @@ modify_unit(game, "eric",        "B4",   "move",    "B1") # 9 units
 modify_unit(game, "eric",        "C3",   "control", "C3") # 7 units
 modify_unit(game, "eric",        "F7",   "control", "F7") # 8 units
 
-```
-
-Attempt to reconcile moves.
-
-```{r}
 res <- reconcile_player_orders(game)
 print(draw_map(res, "CONFLICT!"))
-knitr::kable(add_keywords(res))
 ```
 
 ### Encounter battles
-
-Another fight, this time in `B1`, but neither force was attacking or controlling. They just ran into each other. Does this play differently? Bonuses or lack thereof?
 
 ```{r}
 modify_unit(game, "big_grizz",  "B1", "retreat", "B2") # 5 units
 res <- reconcile_player_orders(game)
 ```
-
-
-### Controlling? Healing?
-
-I have Chris here holding to control in both `F2` (instead of attacking `F1`) and `F4` (instead of pursuing Eric into `F7`), and Eric holding `C3` and `F7`. I'm thinking maybe there is some benefit to resting like this? Getting reinforcements? Heailing?
-
-(Mostly I just didn't want to process too many battles this turn)
-
-### Vision
-
-Sidenote: notice how everyone's vision changes... **The territories with a black dot are invisible behind fog-o'-war for that player and the ones with an empty dot are visible but unoccupied.** _Also, note: I haven't yet implemented communication relays or any way to control a territory without having a unit in it. Need to discuss that at some point._
-
-**Grizz**
-```{r}
-draw_map(res, "big_grizz")
-```
-
-**Chris**
-```{r}
-draw_map(res, "chris")
-```
-
-**Eric**
-```{r}
-draw_map(res, "eric")
-```
-
 # TURN 4
-Players change their maps (making orders). Renew the attack.
 
 ```{r}
 modify_unit(game, "big_grizz",   "B2",   "control", "B2") # 5 units
@@ -238,51 +157,30 @@ modify_unit(game, "chris",       "F2",   "attack",  "F1") # 9 units
 modify_unit(game, "chris",       "F4",   "attack",  "F7") # 3 units
 modify_unit(game, "eric",        "B1",   "attack",  "B2") # 9 units
 modify_unit(game, "eric",        "F7",   "control", "F7") # 8 units
-```
 
-Attempt to reconcile moves.
-
-```{r}
 res <- reconcile_player_orders(game)
 print(draw_map(res, "CONFLICT!"))
-knitr::kable(add_keywords(res))
 ```
 
 ### Fights are resolved
-We fight. Adjust maps accordingly for the outcome of the conflicts.
 
 ```{r}
 modify_unit(game, "big_grizz",   "F1",   "retreat", "E2") # 14 units
 modify_unit(game, "eric",        "B2",   "retreat", "B1") # 9 units
 modify_unit(game, "eric",        "F7",   "retreat", "F8") # 8 units
-```
 
-Now we reconcile again.
-
-```{r}
 res <- reconcile_player_orders(game)
 print(draw_map(res, "CONFLICT!"))
-knitr::kable(add_keywords(res))
 ```
 
 ### Retreats
-
-_Here's a good question: what happens here? A large army retreats into an area where a spy has been hiding. Do they fight? Do they take casualties?_
 
 ```{r}
 modify_unit(game, "eric",  "F8", "retreat", "F5") # 5 units
 res <- reconcile_player_orders(game)
 ```
 
-_Until we decide on that, I just made Eric retreat to `F5` instead. Another question: could he have retreated to `C5`? It borders `F7` where the battle started, but **not** `F8` where the retreat conflict happened. Not sure on this one..._
-
-#### sidenote: I originally did this by accident but I saved myself with this warning
-```{r}
-modify_unit(game, "big_grizz",  "F8", "retreat", "F5") # 5 units
-```
-
 # TURN 5
-Here's how the map stands at the beginning of Turn 5...
 
 ```{r}
 print(draw_map(res))
