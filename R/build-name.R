@@ -15,8 +15,11 @@ names(NAMES) <- names_keys
 #' @export
 build_name <- function(.u = NULL) {
   assert_string(.u, null.ok = TRUE)
+
   .u_opts <- UNIT$unit_type
   if (is.null(.u)) .u <- sample(.u_opts, 1L)
+
+  .u <- sanitize_name(.u)
   if (!(.u) %in% .u_opts) {
     abort(glue("Invalid `.u` arg: {.u} -- Use one of: {paste(.u_opts, collapse = ', ')}"))
   }

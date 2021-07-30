@@ -14,6 +14,10 @@ Y_MULT <- 10
 draw_map <- function(game_df, .p = NULL) {
   map_img <- jpeg::readJPEG(system.file("extdata", "img", "MundusCentrumAlpha.jpeg", package = "MundusCentrum"))
 
+  if (!is.null(.p)) {
+    if (!(.p %in% game_df$player)) abort(glue("{.p} is not a valid player. Choose from {paste(unique(game_df$player), collapse = ', ')}"))
+  }
+
   # get static map coordinates
   map_data <- map_dfr(names(MAP), ~{
     .m <- MAP[[.x]]
@@ -43,13 +47,14 @@ draw_map <- function(game_df, .p = NULL) {
   # get units
   unit_data <- full_join(
     map_data,
-    #count(game_df, loc, player),
-    game_df %>% group_by(loc, player) %>% summarise(total_folks = sum(size)),
+    count(game_df, loc, player),
+    #game_df %>% group_by(loc, player) %>% summarise(total_folks = sum(size)),
     by = "loc"
   ) %>%
     filter(!is.na(player), loc %in% visible_loc) %>%
     mutate(
-      point_size = pmax(pmin(total_folks/3, 20), 2) #### TODO: adjust this once we get real army sizes
+      point_size = pmin(ifelse(n < 5, n^1.2, ifelse(n > 5, n^0.8, n)), 20)
+      #point_size = pmax(pmin(total_folks/3, 20), 2) #### TODO: adjust this once we get real army sizes
     )
 
   ###### TODO: change this to be dynamic (or just set to a flat file at beginning of game, and loaded here)

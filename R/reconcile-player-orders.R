@@ -36,8 +36,8 @@ players_to_global_map <- function(game){
         by = "unit_name"
       ) %>%
       mutate(player = .p) %>%
-      select(player, loc, unit_type, size, action, unit_name) %>%
-      arrange(loc, player, action, unit_type, size, unit_name)
+      select(player, loc, unit_type, action, unit_name) %>%
+      arrange(loc, player, action, unit_type, unit_name)
   })
 
   # return any disputed lands

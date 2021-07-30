@@ -69,9 +69,13 @@ setup_game_dir <- function(name, players) {
 
     # load input units file
     if (!file_exists(.p[["units"]])) abort(glue("{.p[['name']]} passed {.p[['units']]} but that file doesn't exist."))
-    .u <- read_csv(.p[["units"]], col_types = "cicc")
+    .u <- read_csv(.p[["units"]], col_types = "cc")
     .u %>%
-      mutate(unit_name = map_chr(unit_type, ~ build_name(.x))) %>%
+      mutate(
+        unit_type = map_chr(unit_type, sanitize_name),
+        unit_name = map_chr(unit_type, build_name),
+        action = "control"
+      ) %>%
       select(unit_name, everything()) %>%
       write_csv(file.path(player_dir, paste0(.p[["id"]], ".csv")))
 

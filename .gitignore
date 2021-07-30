@@ -1,6 +1,6 @@
 .Rprofile
 renv/*
-inst/games/anno_uno/*
+inst/games/anno_uno*/*
 
 .DS_Store
 

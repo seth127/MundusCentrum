@@ -1,13 +1,14 @@
-unit_type,size,loc,action
-lt_dan,10,F1,hold
-lt_dan,10,F1,hold
-lt_dan,10,F1,hold
-mule,2,F1,hold
-lt_dan,15,F2,hold
-lt_dan,15,F2,hold
-lt_dan,15,F2,hold
-rambo,10,F2,hold
-mule,4,F2,hold
-steve_zissou,10,F3,hold
-maverick,7,F6,hold
-keyser_soze,3,F8,hold
+unit_type,loc
+Flying Hive Tryant,F2
+Broodlord,F2
+Genestealers,F2
+Tyranid Warriors,F2
+Hive Crone,F2
+Termagants,F2
+Hormagaunts,F2
+Hive Guard,F2
+Biovores,F2
+Ripper Swarms,F2
+Zoathropes,F2
+Lictor,F2
+Raveners,F2

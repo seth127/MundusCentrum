@@ -1,13 +1,24 @@
-unit_type,size,loc,action
-maverick,5,A1,hold
-cptn_steve_hiller_usmc,7,A2,hold
-steve_zissou,5,A2,hold
-keyser_soze,3,A7,hold
-lt_dan,20,A5,hold
-lt_dan,10,A5,hold
-cptn_steve_hiller_usmc,10,A6,hold
-lt_dan,15,A6,hold
-lt_dan,15,A6,hold
-lt_dan,15,A6,hold
-led_zep,3,A6,hold
-maverick,5,A8,hold
+unit_type,loc
+Ravenwing Talonmaster,B10
+Deathwing Captain,B10
+Techmarine,B10
+Phobos Librarian,B10
+Tactical Squad,B10
+Tactical Squad,B10
+Tactical Squad,B10
+Tactical Squad,B10
+Infiltrators,B10
+Ravenwing Bike Squad,B10
+Ravenwing Attack Bike,B10
+Ravenwing Attack Bike,B10
+Dreadnought,B10
+Redemptor Dreadnought,B10
+Invictor Tactical Warsuit,B10
+Ravenwing Apothecary,B10
+Deathwing Terminators,B10
+Deathwing Knights,B10
+Vindicare Assassin,B10
+Eliminators,B10
+Eradicators,B10
+Storm Raven,B10
+Rhino,B10

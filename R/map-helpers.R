@@ -10,7 +10,7 @@ get_player_map_path <- function(game, player) {
 
 #' @export
 read_player_map <- function(game, player) {
-  read_csv(get_player_map_path(game, player), col_types = "ccicc")
+  read_csv(get_player_map_path(game, player), col_types = "cccc")
 }
 
 #' @export

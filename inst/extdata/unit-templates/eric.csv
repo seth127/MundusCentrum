@@ -1,13 +1,29 @@
-unit_type,size,loc,action
-lt_dan,20,C1,hold
-lt_dan,20,C1,hold
-lt_dan,20,C1,hold
-mule,3,C1,hold
-rambo,10,C1,hold
-ricky_bobby,10,C2,hold
-ricky_bobby,10,C2,hold
-keyser_soze,5,C3,hold
-steve_zissou,10,C4,hold
-rocketman,10,C5,hold
-rocketman,10,C5,hold
-
+unit_type,loc
+Trazyn The Infinite,C4
+Illuminor Szeras,C4
+Technomancer,C4
+Lychgaurd,C4
+Skorpekh Destroyers,C4
+Canoptek Plasmacyte,C4
+Immortals,C4
+Canoptek Spyders,C4
+Canoptek Spyders,C4
+Cryptothralls,C4
+Cryptothralls,C4
+Canoptek Scarab Swarms,C4
+Canoptek Wraiths,C4
+Deathmarks,C4
+Night Scythe,C4
+Overlord,C4
+Royal Warden,C4
+Necron Warriors,C4
+Immortals,C4
+Canoptek Scarab Swarms,C4
+Canoptek Scarab Swarms,C4
+Night Scythe,C4
+Overlord,C4
+Royal Warden,C4
+Immortals,C4
+Necron Warriors,C4
+Canoptek Scarab Swarms,C4
+Canoptek Scarab Swarms,C4

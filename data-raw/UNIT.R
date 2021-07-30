@@ -72,4 +72,11 @@ UNIT <- .l %>%
   dplyr::bind_rows() %>%
   replace(is.na(.), FALSE)
 
+dup_units <- duplicated(UNIT$unit_type)
+if (any(dup_units)) {
+  message("DUPLICATED ROWS!!!\n")
+  print(filter(UNIT, dup_units))
+  abort("Duplicated rows in UNIT")
+}
+
 usethis::use_data(UNIT, overwrite = TRUE)
