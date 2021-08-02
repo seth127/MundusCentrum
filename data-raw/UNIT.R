@@ -62,6 +62,12 @@ empty <- data.frame(
   create_unit_type("Zoathropes", "fly"),
   create_unit_type("Lictor", "deep", "sneak"),
   create_unit_type("Raveners", "fast", "deep"),
+  create_unit_type("Neurothrope", "fly"),
+  create_unit_type("Maleceptor"),
+  create_unit_type("Venomthropes"),
+  create_unit_type("Gargoyles", "fly", "fast", "deep"),
+  create_unit_type("Exocrine"),
+  create_unit_type("Tyrannocyte", "transport", "fly", "deep"),
 
   # RIGHT HERE ^
 )
