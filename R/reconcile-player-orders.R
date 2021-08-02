@@ -8,15 +8,23 @@
 #' @importFrom dplyr arrange
 #' @export
 reconcile_player_orders <- function(game) {
-  .m <- players_to_global_map(game)
-  if (nrow(.m[["conflict"]]) > 0) {
+
+  conflicts <- game$map_df %>%
+    group_by(loc) %>%
+    summarize(count = length(unique(player))) %>%
+    filter(count > 1) %>%
+    pull(loc)
+
+  if (length(conflicts) > 0) {
     message("CONFLICT(s):")
     warn("Conflict is at hand! Please resolve territorial disputes.", "map_conflict_warning")
-    return(.m[["conflict"]])
+    game$conflicts <- conflicts
+  } else {
+    message("All units resolved.")
+    game$conflicts <- NULL
   }
-  message("All units resolved.")
 
-  return(invisible(.m[["resolved"]]))
+  game
 }
 
 #' Update global map from player maps
@@ -27,9 +35,13 @@ reconcile_player_orders <- function(game) {
 #'
 #' @keywords internal
 players_to_global_map <- function(game){
+
+  #### DEPRECATED???
+
+
   .gm <- read_global_map(game)
   new_map <- map_dfr(get_player_names(game), function (.p) {
-    .pm <- read_player_map(game, .p)
+    .pm <- get_player_map(game, .p)
     ### TODO: probably need to check for mismatches before we return this
       full_join(
         select(.gm, unit_name),

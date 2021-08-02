@@ -8,15 +8,26 @@ Y_MULT <- 10
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom grid rasterGrob unit
 #' @importFrom dplyr count full_join rename summarise group_by
-#' @param game_df Takes a tibble output from [reconcile_player_orders()]
+#' @param game The game object that contains the map etc
 #' @return Returns a ggplot object of the map
 #' @export
-draw_map <- function(game_df, .p = NULL) {
+draw_map <- function(game, .p = NULL) {
   map_img <- jpeg::readJPEG(system.file("extdata", "img", "MundusCentrumAlpha.jpeg", package = "MundusCentrum"))
 
-  #check_player_name(game_df, .p) # maybe we don't call this.
-  # The problem is in Conflict maps it errors if you aren't in the conflict
-  # if we comment this it should just return empty
+  if (!is.null(.p) && .p == "GLOBAL") .p <- NULL
+  check_player_name(game, .p)
+
+  # get df of units we care about
+  map_df <- get_map_df(game, .p)
+  map_title <- if (!is.null(game$conflicts)) {
+    "CONFLICT!"
+  } else {
+    if (is.null(.p)) {
+      "GLOBAL"
+    } else {
+      .p
+    }
+  }
 
   # get static map coordinates
   map_data <- map_dfr(names(MAP), ~{
@@ -32,11 +43,11 @@ draw_map <- function(game_df, .p = NULL) {
   # get control and visibility
   map_data <- left_join(
       map_data,
-      game_df %>% filter(action == "control") %>% select(player, loc) %>% unique() %>% rename(control = player),
+      map_df %>% filter(action == "control") %>% select(player, loc) %>% unique() %>% rename(control = player),
       by = "loc"
     ) %>%
     mutate(
-      visible = loc %in% player_vision(game_df, .p),
+      visible = loc %in% player_vision(map_df, .p),
       loc_fill =  ifelse(!visible, "DARK", ifelse(!is.na(control), control, "FREE"))
     )
 
@@ -47,8 +58,8 @@ draw_map <- function(game_df, .p = NULL) {
   # get units
   unit_data <- full_join(
     map_data,
-    count(game_df, loc, player),
-    #game_df %>% group_by(loc, player) %>% summarise(total_folks = sum(size)),
+    count(map_df, loc, player),
+    #map_df %>% group_by(loc, player) %>% summarise(total_folks = sum(size)),
     by = "loc"
   ) %>%
     filter(!is.na(player), loc %in% visible_loc) %>%
@@ -85,16 +96,16 @@ draw_map <- function(game_df, .p = NULL) {
     scale_size_area(guide = "none") +
     scale_colour_manual(values = player_colors) +
     scale_fill_manual(values = c(player_colors, "FREE" = "#00000000", "DARK" = "#000000"), guide = "none") + # visibility and control
-    ggtitle(.p %||% "GLOBAL")
+    ggtitle(map_title)
 
 }
 
 
-player_vision <- function(game_df, .p) {
+player_vision <- function(map_df, .p) {
   if (is.null(.p)) return(names(MAP))
-  if (.p == "CONFLICT!") return(unique(game_df$loc))
+  if (.p == "CONFLICT!") return(unique(map_df$loc))
 
-  occ_loc <- game_df %>%
+  occ_loc <- map_df %>%
     filter(player == .p) %>%
     pull(loc) %>%
     unique()

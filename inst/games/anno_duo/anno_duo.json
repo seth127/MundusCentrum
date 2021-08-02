@@ -1,0 +1,21 @@
+{
+  "name": "Anno Duo",
+  "players": [
+    {
+      "name" : "Big Grizz",
+      "team" : "Dark Angels",
+      "units" : "../../extdata/unit-templates/big_grizz.csv"
+    },
+    {
+      "name" : "Eric",
+      "team" : "Necrons",
+      "units" : "../../extdata/unit-templates/eric.csv"
+    },
+    {
+      "name" : "Chris",
+      "team" : "Tyranids",
+      "units" : "../../extdata/unit-templates/chris.csv"
+    }
+  ],
+  "points" : 3000
+}

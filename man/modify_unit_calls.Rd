@@ -4,7 +4,7 @@
 \alias{modify_unit_calls}
 \title{Print the calls players make to move units}
 \usage{
-modify_unit_calls(game_df, .p = NULL)
+modify_unit_calls(game, .p = NULL)
 }
 \description{
 Print the calls players make to move units

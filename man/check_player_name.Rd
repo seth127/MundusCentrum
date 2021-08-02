@@ -4,7 +4,7 @@
 \alias{check_player_name}
 \title{Check if a player name is in the game}
 \usage{
-check_player_name(game_df, .p)
+check_player_name(game, .p)
 }
 \description{
 Check if a player name is in the game

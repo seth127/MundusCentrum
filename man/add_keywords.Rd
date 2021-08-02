@@ -4,7 +4,7 @@
 \alias{add_keywords}
 \title{Join a game_df against the unit_type keyword columns}
 \usage{
-add_keywords(game_df, .p = NULL)
+add_keywords(game, .p = NULL)
 }
 \description{
 Join a game_df against the unit_type keyword columns
