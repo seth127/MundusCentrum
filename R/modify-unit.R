@@ -27,6 +27,9 @@ modify_unit <- function(game, player, .u, .a, .l) {
     # TODO: should check if it's a legal move first. Boring...
     if(is.null(.x) || is.na(.x)) return(NULL)
     .pm <- read_player_map(game, player)
+
+    # TODO: add translating unit_id to .u (probably here)
+
     if (!(.x %in% .pm$unit_name)) {
       warning(glue("{.x} is not a unit in {player}'s army"))
       return(NULL)
@@ -49,11 +52,7 @@ modify_unit <- function(game, player, .u, .a, .l) {
 #' @importFrom purrr walk
 #' @export
 kill_unit <- function(game, player, .u) {
-  walk(.u, ~{
-    .pm <- read_player_map(game, player) %>%
-      filter(unit_name != .x)
-    write_player_map(game, player, .pm)
-  })
+  walk(.u, ~ modify_unit(game, player, .x, NA_character_, NA_character_))
 }
 
 
