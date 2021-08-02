@@ -15,6 +15,7 @@ reconcile_player_orders <- function(game) {
     return(.m[["conflict"]])
   }
   message("All units resolved.")
+
   return(invisible(.m[["resolved"]]))
 }
 
@@ -27,7 +28,7 @@ reconcile_player_orders <- function(game) {
 #' @keywords internal
 players_to_global_map <- function(game){
   .gm <- read_global_map(game)
-  new_map <- map_dfr(game[["players"]], function (.p) {
+  new_map <- map_dfr(get_player_names(game), function (.p) {
     .pm <- read_player_map(game, .p)
     ### TODO: probably need to check for mismatches before we return this
       full_join(
@@ -36,8 +37,8 @@ players_to_global_map <- function(game){
         by = "unit_name"
       ) %>%
       mutate(player = .p) %>%
-      select(player, loc, unit_type, action, unit_name) %>%
-      arrange(loc, player, action, unit_type, unit_name)
+      select(player, loc, unit_id, unit_type, action, unit_name) %>%
+      arrange(loc, player, action, unit_id, unit_type, unit_name)
   })
 
   # return any disputed lands

@@ -14,7 +14,9 @@ Y_MULT <- 10
 draw_map <- function(game_df, .p = NULL) {
   map_img <- jpeg::readJPEG(system.file("extdata", "img", "MundusCentrumAlpha.jpeg", package = "MundusCentrum"))
 
-  check_player_name(game_df, .p)
+  #check_player_name(game_df, .p) # maybe we don't call this.
+  # The problem is in Conflict maps it errors if you aren't in the conflict
+  # if we comment this it should just return empty
 
   # get static map coordinates
   map_data <- map_dfr(names(MAP), ~{

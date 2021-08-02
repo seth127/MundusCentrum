@@ -47,9 +47,17 @@ new_game <- function(name, players, points = NULL) {
     if (any(map_lgl(players, ~ is.null(.x[["points"]])))) abort("Must either pass new_game(points) or specify points for each player")
   }
 
-  game <- list(players = ids)
+  game <- list(
+    # create hashes for serving html
+    players = as.list(
+      map_chr(paste0(name, c("GLOBAL", ids)), ~digest::digest(.x, algo = "md5")) %>%
+        rlang::set_names(c("GLOBAL", ids))
+    )
+  )
   game[["game_root"]] <- setup_game_dir(name, players)
   write_csv(BLANK_MAP, get_global_map_path(game))
+  write_lines(jsonlite::toJSON(game), get_global_json_path(game))
+
   reconcile_player_orders(game)
   return(game)
 }
@@ -72,6 +80,7 @@ setup_game_dir <- function(name, players) {
     .u <- read_csv(.p[["units"]], col_types = "cc")
     .u %>%
       mutate(
+        unit_id = seq(nrow(.u)),
         unit_type = map_chr(unit_type, sanitize_name),
         unit_name = map_chr(unit_type, build_name),
         action = "control"

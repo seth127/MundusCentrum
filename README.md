@@ -6,6 +6,10 @@ Check out [the "Sample Game" vignette](https://seth127.github.io/MundusCentrum/s
 ## To Do
 
 * Move these to issues
+* Auto write Rmd's for each player
+  * every reconcile_*() call? A special end of turn call? (probably the former)
+  * this is what we'll auto email
+  * might need a print_res method for players
 * s3 classes for game and game_df and maybe others (player?)
 * Check legal moves
   * inside move_unit() need to check the unit's movement and location and MAP borders
@@ -19,6 +23,7 @@ Check out [the "Sample Game" vignette](https://seth127.github.io/MundusCentrum/s
 * Dropping comm relays and control flags as you go.
 * Make it so you don't have to do `draw_map(res, "CONFLICT!")` it just figures out there's conflict
 * Figure out an easy helper for splitting up forces with `modify_unit()`
+* Change `geom_point(size)` to points instead of counts of units
 * Vision
   * sneaking  
   * vision of spaces passed through? (maybe only relevant to soaring?)
