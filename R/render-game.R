@@ -21,7 +21,7 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
   walk(to_render, ~ {
     data <- list(PLAYER = .x)
 
-    player_hash <- digest::digest(paste0(game_name, .x), algo = "md5")
+    player_hash <- digest::digest(paste(game_name, .x), algo = "md5")
 
     #?#other_players <- str_subset(to_render, glue("(GLOBAL|{.x})"), negate = TRUE)
 
@@ -66,7 +66,7 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
   if (isTRUE(html)) {
     walk(to_render, ~ {
       player_hash <- digest::digest(paste0(game_name, .x), algo = "md5")
-      rmd_file <- file.path(game_path, paste0(player_hash, ".Rmd"))
+      rmd_file <- file.path(game_path, paste(player_hash, ".Rmd"))
       message(glue("  Rendering html from {rmd_file}..."))
       rmarkdown::render(
         rmd_file,

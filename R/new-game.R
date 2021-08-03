@@ -50,7 +50,7 @@ new_game <- function(name, players, points = NULL) {
   game <- list(
     # create hashes for serving html
     players = as.list(
-      map_chr(paste0(name, c("GLOBAL", ids)), ~digest::digest(.x, algo = "md5")) %>%
+      map_chr(paste(name, c("GLOBAL", ids)), ~digest::digest(.x, algo = "md5")) %>%
         rlang::set_names(c("GLOBAL", ids))
     )
   )
