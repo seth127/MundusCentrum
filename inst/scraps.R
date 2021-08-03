@@ -1,3 +1,5 @@
+devtools::load_all()
+
 name = "Anno Uno"
 players = list(
   list(
@@ -44,5 +46,7 @@ View(
 
 
 # get keywords joined against state of game map
-View()
+# add_keywords(game)
 
+render_game("inst/games/anno_duo", players = TRUE, html = TRUE)
+publish_game_html("inst/games/anno_duo", "~/seth127.github.io/MundusCentrum/games", overwrite = TRUE)

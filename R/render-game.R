@@ -1,7 +1,8 @@
 #' Render the Rmd files for a game
 #'
 #' Takes an `.Rmd` template and a `.json` as input and renders
-#' the markdown(s)
+#' the markdown(s).
+#' **This is basically how you "play" the game.**
 #' @export
 render_game <- function(game_path, players = FALSE, html = FALSE) {
   game_name <- basename(game_path)
@@ -9,6 +10,14 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
   json_input <- file.path(game_path, paste0(game_name, ".json"))
   checkmate::assert_file_exists(rmd_template)
   checkmate::assert_file_exists(json_input)
+
+  write_lines(glue('
+!{game_name}.Rmd
+!{game_name}.json
+*.Rmd
+*.html'),
+    file.path(game_path, ".gitignore")
+  )
 
   template_string <- readr::read_lines(rmd_template)
 
@@ -22,27 +31,17 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
     data <- list(PLAYER = .x)
 
     player_hash <- digest::digest(paste(game_name, .x), algo = "md5")
+    message(glue("{paste(game_name, .x)} -- {player_hash}"))
 
-    #?#other_players <- str_subset(to_render, glue("(GLOBAL|{.x})"), negate = TRUE)
-
-    #
+    # build Rmd string
     text <- template_string
-
-    # trying to add back in the player's moves, but haven't gotten there yet...
-
-
-    # .x_moves <- template_string %>%
-    #   str_detect(paste0("(kill|modify)_unit.+", .x))
-    # .x_moves_string <- template_string[.x_moves]
-####
-
 
     if (.x == "GLOBAL") {
       # turn on code rendering for GLOBAL only
       text <- text %>%
         str_replace(stringr::fixed("echo = FALSE"), "echo = TRUE")
     } else {
-      # trying to add back in the player's moves
+      # add in the player's moves for printing only (because real code is echo = FALSE)
       moves <- text %>%
         str_detect("^### moves") %>%
         which() %>%
@@ -61,12 +60,9 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
     text <- whisker::whisker.render(text, data)
 
     write_lines(text, file.path(game_path, paste0(player_hash, ".Rmd")))
-  })
 
-  if (isTRUE(html)) {
-    walk(to_render, ~ {
-      player_hash <- digest::digest(paste0(game_name, .x), algo = "md5")
-      rmd_file <- file.path(game_path, paste(player_hash, ".Rmd"))
+    if (isTRUE(html)) {
+      rmd_file <- file.path(game_path, paste0(player_hash, ".Rmd"))
       message(glue("  Rendering html from {rmd_file}..."))
       rmarkdown::render(
         rmd_file,
@@ -74,16 +70,17 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
         output_dir = game_path,
         quiet = TRUE
       )
-    })
-    message("All done rendering.")
-  }
+    }
+  })
+  message("All done rendering.")
 }
 
 #' Copy game HTML files to a new dir (for publishing and hosting)
 #' @export
-publish_game_html <- function(game_dir, dest_dir) {
+publish_game_html <- function(game_dir, dest_dir, overwrite = FALSE) {
   html_files <- fs::dir_ls(game_dir, glob = "*.html")
   dest_dir <- file.path(dest_dir, basename(game_dir))
+  if (isTRUE(overwrite) && fs::dir_exists(dest_dir)) fs::dir_delete(dest_dir)
   if (!fs::dir_exists(dest_dir)) fs::dir_create(dest_dir)
 
   fs::file_copy(html_files, dest_dir)

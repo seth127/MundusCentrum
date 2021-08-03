@@ -135,10 +135,8 @@ game <- game %>%
 Attempt to reconcile moves.
 
 ```{r}
-# print(draw_map(game, "{{PLAYER}}"))
-# knitr::kable(get_map_df(game, "{{PLAYER}}"))
-print(draw_map(game))
-knitr::kable(get_map_df(game))
+print(draw_map(game, "{{PLAYER}}"))
+knitr::kable(get_map_df(game, "{{PLAYER}}"))
 ```
 
 ### moves
