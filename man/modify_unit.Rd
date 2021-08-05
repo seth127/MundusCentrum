@@ -11,8 +11,9 @@ modify_unit(game, .p, .u, .a, .l)
 
 \item{.p}{The player who owns the unit(s)}
 
-\item{.u}{Either a character vector of unit names to modify or a scalar of a
-map loc, in which case all units in that loc will be modified.}
+\item{.u}{Either a character vector of unit names to modify, a vector of
+unit_id's , or a scalar of a map loc, in which case all units in that loc
+will be modified.}
 
 \item{.a}{Action to assign to units}
 

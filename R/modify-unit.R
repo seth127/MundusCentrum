@@ -1,11 +1,13 @@
 #' Modify the action of a unit or group of units
 #' @param game The game to modify the unit(s) in
 #' @param .p The player who owns the unit(s)
-#' @param .u Either a character vector of unit names to modify or a scalar of a
-#'   map loc, in which case all units in that loc will be modified.
+#' @param .u Either a character vector of unit names to modify, a vector of
+#'   unit_id's , or a scalar of a map loc, in which case all units in that loc
+#'   will be modified.
 #' @param .a Action to assign to units
 #' @param .l Location to move units to (or same as where they are if not moving)
 #' @importFrom purrr walk
+#' @importFrom dplyr bind_rows
 #' @export
 modify_unit <- function(game, .p, .u, .a, .l) {
   check_player_name(game, .p)
@@ -33,13 +35,19 @@ modify_unit <- function(game, .p, .u, .a, .l) {
     # TODO: should check if it's a legal move first. Boring...
     if(is.null(.x) || is.na(.x)) return(NULL)
 
-    # TODO: add translating unit_id to .u (probably here)
+    # translate unit_id to unit_name (probably here)
+    if (!is.na(suppressWarnings(as.numeric(.x)))) {
+      .x <- game %>%
+        get_player_map(.p) %>%
+        filter(player == .p, unit_id == .x) %>%
+        pull(unit_name)
+    }
 
+    if (length(.x) > 1) message(glue("length(.x) > 1 :: {paste(.x, collapse = ', ')}"))
     if (!(.x %in% pull(get_player_map(game, .p), unit_name))) {
       warning(glue("{.x} is not a unit in {.p}'s army"))
       return(NULL)
     }
-    ####
 
     # edit player map
     game$map_df %>%
@@ -91,4 +99,12 @@ print_modify_unit_call <- function(...) {
   print(
     glue('modify_unit(game, "{.row$player}",\t"{.row$loc}",\t"WHAT?",\t"WHERE?") # {.row$n} units')
   )
+}
+
+#' @keywords internal
+sort_map_df <- function(map_df) {
+  map_df %>%
+    arrange(loc, player, action, unit_id, unit_type, unit_name) %>%
+    select(player, loc, unit_id, unit_type, action, unit_name)
+
 }

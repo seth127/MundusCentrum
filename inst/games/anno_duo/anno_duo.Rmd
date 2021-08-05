@@ -30,14 +30,6 @@ print(draw_map(game, "{{PLAYER}}"))
 knitr::kable(get_map_df(game, "{{PLAYER}}"))
 ```
 
-```{r}
-# Get a list of unit ID's to easily make the `modify_unit()` calls below.
-# will hopefully refactor `modify_unit()` to just take integer ID's in the future
-moby_units <- get_player_map(game, "big_grizz") %>% pull(unit_name)
-eric_units <- get_player_map(game, "eric") %>% pull(unit_name)
-chris_units <- get_player_map(game, "chris") %>% pull(unit_name)
-```
-
 # TURN 1
 Players change their maps (making orders)
 
@@ -45,35 +37,35 @@ Players change their maps (making orders)
 
 ```{r}
 game <- game %>%
-  modify_unit("big_grizz", moby_units[1],   "move",  "C2") %>%
-  modify_unit("big_grizz", moby_units[c(2, 7, 17, 18)],   "control",  "D4") %>%
-  modify_unit("big_grizz", moby_units[c(3, 5:6, 13, 22)],   "soar",  "H2") %>% # transport
-  modify_unit("big_grizz", moby_units[c(8, 23)],   "move",  "C5") %>% # transport
-  modify_unit("big_grizz", moby_units[9],   "move",  "F5") %>%
-  modify_unit("big_grizz", moby_units[c(10:12, 16)],   "move",  "D1") %>%
-  modify_unit("big_grizz", moby_units[c(14:15, 19:21)],   "move",  "F5") %>%
-  modify_unit("eric",      eric_units[c(1:6, 13:14, 8:11)],   "move",  "E7") %>%
-  modify_unit("eric",      eric_units[7],     "control","G7") %>%
-  modify_unit("eric",      eric_units[12],     "move","E5") %>%
-  modify_unit("eric",      eric_units[15:18],   "soar","I4") %>% # transport 
-  modify_unit("eric",      eric_units[19],   "move","G6") %>%
-  modify_unit("eric",      eric_units[20],   "move","E6") %>%
-  modify_unit("eric",      eric_units[21],   "move","E4") %>%
-  modify_unit("eric",      eric_units[c(22:24, 26)],   "soar", "H3") %>% # transport 
-  modify_unit("eric",      eric_units[25],   "move","G8") %>%
-  modify_unit("eric",      eric_units[27],   "move","F4") %>%
-  modify_unit("eric",      eric_units[28],   "move","F8") %>%
-  modify_unit("chris",     chris_units[c(6, 13)],  "move","A2") %>%
-  modify_unit("chris",     chris_units[c(5, 7, 8, 12, 23)],  "move","A3") %>%
-  modify_unit("chris",     chris_units[1],  "move","A4") %>%
-  modify_unit("chris",     chris_units[c(10, 14, 24)],  "move","A6") %>%
-  modify_unit("chris",     chris_units[c(3, 9, 17, 18, 22)],  "move","A7") %>%
-  modify_unit("chris",     chris_units[2],  "move","A8") %>%
-  modify_unit("chris",     chris_units[19],  "move","B10") %>%
-  modify_unit("chris",     chris_units[21],  "move","B11") %>%
-  modify_unit("chris",     chris_units[c(4, 15)],  "move","B7") %>%
-  modify_unit("chris",     chris_units[20],  "move","E1") %>%
-  modify_unit("chris",     chris_units[c(11, 16, 25)],  "control","A5") %>%
+  modify_unit("big_grizz", 1,   "move",  "C2") %>%
+  modify_unit("big_grizz", c(2, 7, 17, 18),   "control",  "D4") %>%
+  modify_unit("big_grizz", c(3, 5:6, 13, 22),   "soar",  "H2") %>% # transport
+  modify_unit("big_grizz", c(8, 23),   "move",  "C5") %>% # transport
+  modify_unit("big_grizz", 9,   "move",  "F5") %>%
+  modify_unit("big_grizz", c(10:12, 16),   "move",  "D1") %>%
+  modify_unit("big_grizz", c(14:15, 19:21),   "move",  "F5") %>%
+  modify_unit("eric",      c(1:6, 13:14, 8:11),   "move",  "E7") %>%
+  modify_unit("eric",      7,     "control","G7") %>%
+  modify_unit("eric",      12,     "move","E5") %>%
+  modify_unit("eric",      15:18,   "soar","I4") %>% # transport 
+  modify_unit("eric",      19,   "move","G6") %>%
+  modify_unit("eric",      20,   "move","E6") %>%
+  modify_unit("eric",      21,   "move","E4") %>%
+  modify_unit("eric",      c(22:24, 26),   "soar", "H3") %>% # transport 
+  modify_unit("eric",      25,   "move","G8") %>%
+  modify_unit("eric",      27,   "move","F4") %>%
+  modify_unit("eric",      28,   "move","F8") %>%
+  modify_unit("chris",     c(6, 13),  "move","A2") %>%
+  modify_unit("chris",     c(5, 7, 8, 12, 23),  "move","A3") %>%
+  modify_unit("chris",     1,  "move","A4") %>%
+  modify_unit("chris",     c(10, 14, 24),  "move","A6") %>%
+  modify_unit("chris",     c(3, 9, 17, 18, 22),  "move","A7") %>%
+  modify_unit("chris",     2,  "move","A8") %>%
+  modify_unit("chris",     19,  "move","B10") %>%
+  modify_unit("chris",     21,  "move","B11") %>%
+  modify_unit("chris",     c(4, 15),  "move","B7") %>%
+  modify_unit("chris",     20,  "move","E1") %>%
+  modify_unit("chris",     c(11, 16, 25),  "control","A5") %>%
   reconcile_player_orders()
 
 ```
@@ -92,43 +84,43 @@ Players change their maps (making orders)
 
 ```{r}
 game <- game %>%
-  modify_unit("big_grizz", moby_units[1],   "move",  "B4") %>%
-  modify_unit("big_grizz", moby_units[7],   "move",  "D2") %>%
-  modify_unit("big_grizz", moby_units[6],   "move",  "H5") %>%
-  modify_unit("big_grizz", moby_units[c(3, 5, 13, 22)],   "control",  "H2") %>%
-  modify_unit("big_grizz", moby_units[c(8, 23)],   "control",  "C5") %>%
-  modify_unit("big_grizz", moby_units[9],   "control",  "F5") %>%
-  modify_unit("big_grizz", moby_units[c(10:12, 16)],   "move",  "B4") %>%
-  modify_unit("big_grizz", moby_units[c(14:15, 19:21)],   "move",  "C5") %>%
-  modify_unit("eric",      eric_units[c(1:6, 13:14, 8:11)],   "move",  "E5") %>%
-  modify_unit("eric",      eric_units[7],     "move","E7") %>%
-  modify_unit("eric",      eric_units[12],     "move","F2") %>%
-  modify_unit("eric",      eric_units[c(15,18)],     "control","I4") %>%
-  modify_unit("eric",      eric_units[16:17],   "move","I5") %>%
-  modify_unit("eric",      eric_units[19],   "control","G6") %>%
-  modify_unit("eric",      eric_units[20],   "move","E3") %>%
-  modify_unit("eric",      eric_units[21],   "move","A8") %>%
-  modify_unit("eric",      eric_units[c(22:24, 26)],   "move","H2") %>%
-  modify_unit("eric",      eric_units[25],   "control","G8") %>%
-  modify_unit("eric",      eric_units[27],   "move","F5") %>%
-  modify_unit("eric",      eric_units[28],   "move","H3") %>%
-  modify_unit("chris",     chris_units[c(6)],  "move","A4") %>%
-  modify_unit("chris",     chris_units[c(13)],  "control","A2") %>%
-  modify_unit("chris",     chris_units[c(5, 12, 23)],  "move","B2") %>%
-  modify_unit("chris",     chris_units[c(7, 8)],  "control","A3") %>%
-  modify_unit("chris",     chris_units[1],  "move","A8") %>%
-  modify_unit("chris",     chris_units[c(14)],  "control","A6") %>%
-  modify_unit("chris",     chris_units[c(10, 24)],  "move","A8") %>%
-  modify_unit("chris",     chris_units[c(3,17, 18, 22)],  "move","B9") %>%
-  modify_unit("chris",     chris_units[c(9)],  "control","A7") %>%
-  modify_unit("chris",     chris_units[2],  "move","E1") %>%
-  modify_unit("chris",     chris_units[19],  "move","E1") %>%
-  modify_unit("chris",     chris_units[21],  "move","B6") %>%
-  modify_unit("chris",     chris_units[c(4)],  "move","B8") %>%
-  modify_unit("chris",     chris_units[c(15)],  "move","B9") %>%
-  modify_unit("chris",     chris_units[20],  "move","E2") %>%
-  modify_unit("chris",     chris_units[11],  "move","B7") %>%
-  modify_unit("chris",     chris_units[c(16, 25)],  "control","A5") %>%
+  modify_unit("big_grizz", 1,   "move",  "B4") %>%
+  modify_unit("big_grizz", 7,   "move",  "D2") %>%
+  modify_unit("big_grizz", 6,   "move",  "H5") %>%
+  modify_unit("big_grizz", c(3, 5, 13, 22),   "control",  "H2") %>%
+  modify_unit("big_grizz", c(8, 23),   "control",  "C5") %>%
+  modify_unit("big_grizz", 9,   "control",  "F5") %>%
+  modify_unit("big_grizz", c(10:12, 16),   "move",  "B4") %>%
+  modify_unit("big_grizz", c(14:15, 19:21),   "move",  "C5") %>%
+  modify_unit("eric",      c(1:6, 13:14, 8:11),   "move",  "E5") %>%
+  modify_unit("eric",      7,     "move","E7") %>%
+  modify_unit("eric",      12,     "move","F2") %>%
+  modify_unit("eric",      c(15,18),     "control","I4") %>%
+  modify_unit("eric",      16:17,   "move","I5") %>%
+  modify_unit("eric",      19,   "control","G6") %>%
+  modify_unit("eric",      20,   "move","E3") %>%
+  modify_unit("eric",      21,   "move","A8") %>%
+  modify_unit("eric",      c(22:24, 26),   "move","H2") %>%
+  modify_unit("eric",      25,   "control","G8") %>%
+  modify_unit("eric",      27,   "move","F5") %>%
+  modify_unit("eric",      28,   "move","H3") %>%
+  modify_unit("chris",     c(6),  "move","A4") %>%
+  modify_unit("chris",     c(13),  "control","A2") %>%
+  modify_unit("chris",     c(5, 12, 23),  "move","B2") %>%
+  modify_unit("chris",     c(7, 8),  "control","A3") %>%
+  modify_unit("chris",     1,  "move","A8") %>%
+  modify_unit("chris",     c(14),  "control","A6") %>%
+  modify_unit("chris",     c(10, 24),  "move","A8") %>%
+  modify_unit("chris",     c(3,17, 18, 22),  "move","B9") %>%
+  modify_unit("chris",     c(9),  "control","A7") %>%
+  modify_unit("chris",     2,  "move","E1") %>%
+  modify_unit("chris",     19,  "move","E1") %>%
+  modify_unit("chris",     21,  "move","B6") %>%
+  modify_unit("chris",     4,  "move","B8") %>%
+  modify_unit("chris",     15,  "move","B9") %>%
+  modify_unit("chris",     20,  "move","E2") %>%
+  modify_unit("chris",     11,  "move","B7") %>%
+  modify_unit("chris",     c(16, 25),  "control","A5") %>%
   reconcile_player_orders()
 ```
 
@@ -145,7 +137,7 @@ knitr::kable(get_map_df(game, "{{PLAYER}}"))
 # retreats
 game <- game %>%
   modify_unit("eric", "F5",   "move","F8") %>%
-  kill_unit("eric", eric_units[21]) %>%
+  kill_unit("eric", 21) %>%
   modify_unit("eric", "H2",   "move","H3") %>%
   reconcile_player_orders()
 ```
