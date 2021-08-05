@@ -6,12 +6,12 @@ Check out [the "Sample Game" vignette](https://seth127.github.io/MundusCentrum/s
 ## To Do
 
 * Move these to issues
-* Battles when crossing paths
-  * need to keep track of paths on longer moves
 * Vision
   * sneaking  
 * Bridges
 * Add the soaring layer
+* Check which `unique() # if unit in multiple battles they will be duplicated` calls are really necessary
+* Figure out why `#ifelse(.i != length(.l), "TRUE", "")` and  `# !isTRUE(as.logical(passing_through))` wasn't working
 * s3 class for game object
   * print method
   * dispatches for important functions

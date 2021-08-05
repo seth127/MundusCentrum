@@ -6,7 +6,7 @@
 #'   will be modified.
 #' @param .a Action to assign to units
 #' @param .l Location to move units to (or same as where they are if not moving)
-#' @importFrom purrr walk
+#' @importFrom purrr walk imap_dfr
 #' @importFrom dplyr bind_rows
 #' @export
 modify_unit <- function(game, .p, .u, .a, .l) {
@@ -28,40 +28,47 @@ modify_unit <- function(game, .p, .u, .a, .l) {
       .u <- .loc_u
     }
   }
+  .u <- unique(.u) # if unit in multiple battles they will be duplicated
 
   ## TODO: this feels like it might be super inefficient, making a lot of copies of game$map_df maybe... should look into that
   ## * should this be some kind of map instead of walk?
-  new_moves <- map_dfr(.u, ~{
+  new_moves <- map_dfr(.u, function(.ux) {
     # TODO: should check if it's a legal move first. Boring...
-    if(is.null(.x) || is.na(.x)) return(NULL)
+    if(is.null(.ux) || is.na(.ux)) return(NULL)
 
     # translate unit_id to unit_name (probably here)
-    if (!is.na(suppressWarnings(as.numeric(.x)))) {
-      .x <- game %>%
+    if (!is.na(suppressWarnings(as.numeric(.ux)))) {
+      .ux <- game %>%
         get_player_map(.p) %>%
-        filter(player == .p, unit_id == .x) %>%
-        pull(unit_name)
+        filter(player == .p, unit_id == .ux) %>%
+        pull(unit_name) %>%
+        unique() # if unit in multiple battles they will be duplicated
     }
 
-    if (length(.x) > 1) message(glue("length(.x) > 1 :: {paste(.x, collapse = ', ')}"))
-    if (!(.x %in% pull(get_player_map(game, .p), unit_name))) {
-      warning(glue("{.x} is not a unit in {.p}'s army"))
+    if (length(.ux) > 1) warn(glue("length(.ux) > 1 :: {paste(.ux, collapse = ', ')}"), "modify_unit_warning")
+    if (!(.ux %in% pull(get_player_map(game, .p), unit_name))) {
+      warning(glue("{.ux} is not a unit in {.p}'s army"))
       return(NULL)
     }
 
     # edit player map
-    game$map_df %>%
-      filter(.data$unit_name == .x) %>%
-      mutate(
-        loc = .l,
-        action = .a
-      )
+    purrr::imap_dfr(.l, function(.lx, .i) {
+      game$map_df %>%
+        filter(.data$unit_name == .ux) %>%
+        mutate(
+          loc = .lx,
+          action = .a,
+          passing_through = .i != length(.l)#ifelse(.i != length(.l), "TRUE", "")
+        )
+    }) %>%
+      unique() # if unit in multiple battles they will be duplicated
   })
 
   game$map_df <- dplyr::bind_rows(
     new_moves,
     game$map_df %>% filter(!(.data$unit_name %in% new_moves$unit_name))
   ) %>%
+    #unique() %>% # if unit in multiple battles they will be duplicated
     sort_map_df()
 
   return(game)
@@ -105,6 +112,6 @@ print_modify_unit_call <- function(...) {
 sort_map_df <- function(map_df) {
   map_df %>%
     arrange(loc, player, action, unit_id, unit_type, unit_name) %>%
-    select(player, loc, unit_id, unit_type, action, unit_name)
+    select(player, loc, unit_id, unit_type, action, unit_name, passing_through)
 
 }

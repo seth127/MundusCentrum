@@ -39,7 +39,7 @@ Players change their maps (making orders)
 game <- game %>%
   modify_unit("big_grizz", 1,   "move",  "C2") %>%
   modify_unit("big_grizz", c(2, 7, 17, 18),   "control",  "D4") %>%
-  modify_unit("big_grizz", c(3, 5:6, 13, 22),   "soar",  "H2") %>% # transport
+  modify_unit("big_grizz", c(3, 5:6, 13, 22),   "soar",  c("F5", "H2")) %>% # transport
   modify_unit("big_grizz", c(8, 23),   "move",  "C5") %>% # transport
   modify_unit("big_grizz", 9,   "move",  "F5") %>%
   modify_unit("big_grizz", c(10:12, 16),   "move",  "D1") %>%
@@ -47,11 +47,11 @@ game <- game %>%
   modify_unit("eric",      c(1:6, 13:14, 8:11),   "move",  "E7") %>%
   modify_unit("eric",      7,     "control","G7") %>%
   modify_unit("eric",      12,     "move","E5") %>%
-  modify_unit("eric",      15:18,   "soar","I4") %>% # transport 
+  modify_unit("eric",      15:18,   "soar", c("G8", "G10", "I1", "I3", "I4")) %>% # transport 
   modify_unit("eric",      19,   "move","G6") %>%
   modify_unit("eric",      20,   "move","E6") %>%
-  modify_unit("eric",      21,   "move","E4") %>%
-  modify_unit("eric",      c(22:24, 26),   "soar", "H3") %>% # transport 
+  modify_unit("eric",      21,   "move", c("E7", "E4")) %>%
+  modify_unit("eric",      c(22:24, 26),   "soar", c("G8", "H3")) %>% # transport 
   modify_unit("eric",      25,   "move","G8") %>%
   modify_unit("eric",      27,   "move","F4") %>%
   modify_unit("eric",      28,   "move","F8") %>%
@@ -99,7 +99,7 @@ game <- game %>%
   modify_unit("eric",      16:17,   "move","I5") %>%
   modify_unit("eric",      19,   "control","G6") %>%
   modify_unit("eric",      20,   "move","E3") %>%
-  modify_unit("eric",      21,   "move","A8") %>%
+  modify_unit("eric",      21,   "move", c("E1", "A8")) %>%
   modify_unit("eric",      c(22:24, 26),   "move","H2") %>%
   modify_unit("eric",      25,   "control","G8") %>%
   modify_unit("eric",      27,   "move","F5") %>%

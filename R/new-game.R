@@ -78,7 +78,8 @@ setup_map_df <- function(name, players) {
         unit_id = seq(nrow(.u)),
         unit_type = map_chr(unit_type, sanitize_name),
         unit_name = map_chr(unit_type, build_name),
-        action = "control"
+        action = "control",
+        passing_through = FALSE
       ) %>%
       sort_map_df()
   })
