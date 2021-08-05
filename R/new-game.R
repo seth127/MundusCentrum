@@ -52,7 +52,8 @@ new_game <- function(name, players, points = NULL) {
     players = as.list(
       map_chr(paste(name, c("GLOBAL", ids)), ~digest::digest(.x, algo = "md5")) %>%
         rlang::set_names(c("GLOBAL", ids))
-    )
+    ),
+    map = MAP
   )
   game[["map_df"]] <- setup_map_df(name, players)
 
@@ -83,12 +84,5 @@ setup_map_df <- function(name, players) {
 #' @keywords internal
 sanitize_name <- function(.n) {
   tolower(str_replace_all(.n, "[^[:alnum:]]", "_"))
-}
-
-#' @keywords internal
-sort_map_df <- function(map_df) {
-  map_df %>%
-  select(player, loc, unit_id, unit_type, action, unit_name) %>%
-    arrange(loc, player, action, unit_id, unit_type, unit_name)
 }
 

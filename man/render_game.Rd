@@ -8,5 +8,6 @@ render_game(game_path, players = FALSE, html = FALSE)
 }
 \description{
 Takes an \code{.Rmd} template and a \code{.json} as input and renders
-the markdown(s)
+the markdown(s).
+\strong{This is basically how you "play" the game.}
 }

@@ -41,14 +41,13 @@ draw_map <- function(game, .p = NULL) {
   })
 
   # get control and visibility
-  map_data <- left_join(
-      map_data,
-      map_df %>% filter(action == "control") %>% select(player, loc) %>% unique() %>% rename(control = player),
-      by = "loc"
-    ) %>%
+  map_data <- map_data %>%
+    left_join(get_control_df(game), by = "loc") %>%
+    left_join(get_comm_df(game), by = "loc") %>%
     mutate(
       visible = loc %in% player_vision(map_df, .p),
-      loc_fill =  ifelse(!visible, "DARK", ifelse(!is.na(control), control, "FREE"))
+      loc_fill =  ifelse(!visible, "DARK", ifelse(!is.na(control), control, "FREE")),
+      comm_fill =  ifelse(!visible, "DARK", ifelse(!is.na(comm), comm, "FREE"))
     )
 
   visible_loc <- map_data %>%
@@ -81,7 +80,8 @@ draw_map <- function(game, .p = NULL) {
                       0, 1*X_MULT, 0, 1*Y_MULT) +
     geom_point(size = 3, shape = 21, aes(fill = loc_fill)) +
     geom_point(data = filter(map_data, !is.na(control)), size = 2, shape = 8) +
-    geom_jitter(data = unit_data, aes(size = point_size, color = player), alpha = 0.82, width = 0.15, height = 0.15) +
+    geom_point(data = filter(map_data, !is.na(comm)), size = 1, shape = 21, aes(fill = comm_fill)) +
+    geom_jitter(data = unit_data, aes(size = point_size, fill = player), alpha = 0.82, width = 0.15, height = 0.15, shape = 21, colour = "#A9A9A9") +
     theme(
       axis.title.x=element_blank(),
       axis.text.x=element_blank(),

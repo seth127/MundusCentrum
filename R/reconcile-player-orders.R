@@ -22,12 +22,31 @@ reconcile_player_orders <- function(game) {
   } else {
     message("All units resolved.")
     game$conflicts <- NULL
+
+    # record comm relays
+    locs <- game$map_df$loc
+    names(locs) <- game$map_df$player
+    locs <- locs[!duplicated(locs)]
+    for(.i in 1:length(locs)) {
+      game$map[[locs[.i]]][["comm"]] <- names(locs)[.i]
+    }
+
+    # GET RID OF PATH ENTRIES
+
+    # record control
+    control_df <- filter(game$map_df, action == "control")
+    locs <- control_df$loc
+    names(locs) <- control_df$player
+    locs <- locs[!duplicated(locs)]
+    for(.i in 1:length(locs)) {
+      game$map[[locs[.i]]][["control"]] <- names(locs)[.i]
+    }
   }
 
   game
 }
 
-#' Update global map from player maps
+#' Update global map from player maps -- DEPRECATE???
 #'
 #' Modifies the global map by
 #' @importFrom purrr map_dfr
@@ -35,9 +54,6 @@ reconcile_player_orders <- function(game) {
 #'
 #' @keywords internal
 players_to_global_map <- function(game){
-
-  #### DEPRECATED???
-
 
   .gm <- read_global_map(game)
   new_map <- map_dfr(get_player_names(game), function (.p) {
