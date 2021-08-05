@@ -2,12 +2,28 @@
 #' @export
 get_map_df <- function(game, .p = NULL) {
   # get df of units we care about
-  res <- if (!is.null(game$conflicts)) {
+  .m <- if (!is.null(game$conflicts)) {
     filter(game$map_df, .data$loc %in% game$conflicts)
   } else {
     get_player_map(game, .p)
   }
-  return(res)
+  return(.m)
+}
+
+#' Print list of units on the map
+#'
+#' Calls [get_map_df()] and formats for printing
+#' @export
+print_map_df <- function(game, .p = NULL) {
+  .m <- get_map_df(game, .p)
+  # get df of units we care about
+  .m <- if (!is.null(game$conflicts)) {
+    .m
+  } else {
+    .m %>%
+      select(-passing_through)
+  }
+  return(knitr::kable(.m))
 }
 
 #' @export

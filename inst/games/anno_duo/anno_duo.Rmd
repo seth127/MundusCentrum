@@ -27,7 +27,7 @@ This is the state of the game at the beginning
 
 ```{r}
 print(draw_map(game, "{{PLAYER}}"))
-knitr::kable(get_map_df(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 # TURN 1
@@ -74,7 +74,7 @@ Attempt to reconcile moves.
 
 ```{r}
 print(draw_map(game, "{{PLAYER}}"))
-knitr::kable(get_map_df(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 # TURN 2
@@ -128,7 +128,7 @@ Attempt to reconcile moves.
 
 ```{r}
 print(draw_map(game, "{{PLAYER}}"))
-knitr::kable(get_map_df(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 ### moves
@@ -144,5 +144,5 @@ game <- game %>%
 
 ```{r}
 print(draw_map(game, "{{PLAYER}}"))
-knitr::kable(get_map_df(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
