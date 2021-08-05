@@ -12,6 +12,7 @@ Check out [the "Sample Game" vignette](https://seth127.github.io/MundusCentrum/s
 * Add the soaring layer
 * Check which `unique() # if unit in multiple battles they will be duplicated` calls are really necessary
 * Figure out why `#ifelse(.i != length(.l), "TRUE", "")` and  `# !isTRUE(as.logical(passing_through))` wasn't working
+* Add feature where if you don't pass `.l` to `modify_unit()` it infers you're talking about where the unit currently is.
 * s3 class for game object
   * print method
   * dispatches for important functions
