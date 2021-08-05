@@ -5,7 +5,6 @@ Y_MULT <- 10
 #' @importFrom ggplot2 ggplot geom_point geom_jitter theme coord_cartesian
 #'   annotation_custom aes element_blank element_text scale_size_area
 #'   scale_colour_manual scale_fill_manual ggtitle
-#' @importFrom RColorBrewer brewer.pal
 #' @importFrom grid rasterGrob unit
 #' @importFrom dplyr count full_join rename group_by
 #' @param game The game object that contains the map etc
@@ -66,11 +65,6 @@ draw_map <- function(game, .p = NULL) {
       #point_size = pmax(pmin(total_folks/3, 20), 2) #### TODO: adjust this once we get real army sizes
     )
 
-  ###### TODO: change this to be dynamic (or just set to a flat file at beginning of game, and loaded here)
-  player_colors <- brewer.pal(3, "Spectral")
-  names(player_colors) <- c("big_grizz", "eric", "chris")
-  #########
-
   ggplot(map_data, aes(x = x_*X_MULT, y = y_*Y_MULT)) +
     coord_cartesian(xlim = c(0,1)*X_MULT, ylim = c(0,1)*Y_MULT) +
     annotation_custom(rasterGrob(map_img,
@@ -93,8 +87,8 @@ draw_map <- function(game, .p = NULL) {
       plot.title = element_text(hjust = 0.5)
     ) +
     scale_size_area(guide = "none") +
-    scale_colour_manual(values = player_colors) +
-    scale_fill_manual(values = c(player_colors, "FREE" = "#00000000", "DARK" = "#000000"), guide = "none") + # visibility and control
+    scale_colour_manual(values = game$player_colors) +
+    scale_fill_manual(values = c(game$player_colors, "FREE" = "#00000000", "DARK" = "#000000"), guide = "none") + # visibility and control
     ggtitle(map_title)
 
 }

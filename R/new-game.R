@@ -20,6 +20,8 @@
 #'
 #' @importFrom checkmate assert_string assert_list
 #' @importFrom dplyr left_join
+#' @importFrom RColorBrewer brewer.pal
+#' @importFrom rlang set_names
 #' @export
 new_game <- function(name, players, points = NULL) {
   assert_string(name)
@@ -53,6 +55,7 @@ new_game <- function(name, players, points = NULL) {
       map_chr(paste(name, c("GLOBAL", ids)), ~digest::digest(.x, algo = "md5")) %>%
         rlang::set_names(c("GLOBAL", ids))
     ),
+    player_colors = rlang::set_names(brewer.pal(length(ids), "Spectral"), ids),
     map = MAP
   )
   game[["map_df"]] <- setup_map_df(name, players)
