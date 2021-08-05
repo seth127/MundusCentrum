@@ -7,7 +7,7 @@ Y_MULT <- 10
 #'   scale_colour_manual scale_fill_manual ggtitle
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom grid rasterGrob unit
-#' @importFrom dplyr count full_join rename summarise group_by
+#' @importFrom dplyr count full_join rename group_by
 #' @param game The game object that contains the map etc
 #' @return Returns a ggplot object of the map
 #' @export
@@ -58,7 +58,6 @@ draw_map <- function(game, .p = NULL) {
   unit_data <- full_join(
     map_data,
     count(map_df, loc, player),
-    #map_df %>% group_by(loc, player) %>% summarise(total_folks = sum(size)),
     by = "loc"
   ) %>%
     filter(!is.na(player), loc %in% visible_loc) %>%

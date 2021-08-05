@@ -5,7 +5,7 @@
 #' locations, it will return a tibble of the units in conflict zones and warn
 #' about that the conflict must be resolved. If there are no conflicts,
 #' invisibly returns the tibble with all units on the board.
-#' @importFrom dplyr arrange
+#' @importFrom dplyr arrange summarize
 #' @export
 reconcile_player_orders <- function(game) {
 
@@ -45,40 +45,3 @@ reconcile_player_orders <- function(game) {
 
   game
 }
-
-#' Update global map from player maps -- DEPRECATE???
-#'
-#' Modifies the global map by
-#' @importFrom purrr map_dfr
-#' @importFrom dplyr full_join left_join group_by summarize filter pull
-#'
-#' @keywords internal
-players_to_global_map <- function(game){
-
-  .gm <- read_global_map(game)
-  new_map <- map_dfr(get_player_names(game), function (.p) {
-    .pm <- get_player_map(game, .p)
-    ### TODO: probably need to check for mismatches before we return this
-      full_join(
-        select(.gm, unit_name),
-        .pm,
-        by = "unit_name"
-      ) %>%
-      mutate(player = .p) %>%
-      select(player, loc, unit_id, unit_type, action, unit_name) %>%
-      arrange(loc, player, action, unit_id, unit_type, unit_name)
-  })
-
-  # return any disputed lands
-  fights <- new_map %>%
-    group_by(loc) %>%
-    summarize(count = length(unique(player))) %>%
-    filter(count > 1) %>%
-    pull(loc)
-
-  list(
-    resolved = new_map %>% filter(!(loc %in% fights)) %>% arrange(loc, player),
-    conflict = new_map %>% filter( (loc %in% fights)) %>% arrange(loc, player)
-  )
-}
-
