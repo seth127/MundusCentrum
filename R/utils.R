@@ -15,15 +15,19 @@ get_player_names <- function(game) {
 #' Check if a player name is in the game
 #' @keywords internal
 check_player_name <- function(game, .p) {
-  # TODO: consider making this s3 to dispatch on either game_df or game
-  # would need to make s3 classes for those both, but that's probably a good idea
-  #
-  # IDEA in email: these things should all take a single `game` object which _contains_ the map too
-  # * and this should just use get_player_names() above ^
-
   valid_players <- c(names(game$players), "CONFLICT!") # just need to get this
   if (!is.null(.p)) {
     checkmate::assert_string(.p)
-    if (!(.p %in% valid_players)) abort(glue("{.p} is not a valid player. Choose from {paste(valid_players, collapse = ', ')}"))
+    if (!(.p %in% valid_players)) abort(glue("`{.p}` is not a valid player. Choose from {paste(valid_players, collapse = ', ')}"))
+  }
+}
+
+#' Check if a location is on the map
+#' @keywords internal
+check_loc <- function(game, .l) {
+  valid_locs <- names(game$map)
+  if (!is.null(.l) && !is.na(.l)) {
+    checkmate::assert_string(.l)
+    if (!(.l %in% valid_locs)) abort(glue("`{.l}` is not a valid loc Choose from {paste(valid_locs, collapse = ', ')}"))
   }
 }

@@ -53,6 +53,7 @@ modify_unit <- function(game, .p, .u, .a, .l) {
 
     # edit player map
     purrr::imap_dfr(.l, function(.lx, .i) {
+      check_loc(game, .lx)
       game$map_df %>%
         filter(.data$unit_name == .ux) %>%
         mutate(
