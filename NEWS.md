@@ -1,8 +1,9 @@
 # MundusCentrum
 
-# development
+# 0.0.1
 
 * Changed battle map to show _all_ the player can see, instead of just the battles.
+* Added turn 3 conflict resolution
 
 # 0.0.1
 
