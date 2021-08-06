@@ -18,7 +18,10 @@ print_map_df <- function(game, .p = NULL) {
   .m <- get_map_df(game, .p)
   # get df of units we care about
   .m <- if (!is.null(game$conflicts)) {
-    .m
+    .m %>%
+      mutate(
+        passing_through = str_replace(as.character(passing_through), "FALSE", "")
+      )
   } else {
     .m %>%
       select(-passing_through)
