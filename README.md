@@ -6,8 +6,6 @@ Check out [the "Sample Game" vignette](https://seth127.github.io/MundusCentrum/s
 ## To Do
 
 * Move these to issues
-* Vision
-  * sneaking  
 * Bridges
 * Add the soaring layer
 * Check which `unique() # if unit in multiple battles they will be duplicated` calls are really necessary

@@ -12,6 +12,11 @@ get_player_names <- function(game) {
   stringr::str_subset(names(game[["players"]]), "GLOBAL", negate = TRUE)
 }
 
+#' @export
+get_other_players_names <- function(game, .p) {
+  stringr::str_subset(names(game[["players"]]), glue("GLOBAL|{.p}"), negate = TRUE)
+}
+
 #' Check if a player name is in the game
 #' @keywords internal
 check_player_name <- function(game, .p) {

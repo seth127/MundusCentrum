@@ -2,7 +2,10 @@
 get_player_map <- function(game, .p) {
   check_player_name(game, .p)
   res <- if (!is.null(.p) && .p != "GLOBAL") {
-    filter(game$map_df, .data$loc %in% player_vision(game, .p))
+    .op <- get_other_players_names(game, .p)
+    game$map_df %>%
+      filter(.data$loc %in% player_vision(game, .p)) %>%
+      filter(!(.data$player %in% .op & .data$action == "sneak"))
   } else {
     game$map_df
   }
@@ -44,11 +47,4 @@ get_controls <- function(game, .p) {
     na.omit() %>%
     as.character()
 
-}
-
-
-#' Filter out sneakers
-#' @keywords internal
-filter_out_sneakers <- function(map_df, .p) {
-  #map
 }
