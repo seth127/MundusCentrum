@@ -44,7 +44,7 @@ draw_map <- function(game, .p = NULL) {
     left_join(get_control_df(game), by = "loc") %>%
     left_join(get_comm_df(game), by = "loc") %>%
     mutate(
-      visible = loc %in% player_vision(map_df, .p),
+      visible = loc %in% player_vision(game, .p),
       loc_fill =  ifelse(!visible, "DARK", ifelse(!is.na(control), control, "FREE")),
       comm_fill =  ifelse(!visible, "DARK", ifelse(!is.na(comm), comm, "FREE"))
     )
@@ -94,11 +94,11 @@ draw_map <- function(game, .p = NULL) {
 }
 
 
-player_vision <- function(map_df, .p) {
+player_vision <- function(game, .p) {
   if (is.null(.p)) return(names(MAP))
-  if (.p == "CONFLICT!") return(unique(map_df$loc))
+  if (.p == "CONFLICT!") return(unique(game$conflicts))
 
-  occ_loc <- map_df %>%
+  occ_loc <- game$map_df %>%
     filter(player == .p) %>%
     pull(loc) %>%
     unique()
@@ -109,11 +109,14 @@ player_vision <- function(map_df, .p) {
       MAP[[.x]][["rivers"]]
     )
   }) %>%
-    unlist() %>%
-    unique() %>%
-    sort()
+    unlist()
+
+  comms <- get_comms(game, .p)
+  controls <- get_controls(game, .p)
 
   ### TODO: add territories moved through by flyers and fast ones?
 
-  c(occ_loc, borders)
+  c(occ_loc, borders, comms, controls) %>%
+    unique() %>%
+    sort()
 }
