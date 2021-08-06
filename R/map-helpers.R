@@ -12,6 +12,51 @@ get_player_map <- function(game, .p) {
   return(res)
 }
 
+#' Print list of units on the map
+#'
+#' Calls [get_player_map()] and formats for printing
+#' @export
+print_map_df <- function(game, .p = NULL) {
+  .m <- get_player_map(game, .p)
+  # get df of units we care about
+  .m <- if (!is.null(game$conflicts)) {
+    .m %>%
+      mutate(
+        `CONFLICT!` = ifelse(loc %in% game$conflicts, "TRUE", ""),
+        passing_through = str_replace(as.character(passing_through), "FALSE", "")
+      )
+  } else {
+    .m %>%
+      select(-passing_through)
+  }
+  return(knitr::kable(.m))
+}
+
+#' @export
+get_comm_df <- function(game) {
+  map_dfr(names(game$map), ~ {
+    .l <- game$map[[.x]]
+    if (!is.null(.l$comm)) {
+      return(data.frame(comm = .l$comm, loc = .x))
+    } else {
+      return(data.frame(comm = character(), loc = character()))
+    }
+  })
+}
+
+
+#' @export
+get_control_df <- function(game) {
+  map_dfr(names(game$map), ~ {
+    .l <- game$map[[.x]]
+    if (!is.null(.l$control)) {
+      return(data.frame(control = .l$control, loc = .x))
+    } else {
+      return(data.frame(control = character(), loc = character()))
+    }
+  })
+}
+
 
 #' Get loc of all player comms
 #' @importFrom purrr map_lgl

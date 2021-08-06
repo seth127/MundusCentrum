@@ -226,24 +226,34 @@ print_map_df(game, "{{PLAYER}}")
 ```
 
 
-```{r, include = FALSE}
-#**PRETENDING EVERYBODY RETREATS TO SEE THE FULL BOARD**
+```{r}
 # retreats
 game <- game %>%
-  modify_unit("big_grizz", c(1, 10, 11, 12, 16),   "move",  c("B1")) %>%
-  modify_unit("big_grizz", c(3, 5, 13, 22),   "move",  "H2") %>%
-  modify_unit("big_grizz", "H5",   "move",  "H2") %>%
-  modify_unit("eric", "C3",   "move",  "F2") %>%
-  modify_unit("chris",     19,  "move","E1") %>%
+  modify_unit("chris",     "B3",  "move","B2") %>%
+  modify_unit("eric", "C3",   "move",  "F3") %>%
+  modify_unit("eric", "H5",   "move",  "H4") %>%
+  modify_unit("eric", "H3",   "move",  "H1") %>%
   reconcile_player_orders()
+```
 
+```{r}
 print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
+```
+
+# TURN 4
+Players change their maps (making orders)
+
+### moves
+
+```{r}
+game <- game %>%
+  reconcile_player_orders()
 ```
 
 
 # Discussion Notes
 
 * I updated the multi-territory moves for the first two turns. Are we cool with my decisions?
-* The way I have it, after you move you can only see the units in combat. You don't get to see the full board until _after_ combat is resolved. This was intentional on my part, but do we like this?
+* ~~The way I have it, after you move you can only see the units in combat. You don't get to see the full board until _after_ combat is resolved. This was intentional on my part, but do we like this?~~ Ok, I changed this. I think it's much better this way. Red circles on the map show battles and there's a `CONFLICT!` column where relevant in your table. Plus, now you can only see the battles you're involved with.
 * Whose gonna write me a battle story for this turn?

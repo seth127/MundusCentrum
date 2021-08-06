@@ -17,7 +17,7 @@ draw_map <- function(game, .p = NULL) {
   check_player_name(game, .p)
 
   # get df of units we care about
-  map_df <- get_map_df(game, .p)
+  map_df <- get_player_map(game, .p)
   map_title <- if (!is.null(game$conflicts)) {
     "CONFLICT!"
   } else {
@@ -71,9 +71,15 @@ draw_map <- function(game, .p = NULL) {
                                        width = unit(1,"npc"),
                                        height = unit(1,"npc")),
                       0, 1*X_MULT, 0, 1*Y_MULT) +
+    # static loc markers
     geom_point(size = 3, shape = 21, aes(fill = loc_fill)) +
+    # battles
+    geom_point(data =filter(map_data, visible, loc %in% game$conflicts), size = 18, shape = 21, color = "red", stroke = 3, alpha = 0.38) +
+    # comms
     geom_point(data = filter(map_data, !is.na(control)), size = 2, shape = 8) +
+    # controls
     geom_point(data = filter(map_data, !is.na(comm)), size = 1, shape = 21, aes(fill = comm_fill)) +
+    # armies
     geom_jitter(data = unit_data, aes(size = point_size, fill = player), alpha = 0.82, width = 0.15, height = 0.15, shape = 21, colour = "#A9A9A9") +
     theme(
       axis.title.x=element_blank(),
@@ -96,7 +102,7 @@ draw_map <- function(game, .p = NULL) {
 
 player_vision <- function(game, .p) {
   if (is.null(.p)) return(names(MAP))
-  if (.p == "CONFLICT!") return(unique(game$conflicts))
+  #if (.p == "CONFLICT!") return(unique(game$conflicts))
 
   occ_loc <- game$map_df %>%
     filter(player == .p) %>%
