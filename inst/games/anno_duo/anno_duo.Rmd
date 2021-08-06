@@ -245,5 +245,5 @@ print_map_df(game, "{{PLAYER}}")
 # Discussion Notes
 
 * I updated the multi-territory moves for the first two turns. Are we cool with my decisions?
-* The way I have it, after you move you can only see the units in combat. You don't get to see the full board until _after_ combat is resolved. This was intentional on my part, but do we like this?
+* ~~The way I have it, after you move you can only see the units in combat. You don't get to see the full board until _after_ combat is resolved. This was intentional on my part, but do we like this?~~ Ok, I changed this. I think it's much better this way. Red circles on the map show battles and there's a `CONFLICT!` column where relevant in your table. Plus, now you can only see the battles you're involved with.
 * Whose gonna write me a battle story for this turn?
