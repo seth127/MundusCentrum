@@ -5,52 +5,52 @@
 #' locations, it will return a tibble of the units in conflict zones and warn
 #' about that the conflict must be resolved. If there are no conflicts,
 #' invisibly returns the tibble with all units on the board.
-#' @importFrom dplyr arrange
+#' @importFrom dplyr arrange summarize
 #' @export
 reconcile_player_orders <- function(game) {
-  .m <- players_to_global_map(game)
-  if (nrow(.m[["conflict"]]) > 0) {
-    message("CONFLICT(s):")
-    warn("Conflict is at hand! Please resolve territorial disputes.", "map_conflict_warning")
-    return(.m[["conflict"]])
-  }
-  message("All units resolved.")
 
-  return(invisible(.m[["resolved"]]))
-}
-
-#' Update global map from player maps
-#'
-#' Modifies the global map by
-#' @importFrom purrr map_dfr
-#' @importFrom dplyr full_join left_join group_by summarize filter pull
-#'
-#' @keywords internal
-players_to_global_map <- function(game){
-  .gm <- read_global_map(game)
-  new_map <- map_dfr(get_player_names(game), function (.p) {
-    .pm <- read_player_map(game, .p)
-    ### TODO: probably need to check for mismatches before we return this
-      full_join(
-        select(.gm, unit_name),
-        .pm,
-        by = "unit_name"
-      ) %>%
-      mutate(player = .p) %>%
-      select(player, loc, unit_id, unit_type, action, unit_name) %>%
-      arrange(loc, player, action, unit_id, unit_type, unit_name)
-  })
-
-  # return any disputed lands
-  fights <- new_map %>%
+  conflicts <- game$map_df %>%
     group_by(loc) %>%
     summarize(count = length(unique(player))) %>%
     filter(count > 1) %>%
     pull(loc)
 
-  list(
-    resolved = new_map %>% filter(!(loc %in% fights)) %>% arrange(loc, player),
-    conflict = new_map %>% filter( (loc %in% fights)) %>% arrange(loc, player)
-  )
-}
+  if (length(conflicts) > 0) {
+    message("CONFLICT(s):")
+    warn("Conflict is at hand! Please resolve territorial disputes.", "map_conflict_warning")
+    game$conflicts <- conflicts
+  } else {
+    message("All units resolved.")
+    game$conflicts <- NULL
 
+    # record comm relays
+    locs <- game$map_df$loc
+    names(locs) <- game$map_df$player
+    locs <- locs[!duplicated(locs)]
+    for(.i in 1:length(locs)) {
+      game$map[[locs[.i]]][["comm"]] <- names(locs)[.i]
+    }
+
+    # get rid of passing_through entries
+    game$map_df <- filter(game$map_df, !passing_through) # !isTRUE(as.logical(passing_through)) # wasn't working
+    .dups <- duplicated(game$map_df$unit_name)
+    if (sum(.dups) > 0) {
+      warn(paste(
+        "DEV ERROR: passing through not filtered. Duplicate units:",
+        paste(game$map_df$player[.dups], game$map_df$unit_id[.dups], game$map_df$unit_name[.dups], sep = " - ", collapse = ', '),
+        "reconcile_error"
+      ))
+    }
+
+    # record control
+    control_df <- filter(game$map_df, action == "control")
+    locs <- control_df$loc
+    names(locs) <- control_df$player
+    locs <- locs[!duplicated(locs)]
+    for(.i in 1:length(locs)) {
+      game$map[[locs[.i]]][["control"]] <- names(locs)[.i]
+    }
+  }
+
+  game
+}

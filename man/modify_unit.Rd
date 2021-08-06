@@ -4,15 +4,16 @@
 \alias{modify_unit}
 \title{Modify the action of a unit or group of units}
 \usage{
-modify_unit(game, player, .u, .a, .l)
+modify_unit(game, .p, .u, .a, .l)
 }
 \arguments{
 \item{game}{The game to modify the unit(s) in}
 
-\item{player}{The player who owns the unit(s)}
+\item{.p}{The player who owns the unit(s)}
 
-\item{.u}{Either a character vector of unit names to modify or a scalar of a
-map loc, in which case all units in that loc will be modified.}
+\item{.u}{Either a character vector of unit names to modify, a vector of
+unit_id's , or a scalar of a map loc, in which case all units in that loc
+will be modified.}
 
 \item{.a}{Action to assign to units}
 

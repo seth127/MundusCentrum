@@ -6,7 +6,7 @@
 #' @importFrom glue glue
 #' @importFrom rlang abort warn inform
 #' @importFrom purrr map map_chr map_lgl walk
-#' @importFrom dplyr select filter mutate everything
+#' @importFrom dplyr select filter mutate everything pull
 #' @importFrom magrittr %>%
 #' @importFrom rlang %||%
 #' @importFrom fs file_exists dir_exists file_create dir_create file_delete dir_delete

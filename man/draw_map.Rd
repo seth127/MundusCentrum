@@ -4,10 +4,10 @@
 \alias{draw_map}
 \title{Draw the game map}
 \usage{
-draw_map(game_df, .p = NULL)
+draw_map(game, .p = NULL)
 }
 \arguments{
-\item{game_df}{Takes a tibble output from \code{\link[=reconcile_player_orders]{reconcile_player_orders()}}}
+\item{game}{The game object that contains the map etc}
 }
 \value{
 Returns a ggplot object of the map

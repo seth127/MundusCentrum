@@ -20,6 +20,8 @@
 #'
 #' @importFrom checkmate assert_string assert_list
 #' @importFrom dplyr left_join
+#' @importFrom RColorBrewer brewer.pal
+#' @importFrom rlang set_names
 #' @export
 new_game <- function(name, players, points = NULL) {
   assert_string(name)
@@ -50,52 +52,41 @@ new_game <- function(name, players, points = NULL) {
   game <- list(
     # create hashes for serving html
     players = as.list(
-      map_chr(paste0(name, c("GLOBAL", ids)), ~digest::digest(.x, algo = "md5")) %>%
+      map_chr(paste(name, c("GLOBAL", ids)), ~digest::digest(.x, algo = "md5")) %>%
         rlang::set_names(c("GLOBAL", ids))
-    )
+    ),
+    player_colors = rlang::set_names(brewer.pal(length(ids), "Spectral"), ids),
+    map = MAP
   )
-  game[["game_root"]] <- setup_game_dir(name, players)
-  write_csv(BLANK_MAP, get_global_map_path(game))
-  write_lines(jsonlite::toJSON(game), get_global_json_path(game))
+  game[["map_df"]] <- setup_map_df(name, players)
 
-  reconcile_player_orders(game)
-  return(game)
+  return(reconcile_player_orders(game))
 }
 
-#' @importFrom uuid UUIDgenerate
+#' @importFrom purrr map_dfr
 #' @keywords internal
-setup_game_dir <- function(name, players) {
-  game_root <- file.path(GAME_ROOT_DIR, sanitize_name(name))
-  if (dir_exists(game_root)) abort(glue("Sorry, {name} already exists in {GAME_ROOT_DIR}. Pick another name."))
-  dir_create(game_root)
+setup_map_df <- function(name, players) {
 
   clear_used_names()
-  player_dirs <- map_chr(players, function(.p) {
-    player_dir <- file.path(game_root, .p[["id"]])
-    dir_create(player_dir)
-    list_to_json(.p, file.path(player_dir, paste0(.p[["id"]], ".json")))
-
+  map_dfr(players, function(.p) {
     # load input units file
     if (!file_exists(.p[["units"]])) abort(glue("{.p[['name']]} passed {.p[['units']]} but that file doesn't exist."))
     .u <- read_csv(.p[["units"]], col_types = "cc")
     .u %>%
       mutate(
+        player = .p[["id"]],
         unit_id = seq(nrow(.u)),
         unit_type = map_chr(unit_type, sanitize_name),
         unit_name = map_chr(unit_type, build_name),
-        action = "control"
+        action = "control",
+        passing_through = FALSE
       ) %>%
-      select(unit_name, everything()) %>%
-      write_csv(file.path(player_dir, paste0(.p[["id"]], ".csv")))
-
-    return(player_dir)
+      sort_map_df()
   })
-  game_root
 }
 
 #' @keywords internal
 sanitize_name <- function(.n) {
   tolower(str_replace_all(.n, "[^[:alnum:]]", "_"))
 }
-
 

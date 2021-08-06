@@ -1,34 +1,50 @@
 #' @export
-get_global_map_path <- function(game) {
-  file.path(game[["game_root"]], glue("{basename(game[['game_root']])}.csv"))
+get_player_map <- function(game, .p) {
+  check_player_name(game, .p)
+  res <- if (!is.null(.p) && .p != "GLOBAL") {
+    .op <- get_other_players_names(game, .p)
+    game$map_df %>%
+      filter(.data$loc %in% c(player_vision(game, .p), NA)) %>%
+      filter(!(.data$player %in% .op & .data$action == "sneak"))
+  } else {
+    game$map_df
+  }
+  return(res)
 }
 
-#' @export
-get_global_json_path <- function(game) {
-  file.path(game[["game_root"]], glue("{basename(game[['game_root']])}.json"))
+
+#' Get loc of all player comms
+#' @importFrom purrr map_lgl
+#' @keywords internal
+get_comms <- function(game, .p) {
+  map_lgl(game$map, ~ {
+    if (is.null(.x$comm)) {
+      FALSE
+    } else {
+      .x$comm == .p
+    }
+  }) %>%
+    which() %>%
+    names() %>%
+    na.omit() %>%
+    as.character()
+
 }
 
-#' @export
-get_player_map_path <- function(game, player) {
-  file.path(game[["game_root"]], player, glue("{player}.csv"))
-}
+#' Get loc of all player comms
+#' @importFrom purrr map_lgl
+#' @keywords internal
+get_controls <- function(game, .p) {
+  map_lgl(game$map, ~ {
+    if (is.null(.x$control)) {
+      FALSE
+    } else {
+      .x$control == .p
+    }
+  }) %>%
+    which() %>%
+    names() %>%
+    na.omit() %>%
+    as.character()
 
-#' @export
-read_player_map <- function(game, player) {
-  read_csv(get_player_map_path(game, player), col_types = "cccic") #%>%mutate(unit_id = as.integer(unit_id))
-}
-
-#' @export
-read_global_map <- function(game) {
-  read_csv(get_global_map_path(game), col_types = "cccic") #%>%mutate(unit_id = as.integer(unit_id))
-}
-
-#' @export
-write_player_map <- function(game, player, map) {
-  write_csv(map, get_player_map_path(game, player))
-}
-
-#' @export
-write_global_map <- function(game, map) {
-  write_csv(map, get_global_map_path(game))
 }

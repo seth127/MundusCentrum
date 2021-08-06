@@ -5,18 +5,28 @@ Y_MULT <- 10
 #' @importFrom ggplot2 ggplot geom_point geom_jitter theme coord_cartesian
 #'   annotation_custom aes element_blank element_text scale_size_area
 #'   scale_colour_manual scale_fill_manual ggtitle
-#' @importFrom RColorBrewer brewer.pal
 #' @importFrom grid rasterGrob unit
-#' @importFrom dplyr count full_join rename summarise group_by
-#' @param game_df Takes a tibble output from [reconcile_player_orders()]
+#' @importFrom dplyr count full_join rename group_by
+#' @param game The game object that contains the map etc
 #' @return Returns a ggplot object of the map
 #' @export
-draw_map <- function(game_df, .p = NULL) {
+draw_map <- function(game, .p = NULL) {
   map_img <- jpeg::readJPEG(system.file("extdata", "img", "MundusCentrumAlpha.jpeg", package = "MundusCentrum"))
 
-  #check_player_name(game_df, .p) # maybe we don't call this.
-  # The problem is in Conflict maps it errors if you aren't in the conflict
-  # if we comment this it should just return empty
+  if (!is.null(.p) && .p == "GLOBAL") .p <- NULL
+  check_player_name(game, .p)
+
+  # get df of units we care about
+  map_df <- get_map_df(game, .p)
+  map_title <- if (!is.null(game$conflicts)) {
+    "CONFLICT!"
+  } else {
+    if (is.null(.p)) {
+      "GLOBAL"
+    } else {
+      .p
+    }
+  }
 
   # get static map coordinates
   map_data <- map_dfr(names(MAP), ~{
@@ -30,14 +40,13 @@ draw_map <- function(game_df, .p = NULL) {
   })
 
   # get control and visibility
-  map_data <- left_join(
-      map_data,
-      game_df %>% filter(action == "control") %>% select(player, loc) %>% unique() %>% rename(control = player),
-      by = "loc"
-    ) %>%
+  map_data <- map_data %>%
+    left_join(get_control_df(game), by = "loc") %>%
+    left_join(get_comm_df(game), by = "loc") %>%
     mutate(
-      visible = loc %in% player_vision(game_df, .p),
-      loc_fill =  ifelse(!visible, "DARK", ifelse(!is.na(control), control, "FREE"))
+      visible = loc %in% player_vision(game, .p),
+      loc_fill =  ifelse(!visible, "DARK", ifelse(!is.na(control), control, "FREE")),
+      comm_fill =  ifelse(!visible, "DARK", ifelse(!is.na(comm), comm, "FREE"))
     )
 
   visible_loc <- map_data %>%
@@ -47,8 +56,7 @@ draw_map <- function(game_df, .p = NULL) {
   # get units
   unit_data <- full_join(
     map_data,
-    count(game_df, loc, player),
-    #game_df %>% group_by(loc, player) %>% summarise(total_folks = sum(size)),
+    count(map_df, loc, player),
     by = "loc"
   ) %>%
     filter(!is.na(player), loc %in% visible_loc) %>%
@@ -56,11 +64,6 @@ draw_map <- function(game_df, .p = NULL) {
       point_size = pmin(ifelse(n < 5, n^1.2, ifelse(n > 5, n^0.8, n)), 20)
       #point_size = pmax(pmin(total_folks/3, 20), 2) #### TODO: adjust this once we get real army sizes
     )
-
-  ###### TODO: change this to be dynamic (or just set to a flat file at beginning of game, and loaded here)
-  player_colors <- brewer.pal(3, "Spectral")
-  names(player_colors) <- c("big_grizz", "eric", "chris")
-  #########
 
   ggplot(map_data, aes(x = x_*X_MULT, y = y_*Y_MULT)) +
     coord_cartesian(xlim = c(0,1)*X_MULT, ylim = c(0,1)*Y_MULT) +
@@ -70,7 +73,8 @@ draw_map <- function(game_df, .p = NULL) {
                       0, 1*X_MULT, 0, 1*Y_MULT) +
     geom_point(size = 3, shape = 21, aes(fill = loc_fill)) +
     geom_point(data = filter(map_data, !is.na(control)), size = 2, shape = 8) +
-    geom_jitter(data = unit_data, aes(size = point_size, color = player), alpha = 0.82, width = 0.15, height = 0.15) +
+    geom_point(data = filter(map_data, !is.na(comm)), size = 1, shape = 21, aes(fill = comm_fill)) +
+    geom_jitter(data = unit_data, aes(size = point_size, fill = player), alpha = 0.82, width = 0.15, height = 0.15, shape = 21, colour = "#A9A9A9") +
     theme(
       axis.title.x=element_blank(),
       axis.text.x=element_blank(),
@@ -83,18 +87,18 @@ draw_map <- function(game_df, .p = NULL) {
       plot.title = element_text(hjust = 0.5)
     ) +
     scale_size_area(guide = "none") +
-    scale_colour_manual(values = player_colors) +
-    scale_fill_manual(values = c(player_colors, "FREE" = "#00000000", "DARK" = "#000000"), guide = "none") + # visibility and control
-    ggtitle(.p %||% "GLOBAL")
+    scale_colour_manual(values = game$player_colors) +
+    scale_fill_manual(values = c(game$player_colors, "FREE" = "#00000000", "DARK" = "#000000"), guide = "none") + # visibility and control
+    ggtitle(map_title)
 
 }
 
 
-player_vision <- function(game_df, .p) {
+player_vision <- function(game, .p) {
   if (is.null(.p)) return(names(MAP))
-  if (.p == "CONFLICT!") return(unique(game_df$loc))
+  if (.p == "CONFLICT!") return(unique(game$conflicts))
 
-  occ_loc <- game_df %>%
+  occ_loc <- game$map_df %>%
     filter(player == .p) %>%
     pull(loc) %>%
     unique()
@@ -105,11 +109,14 @@ player_vision <- function(game_df, .p) {
       MAP[[.x]][["rivers"]]
     )
   }) %>%
-    unlist() %>%
-    unique() %>%
-    sort()
+    unlist()
+
+  comms <- get_comms(game, .p)
+  controls <- get_controls(game, .p)
 
   ### TODO: add territories moved through by flyers and fast ones?
 
-  c(occ_loc, borders)
+  c(occ_loc, borders, comms, controls) %>%
+    unique() %>%
+    sort()
 }
