@@ -4,7 +4,7 @@ get_player_map <- function(game, .p) {
   res <- if (!is.null(.p) && .p != "GLOBAL") {
     .op <- get_other_players_names(game, .p)
     game$map_df %>%
-      filter(.data$loc %in% player_vision(game, .p)) %>%
+      filter(.data$loc %in% c(player_vision(game, .p), NA)) %>%
       filter(!(.data$player %in% .op & .data$action == "sneak"))
   } else {
     game$map_df
