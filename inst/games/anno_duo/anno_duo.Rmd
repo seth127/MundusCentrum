@@ -164,13 +164,39 @@ game <- game %>%
   modify_unit("big_grizz", c(4, 15, 19),   "sneak",  "C3") %>%
   modify_unit("big_grizz", 14,   "reinforce",  "C5") %>%
   
-  #modify_unit("eric", "F8",   "move",  "F5") %>%
+  modify_unit("eric", 1, "move",	"F3") %>%
+  modify_unit("eric", 2, "move",	"F3") %>%
+  modify_unit("eric", 3, "move",	"F4") %>%
+  modify_unit("eric", 4, "move",	"F3") %>%
+  modify_unit("eric", 5, "move",	"F3") %>%
+  modify_unit("eric", 6, "move",	"F3") %>%
+  modify_unit("eric", 7, "move",	"E5") %>%
+  modify_unit("eric", 8, "move",	"F4") %>%
+  modify_unit("eric", 9, "move",	"F3") %>%
+  modify_unit("eric", 10, "move",	"F4") %>%
+  modify_unit("eric", 11, "move",	"F3") %>%
+  modify_unit("eric", 12, "move",	c("C3", "F7")) %>%
+  modify_unit("eric", 13, "move",	"F3") %>%
+  modify_unit("eric", 14, "sneak",	"E5") %>%
+  modify_unit("eric", 15, "move",	"I5") %>%
+  modify_unit("eric", 16, "move",	"I5") %>%
+  modify_unit("eric", 17, "move",	"I4") %>%
+  modify_unit("eric", 18, "control",	"I4") %>%
+  modify_unit("eric", 19, "move",	"G9") %>%
+  modify_unit("eric", 20, "move",	"E4") %>%
+  modify_unit("eric", 21, "rejoin",	"G7") %>%
+  modify_unit("eric", 22, "move",	"H5") %>%
+  modify_unit("eric", 23, "move",	"H5") %>%
+  modify_unit("eric", 24, "move",	"H5") %>%
+  modify_unit("eric", 25, "move",	"G10") %>%
+  modify_unit("eric", 26, "move",	"H5") %>%
+  modify_unit("eric", 27, "move",	"F7") %>%
+  modify_unit("eric", 28, "reinforce",	"H3") %>%
 
   modify_unit("chris", c(20), "defend", "E2") %>%
   modify_unit("chris", c(5, 23), "defend", "B2") %>%
   modify_unit("chris", c(16, 25), "defend", "A5") %>%
   modify_unit("chris", c(3, 17, 18), "defend", "B9") %>%
-  
   modify_unit("chris", c(1,3,17,18) , "move", "B11") %>%
   modify_unit("chris", 2, "move", "E2") %>%
   modify_unit("chris", c(4,7) , "move", "B2") %>%
@@ -197,26 +223,25 @@ print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
-### moves
 
-**PRETENDING EVERYBODY RETREATS TO SEE THE FULL BOARD**
-
-```{r}
+```{r, include = FALSE}
+#**PRETENDING EVERYBODY RETREATS TO SEE THE FULL BOARD**
 # retreats
 game <- game %>%
   modify_unit("big_grizz", c(1, 10, 11, 12, 16),   "move",  c("B1")) %>%
   modify_unit("big_grizz", c(3, 5, 13, 22),   "move",  "H2") %>%
+  modify_unit("big_grizz", "H5",   "move",  "H2") %>%
+  modify_unit("eric", "C3",   "move",  "F2") %>%
   modify_unit("chris",     19,  "move","E1") %>%
   reconcile_player_orders()
-```
 
-```{r}
 print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
+
 # Discussion Notes
 
 * I updated the multi-territory moves for the first two turns. Are we cool with my decisions?
-* Currently sneaky units _can_ be seen, unless their move is actually `"sneak"`. Are we cool with that? It's easier to implement and honestly I kinda like it anyway. -- Seth
 * The way I have it, after you move you can only see the units in combat. You don't get to see the full board until _after_ combat is resolved. This was intentional on my part, but do we like this?
+* Whose gonna write me a battle story for this turn?
