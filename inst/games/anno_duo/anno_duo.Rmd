@@ -226,19 +226,29 @@ print_map_df(game, "{{PLAYER}}")
 ```
 
 
-```{r, include = FALSE}
-#**PRETENDING EVERYBODY RETREATS TO SEE THE FULL BOARD**
+```{r}
 # retreats
 game <- game %>%
-  modify_unit("big_grizz", c(1, 10, 11, 12, 16),   "move",  c("B1")) %>%
-  modify_unit("big_grizz", c(3, 5, 13, 22),   "move",  "H2") %>%
-  modify_unit("big_grizz", "H5",   "move",  "H2") %>%
-  modify_unit("eric", "C3",   "move",  "F2") %>%
-  modify_unit("chris",     19,  "move","E1") %>%
+  modify_unit("chris",     "B3",  "move","B2") %>%
+  modify_unit("eric", "C3",   "move",  "F3") %>%
+  modify_unit("eric", "H5",   "move",  "H4") %>%
+  modify_unit("eric", "H3",   "move",  "H1") %>%
   reconcile_player_orders()
+```
 
+```{r}
 print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
+```
+
+# TURN 4
+Players change their maps (making orders)
+
+### moves
+
+```{r}
+game <- game %>%
+  reconcile_player_orders()
 ```
 
 
