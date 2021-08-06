@@ -196,14 +196,16 @@ game <- game %>%
   modify_unit("chris", c(20), "defend", "E2") %>%
   modify_unit("chris", c(5, 23), "defend", "B2") %>%
   modify_unit("chris", c(16, 25), "defend", "A5") %>%
-  modify_unit("chris", c(3, 17, 18), "defend", "B9") %>%
-  modify_unit("chris", c(1,3,17,18) , "move", "B11") %>%
+  modify_unit("chris", 3, "sneak", "B11") %>%
+  modify_unit("chris", c(1,17,18) , "move", "B11") %>%
   modify_unit("chris", 2, "move", "E2") %>%
-  modify_unit("chris", c(4,7) , "move", "B2") %>%
+  modify_unit("chris", c(4) , "sneak", "B2") %>%
+  modify_unit("chris", c(7) , "move", "B2") %>%
   modify_unit("chris", 6, "move", "A1") %>%
   modify_unit("chris", 8, "move", "B5") %>%
-  modify_unit("chris", 9, "move", "B9") %>%
-  modify_unit("chris", c(10,24) , "move", "E1") %>%
+  modify_unit("chris", 9, "sneak", "B9") %>%
+  modify_unit("chris", c(10) , "sneak", "E1") %>%
+  modify_unit("chris", c(24) , "move", "E1") %>%
   modify_unit("chris", 11, "control", "B7") %>%
   modify_unit("chris", 12, "control", "B2") %>%
   modify_unit("chris", 13, "move", "A4") %>%
