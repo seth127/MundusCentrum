@@ -1,5 +1,8 @@
 devtools::load_all()
 
+##################
+# params to start the game
+
 name = "Anno Uno"
 players = list(
   list(
@@ -18,8 +21,12 @@ players = list(
     units = system.file("extdata", "unit-templates", "chris.csv", package = "MundusCentrum")
   )
 )
-points = 2000
+points = 3000
 
+
+
+##################
+# join against keywords
 View(
   "big_grizz.csv" %>%
   system.file("extdata", "unit-templates", ., package = "MundusCentrum") %>%

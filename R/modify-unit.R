@@ -13,7 +13,7 @@ modify_unit <- function(game, .p, .u, .a, .l) {
   check_player_name(game, .p)
 
   # check if a loc was passed
-  if ((length(.u) == 1) && (.u %in% names(MAP))) {
+  if ((length(.u) == 1) && (.u %in% names(game$map))) {
     .loc_u <- game$map_df %>%
       filter(
         .data$player == .p,

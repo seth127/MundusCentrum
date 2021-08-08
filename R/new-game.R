@@ -56,7 +56,7 @@ new_game <- function(name, players, points = NULL) {
         rlang::set_names(c("GLOBAL", ids))
     ),
     player_colors = rlang::set_names(brewer.pal(length(ids), "Spectral"), ids),
-    map = MAP
+    map = add_sky(MAP)
   )
   game[["map_df"]] <- setup_map_df(name, players)
 
@@ -83,6 +83,30 @@ setup_map_df <- function(name, players) {
       ) %>%
       sort_map_df()
   })
+}
+
+#' Add all the soaring locs to the map
+#' @keywords internal
+add_sky <- function(.m) {
+  .s <- .m
+  add_s <- function(.n) paste0(.n, "S")
+  sky_names <- map_chr(names(.s), add_s)
+  .s <- map(.s, ~{
+    .x$name <- paste(.x$name, "- Sky")
+    .x$sky <- map(c("borders", "rivers", "mountains"), function(.p) {
+      .x[[.p]]
+    }) %>%
+      purrr::compact() %>%
+      unlist() %>%
+      map_chr(add_s)
+    .x[c("name", "sky", "x_", "y_")]
+  }) %>%
+    set_names(sky_names)
+
+  for (.n in sky_names) {
+    .m[[.n]] <- .s[[.n]]
+  }
+  return(.m)
 }
 
 #' @keywords internal
