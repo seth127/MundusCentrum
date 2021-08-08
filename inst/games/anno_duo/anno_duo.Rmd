@@ -95,8 +95,8 @@ game <- game %>%
   modify_unit("eric",      c(1:6, 13:14, 8:11),   "move",  "E5") %>%
   modify_unit("eric",      7,     "move","E7") %>%
   modify_unit("eric",      12,     "move", c("F3", "F2")) %>%
-  modify_unit("eric",      c(15,18),     "control","I4") %>%
-  modify_unit("eric",      16:17,   "move","I5") %>%
+  modify_unit("eric",      c(15, 16,18),     "move","I4") %>%
+  modify_unit("eric",      17,   "control","I3") %>%
   modify_unit("eric",      19,   "control","G6") %>%
   modify_unit("eric",      20,   "move", c("E4", "E3")) %>%
   modify_unit("eric",      21,   "move", c("E1", "A8")) %>%
