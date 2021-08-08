@@ -22,6 +22,13 @@ game <- do.call(new_game, args = jsonlite::fromJSON("anno_duo.json", simplifyVec
 cat("# {{PLAYER}}")
 ```
 
+## Turns
+
+* [Turn 1](#turn1)
+* [Turn 2](#turn2)
+* [Turn 3](#turn3)
+* [Turn 4](#turn4)
+
 ### see the starting point
 This is the state of the game at the beginning
 
@@ -30,7 +37,7 @@ print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
-# TURN 1
+# TURN 1 {#turn1}
 Players change their maps (making orders)
 
 ### moves
@@ -51,7 +58,7 @@ game <- game %>%
   modify_unit("eric",      19,   "move","G6") %>%
   modify_unit("eric",      20,   "move", c("E7", "E6")) %>%
   modify_unit("eric",      21,   "move", c("E7", "E4")) %>% 
-  modify_unit("eric",      c(22:24, 26),   "soar", c("G8S", "H3", "H3S")) %>% # transport 
+  modify_unit("eric",      c(22:24, 26),   "soar", c("G8S", "H3S", "H3")) %>% # transport 
   modify_unit("eric",      25,   "move","G8") %>%
   modify_unit("eric",      27,   "move", c("E7", "F4")) %>%
   modify_unit("eric",      28,   "move", c("E7", "F8")) %>% # cool example here of if you got waylaid in E7 you would have strength together
@@ -77,7 +84,7 @@ print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
-# TURN 2
+# TURN 2 {#turn2}
 Players change their maps (making orders)
 
 ### moves
@@ -148,7 +155,7 @@ print_map_df(game, "{{PLAYER}}")
 ```
 
 
-# TURN 3
+# TURN 3 {#turn3}
 Players change their maps (making orders)
 
 ### moves
@@ -241,7 +248,7 @@ print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
-# TURN 4
+# TURN 4 {#turn4}
 Players change their maps (making orders)
 
 ### moves
