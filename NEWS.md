@@ -1,5 +1,11 @@
 # MundusCentrum
 
+# development
+
+* Turn 4 of `anno_duo`
+* Added Rmd hash and git commit hash to the bottom of Rmd game template
+* Can now pass a vector of player names to `render_game()`
+
 # 0.0.3
 
 * Adding a soaring level to the battlefield
