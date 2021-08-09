@@ -123,7 +123,7 @@ MAP <- list(
     rivers = c("B6"),
     bridges = c("B6"),
     power = TRUE,
-    x_ = 0.38,
+    x_ = 0.4,
     y_ = 0.72
   ),
   B9 = list(
