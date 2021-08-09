@@ -73,7 +73,7 @@ draw_map <- function(game, .p = NULL) {
                                        height = unit(1,"npc")),
                       0, 1*X_MULT, 0, 1*Y_MULT) +
     # static loc markers
-    geom_point(size = 3, shape = 21, aes(fill = loc_fill)) +
+    geom_point(data = filter(map_data, str_detect(loc, "S", negate = TRUE)), size = 3, shape = 21, aes(fill = factor(loc_fill))) +
     # bridges
     geom_line(data = get_bridges(game), aes(x_*X_MULT, y_*Y_MULT, group = bridge_id), size = 3, alpha = 0.5, colour = "#AA5D06", lineend = "round") +
     # battles
