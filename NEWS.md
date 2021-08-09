@@ -1,6 +1,6 @@
 # MundusCentrum
 
-# development
+# 0.0.3
 
 * Adding a soaring level to the battlefield
 * Added jumplinks to turns at the top of the markdown
