@@ -5,3 +5,9 @@ add_bridge <- function(game, .l1, .l2) {
   game$map[[.l2]][["bridges"]] <- c(game$map[[.l2]][["bridges"]], .l1)
   return(game)
 }
+
+#' NOT IMPLEMENTED
+#' @export
+destroy_bridge <- function(game, .l1, .l2) {
+  abort("NOT IMPLEMENTED: destroy_bridge. Consider making this an s3 dispatch on destroy_object", "not_implemented_error")
+}
