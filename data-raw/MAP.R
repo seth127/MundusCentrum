@@ -235,7 +235,7 @@ MAP <- list(
     bridges = c("E3"),
     mountains = c("F2", "F3"),
     power = TRUE,
-    x_ = 0.44,
+    x_ = 0.45,
     y_ = .59
   ),
   E3 = list(

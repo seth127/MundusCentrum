@@ -25,8 +25,10 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
   to_render <- if (isTRUE(players)) {
     .pj <- jsonlite::fromJSON(json_input, simplifyVector = FALSE)$players
     c("GLOBAL", purrr::map_chr(.pj, ~ sanitize_name(.x[["name"]])))
-  } else {
+  } else if (isFALSE(players)) {
     "GLOBAL"
+  } else {
+    to_render <- players
   }
   walk(to_render, ~ {
     data <- list(
