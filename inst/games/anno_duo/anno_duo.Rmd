@@ -216,11 +216,12 @@ game <- game %>%
   modify_unit("chris", 11, "control", "B7") %>%
   modify_unit("chris", 12, "control", "B2") %>%
   modify_unit("chris", 13, "move", "A4") %>%
-  modify_unit("chris", 14, "move", "A1") %>%
+  modify_unit("chris", 14, "move", "A8") %>%
   modify_unit("chris", 15, "control", "B9") %>%
   modify_unit("chris", 19, "move", "E3") %>%
   modify_unit("chris", 21, "move", "B3") %>%
   modify_unit("chris", 22, "move", "B7") %>%
+  add_bridge("A8", "E1") %>%
 
   reconcile_player_orders()
 ```
@@ -255,12 +256,61 @@ Players change their maps (making orders)
 
 ```{r}
 game <- game %>%
+
+  modify_unit("big_grizz", c(1, 10, 11, 12, 16),   "move",  c("B1", "B4")) %>%
+  modify_unit("big_grizz", 7,   "move",  "D1") %>%
+  modify_unit("big_grizz", 6,   "move",  "H6") %>%
+  modify_unit("big_grizz", 5,   "control",  "H3") %>%
+  modify_unit("big_grizz", c(3, 13, 22),   "move",  c("H3", "H4")) %>%
+  modify_unit("big_grizz", c(8, 23),   "control",  "C3") %>%
+  modify_unit("big_grizz", 21,   "move",  "F2") %>%
+  modify_unit("big_grizz", 9,   "control",  "C4") %>%
+  modify_unit("big_grizz", c(4, 15, 19, 20),   "sneak",  "F2") %>%
+  modify_unit("big_grizz", 14,   "reinforce",  "C5") %>%
+  modify_unit("big_grizz", 2,   "move",  "H2") %>%
+  modify_unit("big_grizz", c(17, 18),   "move",  "H4") %>%
+  
+  modify_unit("eric",  1,  "move",          "E5") %>%
+  modify_unit("eric",  2,  "move",          "E5") %>%
+  modify_unit("eric",  3,  "move",          "E5") %>%
+  modify_unit("eric",  4,  "move",          "E5") %>%
+  modify_unit("eric",  5,  "move",          "E5") %>%
+  modify_unit("eric",  6,  "move",          "E5") %>%
+  modify_unit("eric",  7,  "control",       "E5") %>%
+  modify_unit("eric",  8,  "move",          "E5") %>%
+  modify_unit("eric",  9,  "move",          "E5") %>%
+  modify_unit("eric",  10,  "move",         "E5") %>%
+  modify_unit("eric",  11,  "move",         "E5") %>%
+  modify_unit("eric",  12,  "move",         "E5") %>%
+  modify_unit("eric",  13,  "move",         "E5") %>%
+  modify_unit("eric",  14,  "move",         "E5") %>%
+  modify_unit("eric",  15,  "soar",        c("I5S", "H6S", "H6")) %>%
+  modify_unit("eric",  16,  "soar",        c("I5S", "H6S", "H6")) %>%
+  modify_unit("eric",  17,  "soar",        c("I4S", "H6S", "H6")) %>%
+  modify_unit("eric",  18,  "soar",        c("I4S", "H6S", "H6")) %>%
+  modify_unit("eric",  19,  "control",      "G9") %>%
+  modify_unit("eric",  20,  "reinforce",    "E4") %>%
+  modify_unit("eric",  21,  "move",         c("G8", "H4")) %>%
+  modify_unit("eric",  22,  "reinforce",    "H4") %>%
+  modify_unit("eric",  23,  "reinforce",    "H4") %>%
+  modify_unit("eric",  24,  "reinforce",    "H4") %>%
+  modify_unit("eric",  25,  "control",      "G10") %>%
+  modify_unit("eric",  26,  "control",      "H4") %>%
+  modify_unit("eric",  27,  "reinforce",    "F7") %>%
+  modify_unit("eric",  28,  "reinforce",    "H1") %>%
+
   reconcile_player_orders()
 ```
 
+```{r}
+print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
+```
 
 # Discussion Notes
 
 * I updated the multi-territory moves for the first two turns. Are we cool with my decisions?
 * ~~The way I have it, after you move you can only see the units in combat. You don't get to see the full board until _after_ combat is resolved. This was intentional on my part, but do we like this?~~ Ok, I changed this. I think it's much better this way. Red circles on the map show battles and there's a `CONFLICT!` column where relevant in your table. Plus, now you can only see the battles you're involved with.
 * Whose gonna write me a battle story for this turn?
+
+**Hash:** {{RMD_MD5}}
