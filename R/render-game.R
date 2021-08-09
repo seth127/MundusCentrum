@@ -33,7 +33,11 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
   walk(to_render, ~ {
     data <- list(
       PLAYER = .x,
-      RMD_MD5 = .md5
+      RMD_MD5 = .md5,
+      CODE_HASH = withr::with_dir(
+        here::here(),
+        system("git rev-parse HEAD", intern=TRUE)
+      )
     )
 
     player_hash <- digest::digest(paste(game_name, .x), algo = "md5")

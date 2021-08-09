@@ -16,6 +16,7 @@ Imports:
   ggplot2,
   grid,
   glue,
+  here,
   jpeg,
   jsonlite,
   purrr,
