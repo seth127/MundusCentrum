@@ -22,6 +22,13 @@ game <- do.call(new_game, args = jsonlite::fromJSON("anno_duo.json", simplifyVec
 cat("# {{PLAYER}}")
 ```
 
+## Turns
+
+* [Turn 1](#turn1)
+* [Turn 2](#turn2)
+* [Turn 3](#turn3)
+* [Turn 4](#turn4)
+
 ### see the starting point
 This is the state of the game at the beginning
 
@@ -30,7 +37,7 @@ print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
-# TURN 1
+# TURN 1 {#turn1}
 Players change their maps (making orders)
 
 ### moves
@@ -39,7 +46,7 @@ Players change their maps (making orders)
 game <- game %>%
   modify_unit("big_grizz", 1,   "move",  c("D3", "C2")) %>%
   modify_unit("big_grizz", c(2, 7, 17, 18),   "control",  "D4") %>%
-  modify_unit("big_grizz", c(3, 5:6, 13, 22),   "soar",  c("F5", "H2")) %>% # transport
+  modify_unit("big_grizz", c(3, 5:6, 13, 22),   "soar",  c("F5S", "H2S", "H2")) %>% # transport
   modify_unit("big_grizz", c(8, 23),   "move",  c("D3", "C4", "C5")) %>% # transport
   modify_unit("big_grizz", 9,   "move",  "F5") %>%
   modify_unit("big_grizz", c(10:12, 16),   "move",  c("D2", "D1")) %>%
@@ -47,11 +54,11 @@ game <- game %>%
   modify_unit("eric",      c(1:6, 13:14, 8:11),   "move",  "E7") %>%
   modify_unit("eric",      7,     "control","G7") %>%
   modify_unit("eric",      12,     "move", c("E7", "E5")) %>%
-  modify_unit("eric",      15:18,   "soar", c("G8", "G10", "I1", "I3", "I4")) %>% # transport IS THIS LEGAL? you move 5 spaces here...
+  modify_unit("eric",      15:18,   "soar", c("G8S", "G10S", "I1S", "I3S")) %>% # transport IS THIS LEGAL? do you need to use a move to land?
   modify_unit("eric",      19,   "move","G6") %>%
   modify_unit("eric",      20,   "move", c("E7", "E6")) %>%
   modify_unit("eric",      21,   "move", c("E7", "E4")) %>% 
-  modify_unit("eric",      c(22:24, 26),   "soar", c("G8", "H3")) %>% # transport 
+  modify_unit("eric",      c(22:24, 26),   "soar", c("G8S", "H3S", "H3")) %>% # transport 
   modify_unit("eric",      25,   "move","G8") %>%
   modify_unit("eric",      27,   "move", c("E7", "F4")) %>%
   modify_unit("eric",      28,   "move", c("E7", "F8")) %>% # cool example here of if you got waylaid in E7 you would have strength together
@@ -77,7 +84,7 @@ print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
-# TURN 2
+# TURN 2 {#turn2}
 Players change their maps (making orders)
 
 ### moves
@@ -95,8 +102,8 @@ game <- game %>%
   modify_unit("eric",      c(1:6, 13:14, 8:11),   "move",  "E5") %>%
   modify_unit("eric",      7,     "move","E7") %>%
   modify_unit("eric",      12,     "move", c("F3", "F2")) %>%
-  modify_unit("eric",      c(15,18),     "control","I4") %>%
-  modify_unit("eric",      16:17,   "move","I5") %>%
+  modify_unit("eric",      c(15, 16,18),     "move","I4") %>%
+  modify_unit("eric",      17,   "control","I3") %>%
   modify_unit("eric",      19,   "control","G6") %>%
   modify_unit("eric",      20,   "move", c("E4", "E3")) %>%
   modify_unit("eric",      21,   "move", c("E1", "A8")) %>%
@@ -148,7 +155,7 @@ print_map_df(game, "{{PLAYER}}")
 ```
 
 
-# TURN 3
+# TURN 3 {#turn3}
 Players change their maps (making orders)
 
 ### moves
@@ -241,7 +248,7 @@ print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
-# TURN 4
+# TURN 4 {#turn4}
 Players change their maps (making orders)
 
 ### moves

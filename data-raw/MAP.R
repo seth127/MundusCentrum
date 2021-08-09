@@ -10,6 +10,7 @@ MAP <- list(
     name = "Lune Valley",
     borders = c("A4", "A3", "B2"),
     rivers = c("A5"),
+    bridges = c("A5"),
     mountains = c("A1"),
     x_ = 0.16,
     y_ = 0.815
@@ -32,8 +33,8 @@ MAP <- list(
     name = "Tower Hills",
     borders = c("A3", "A6", "A7"),
     rivers = c("A2", "B5", "B7"),
-    x_ = 0.215,
-    y_ = 0.74
+    x_ = 0.196,
+    y_ = 0.765
   ),
   A6 = list(
     name = "South Mithlond",
@@ -46,6 +47,7 @@ MAP <- list(
     name = "The Shire",
     borders = c("A5"),
     rivers = c("B9", "B11", "E1"),
+    bridges = c("B9"),
     mountains = c("A8"),
     power = TRUE,
     x_ = 0.22,
@@ -72,8 +74,10 @@ MAP <- list(
     name = "Borderlands",
     borders = c("A2", "A3", "B1", "B3", "B5", "B7", "B8"),
     rivers = c("B6"),
-    x_ = 0.33,
-    y_ = 0.87
+    # x_ = 0.33,
+    # y_ = 0.87
+    x_ = 0.375,
+    y_ = 0.825
   ),
   B3 = list(
     name = "Angmar",
@@ -100,6 +104,7 @@ MAP <- list(
     name = "Rhudaur",
     borders = c("C1"),
     rivers = c("B2", "B8", "B11", "C3", "E2"),
+    bridges = "E2",
     mountains = c("B3", "C3"),
     x_ = 0.505,
     y_ = 0.76
@@ -116,6 +121,7 @@ MAP <- list(
     name = "Weather Hills",
     borders = c("B2", "B7", "B10", "B11"),
     rivers = c("B6"),
+    bridges = c("B6"),
     power = TRUE,
     x_ = 0.38,
     y_ = 0.72
@@ -137,13 +143,14 @@ MAP <- list(
     name = "South Downs",
     borders = c("B8", "B9", "B10", "E1"),
     rivers = c("A7", "B6", "E2", "E3"),
-    x_ = 0.39,
-    y_ = 0.65
+    x_ = 0.34,
+    y_ = 0.615
   ),
   C1 = list(
     name = "Carrock",
     borders = c("B4", "B6", "C2"),
     rivers = c("C3"),
+    bridges = c("C3"),
     mountains = c("B3"),
     x_ = 0.585,
     y_ = 0.82
@@ -152,6 +159,7 @@ MAP <- list(
     name = "North Mirkwood",
     borders = c("C1"),
     rivers = c("C4", "D3"),
+    bridges = c("C4", "D3"),
     mountains = c("B1", "D1"),
     power = TRUE,
     x_ = 0.69,
@@ -161,6 +169,7 @@ MAP <- list(
     name = "Anduin Valley",
     borders = c("C4", "C5", "F7"),
     rivers = c("B6", "C1", "F2", "F3"),
+    bridges = c("C1", "F2"),
     mountains = c("B6", "E2"),
     x_ = 0.61,
     y_ = 0.65
@@ -205,6 +214,7 @@ MAP <- list(
     name = "South Rhun",
     borders = c("D2"),
     rivers = c("D3", "F5"),
+    bridges = c("F5"),
     mountains = c("D1"),
     x_ = 0.94,
     y_ = 0.755
@@ -213,6 +223,7 @@ MAP <- list(
     name = "Minhiriath",
     borders = c("B11"),
     rivers = c("A7", "A8", "E3", "E4"),
+    bridges = c("E3", "E4"),
     power = TRUE,
     x_ = 0.240,
     y_ = 0.555
@@ -221,6 +232,7 @@ MAP <- list(
     name = "Eregion",
     borders = c("F1"),
     rivers = c("B6", "B11", "E3"),
+    bridges = c("E3"),
     mountains = c("F2", "F3"),
     power = TRUE,
     x_ = 0.44,
@@ -238,6 +250,7 @@ MAP <- list(
     name = "Enedwaith",
     borders = c("E3"),
     rivers = c("E1", "E5", "E6", "E7"),
+    bridges = c("E7"),
     x_ = 0.35,
     y_ = 0.435
   ),
@@ -261,6 +274,7 @@ MAP <- list(
     name = "Gap of Rohan",
     borders = c("E5", "E6", "G7"),
     rivers = c("E4", "F4", "F8"),
+    bridges = c("F4"),
     mountains = c("G4", "G5", "G6"),
     power = TRUE,
     x_ = 0.5,
@@ -293,6 +307,7 @@ MAP <- list(
     name = "The Wold",
     borders = c("E5", "F3"),
     rivers = c("E7", "F7", "F8"),
+    bridges = c("F7"),
     power = TRUE,
     x_ = 0.59,
     y_ = 0.43
@@ -377,6 +392,7 @@ MAP <- list(
     name = "Minas Tirith",
     borders = c("E7", "G5"),
     rivers = c("G8"),
+    bridges = c("G8"),
     x_ = 0.54,
     y_ = 0.195
   ),
@@ -450,6 +466,7 @@ MAP <- list(
     name = "Harondor",
     borders = c("G10"),
     rivers = c("I2", "I3"),
+    bridges = c("I3"),
     mountains = c("H6"),
     x_ = 0.52,
     y_ = 0.05

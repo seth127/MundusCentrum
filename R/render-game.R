@@ -20,6 +20,7 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
   )
 
   template_string <- readr::read_lines(rmd_template)
+  .md5 <- digest::digest(template_string)
 
   to_render <- if (isTRUE(players)) {
     .pj <- jsonlite::fromJSON(json_input, simplifyVector = FALSE)$players
@@ -28,7 +29,10 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
     "GLOBAL"
   }
   walk(to_render, ~ {
-    data <- list(PLAYER = .x)
+    data <- list(
+      PLAYER = .x,
+      RMD_MD5 = .md5
+    )
 
     player_hash <- digest::digest(paste(game_name, .x), algo = "md5")
     message(glue("{paste(game_name, .x)} -- {player_hash}"))
