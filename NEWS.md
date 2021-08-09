@@ -4,6 +4,8 @@
 
 * Adding a soaring level to the battlefield
 * Added jumplinks to turns at the top of the markdown
+* Added bridges
+* Added md5 hash of game Rmd to the bottom of the renders
 
 # 0.0.2
 
