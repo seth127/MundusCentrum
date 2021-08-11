@@ -299,6 +299,25 @@ game <- game %>%
   modify_unit("eric",  27,  "reinforce",    "F7") %>%
   modify_unit("eric",  28,  "reinforce",    "H1") %>%
 
+  modify_unit("chris", c(2, 4, 16, 19, 20, 21, 23, 25), "reinforce") %>%  
+  modify_unit("chris", c(1),  "move", c("B8", "B2")) %>%
+  modify_unit("chris", c(3),  "sneak", "E1") %>%
+  modify_unit("chris", c(5),  "move", "B1") %>%
+  modify_unit("chris", c(6),  "control", "A1") %>%
+  modify_unit("chris", c(7),  "move", "B6") %>%
+  modify_unit("chris", c(8),  "control", "B5") %>%
+  modify_unit("chris", c(9),  "sneak", "B10") %>%
+  modify_unit("chris", c(10), "control", "E1") %>%
+  modify_unit("chris", c(11), "move", "B8") %>%
+  modify_unit("chris", c(12), "move", "B1") %>%
+  modify_unit("chris", c(13), "control", "A4") %>%
+  modify_unit("chris", c(14), "control", "A8") %>%
+  modify_unit("chris", c(15), "move", "B11") %>%
+  modify_unit("chris", c(17), "move", "E2") %>%
+  modify_unit("chris", c(18), "move", "E2") %>%
+  modify_unit("chris", c(22), "move", "B2") %>%
+  modify_unit("chris", c(24), "move", "E3") %>%
+
   reconcile_player_orders()
 ```
 
