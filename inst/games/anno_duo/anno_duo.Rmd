@@ -38,7 +38,26 @@ print_map_df(game, "{{PLAYER}}")
 ```
 
 # TURN 1 {#turn1}
-Players change their maps (making orders)
+
+```
+Mundus Centrum Campaign
+0.248.853.M41
+
+++++++TRANSMITTED: MUNDUS CENTRUM
++++++++++RECEIVED: THE ROCK
++++++++++++AUTHOR: DEATHWING CAPTAIN LAZAAR
+++++++++++SUBJECT: LOG OF MUNDUS CENTRUM CAMPAIGN
+++++++++++THOUGHT: A MOMENT OF LAXITY SPAWNS A LIFETIME OF HERESY.
+
+
+	248.853.M41: Following the leads we received from Brother Interrogator Chaplain Asmodai, we made haste to Sector Mundus Centrum. Upon translation from warp space, we were immediately set upon by one of the Great Devourer’s many tendrils. The battle in high orbit above Mundus Centrum would have delayed our landing onto the main continent for weeks had not the unheralded arrival of a large contingent of Necron tomb ships not caught the Tyranid bio-forms unawares.  Void battle was joined between the Tyranid and Necron ships, and we used this brief respite to land a small force of our brothers planet-side in the North East region of the continent (Imperial Designation: Rhun). I have accompanied my fellow marines to lead from the field, leaving Brother Aralith in command of the fleet.
+
+	The derelict star port in South Rhun is in some disrepair, but it will suffice for our purposes as an operational command center.  Brother Techmarine Ophaniel reports that with some maintenance, we may be able to link the other abandoned star ports on the continent and reactivate the dormant orbital defense systems, allowing us to target the xenos interlopers and cleanse local space of their alien taint.
+
+	In our descent to Rhun, augurs picked up a disturbing number of returns from other craft entering the atmosphere.  To the South, it appears the shambling Necron host has endeavored to gain a foothold in the former capital region (Imperial Designation: Gondor).  To the West, bio-forms of the insatiable Tyranids have assumedly already begun to consume and destroy one of the continent’s main agricultural regions (Imperial Designation: Eriador).
+
+	The presence of these xenos armies will surely slow the hunt for our quarry, but we will persevere undeterred.  For the Emperor.  For the Lion.
+```
 
 ### moves
 
@@ -85,7 +104,11 @@ print_map_df(game, "{{PLAYER}}")
 ```
 
 # TURN 2 {#turn2}
-Players change their maps (making orders)
+```
+	249.853.M41: Controlling actions are underway.  We are casting our nets wide.  Capture is only a matter of time.
+
+	Brother Techmarine Myrdean reports that a moderate warband of Necrons has landed nearby his position in the South (Imperial Designation: Mordor). He expects conflict within 15 hours.
+```
 
 ### moves
 
@@ -156,7 +179,11 @@ print_map_df(game, "{{PLAYER}}")
 
 
 # TURN 3 {#turn3}
-Players change their maps (making orders)
+```
+250.853.M41: Brother Techmarine Myrdean has successfully repelled a Necron attack to his position at the star port Barad-Dur. The Storm Raven Barador was invaluable in this defense, but Myrdean fears the Necrons are merely testing our strength and resolve before mounting larger attacks. Defensive infrastructure must be built quickly to solidify our grip in Mordor.
+
+	Squad Galizur was also met with some resistance in the expansive territory of the Brown Lands.  A small and meddlesome force of scarabs tried, unsuccessfully, to halt Galizur’s progress in bringing the territory under our control.  Such small storms can be easily weathered.  I am concerned the coming tempest may prove otherwise. The Emperor Protects. 
+```
 
 ### moves
 
@@ -221,7 +248,7 @@ game <- game %>%
   modify_unit("chris", 19, "move", "E3") %>%
   modify_unit("chris", 21, "move", "B3") %>%
   modify_unit("chris", 22, "move", "B7") %>%
-  add_bridge("A8", "E1") %>%
+  add_bridge("A8", "E1") %>% # chris
 
   reconcile_player_orders()
 ```
@@ -250,7 +277,16 @@ print_map_df(game, "{{PLAYER}}")
 ```
 
 # TURN 4 {#turn4}
-Players change their maps (making orders)
+
+```
+251.853.M41: Ravenwing Talonmaster Castiel has demonstrated unparalleled prowess as a hunter of the Second Company.  I have inducted him further into the ranks of the Inner Circle, and expect his name will be well-remembered in the halls of The Rock.  While scouting the northern reaches of Angmar, Castiel came upon a swarm of winged creatures (Imperial Designation: Gargoyles). Unfortunately, the vermin escaped before they could be properly put to the sword.  It seems the voracious appetite of the Great Devourer knows some bounds after all.
+
+Our forces in the densely forested region (Imperial Designation: Mirkwood) came across another small, scouting contingent of Necron scarabs.  Negligible resistance met.  Similarly, Brother Techmarine Myrdean came into contact with constructs of the same variety in the southern territory of Mount Doom.  While dealing with these insectoid nuisances is a trivial matter, the broader goal of the Necrons remains a mystery, and is therefore disquieting. 
+
+The retreat of the Necrons from Myrdean’s wrath in yesterday’s battle for Barad-Dur was an apparent feint.  All available intelligence led Myrdean to believe this small band had fled due-East from his location, and he gave chase only to find the aforementioned scarabs. The true destination of the Necrons was later discovered to be the territory of Gorgoroth, where Squad Naamand was caught in the open as they were setting up the defenses.  Emperor be praised, Naamand was able to signal us in the South Rhun star port before his squad could be overrun.  Brothers Abathar and Apharan of the Deathwing accompanied me with their squads to the front, and we were only just able to stem that tide of living metal from rising over Gorgoroth.
+
+We are undaunted, and we know no fear!
+```
 
 ### moves
 
