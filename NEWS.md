@@ -1,6 +1,6 @@
 # MundusCentrum
 
-# development
+# 0.0.4
 
 * Added class and print method for `game` object.
 * Players can now only see visible bridges. They look a little better too.
