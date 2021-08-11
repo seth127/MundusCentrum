@@ -4,7 +4,7 @@
 \alias{modify_unit}
 \title{Modify the action of a unit or group of units}
 \usage{
-modify_unit(game, .p, .u, .a, .l)
+modify_unit(game, .p, .u, .a, .l = NULL)
 }
 \arguments{
 \item{game}{The game to modify the unit(s) in}
@@ -17,7 +17,7 @@ will be modified.}
 
 \item{.a}{Action to assign to units}
 
-\item{.l}{Location to move units to (or same as where they are if not moving)}
+\item{.l}{Location to move units to (if NULL, assumed to be same as where they are)}
 }
 \description{
 Modify the action of a unit or group of units

@@ -4,7 +4,7 @@
 \alias{print_map_df}
 \title{Print list of units on the map}
 \usage{
-print_map_df(game, .p = NULL)
+print_map_df(game, .p = NULL, .n = NULL)
 }
 \description{
 Calls \code{\link[=get_player_map]{get_player_map()}} and formats for printing

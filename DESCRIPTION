@@ -1,6 +1,6 @@
 Package: MundusCentrum
 Title: What the Package Does (One Line, Title Case)
-Version: 0.0.3
+Version: 0.0.4
 Authors@R: 
     person(given = "First",
            family = "Last",
@@ -16,6 +16,7 @@ Imports:
   ggplot2,
   grid,
   glue,
+  here,
   jpeg,
   jsonlite,
   purrr,

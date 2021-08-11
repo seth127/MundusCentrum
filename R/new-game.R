@@ -50,6 +50,7 @@ new_game <- function(name, players, points = NULL) {
   }
 
   game <- list(
+    name = name,
     # create hashes for serving html
     players = as.list(
       map_chr(paste(name, c("GLOBAL", ids)), ~digest::digest(.x, algo = "md5")) %>%
@@ -59,6 +60,9 @@ new_game <- function(name, players, points = NULL) {
     map = add_sky(MAP)
   )
   game[["map_df"]] <- setup_map_df(name, players)
+
+  # assign class
+  class(game) <- c(GAME_CLASS, class(game))
 
   return(reconcile_player_orders(game))
 }

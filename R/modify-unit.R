@@ -5,11 +5,11 @@
 #'   unit_id's , or a scalar of a map loc, in which case all units in that loc
 #'   will be modified.
 #' @param .a Action to assign to units
-#' @param .l Location to move units to (or same as where they are if not moving)
+#' @param .l Location to move units to (if NULL, assumed to be same as where they are)
 #' @importFrom purrr walk imap_dfr
 #' @importFrom dplyr bind_rows
 #' @export
-modify_unit <- function(game, .p, .u, .a, .l) {
+modify_unit <- function(game, .p, .u, .a, .l = NULL) {
   check_player_name(game, .p)
 
   # check if a loc was passed
@@ -52,6 +52,16 @@ modify_unit <- function(game, .p, .u, .a, .l) {
     }
 
     # edit player map
+    if (is.null(.l)) {
+      # TODO: maybe refactor this and lines 41-45 into a getter helper?
+      .l <- game %>%
+        get_player_map(.p) %>%
+        filter(player == .p, unit_name == .ux) %>%
+        pull(loc) %>%
+        unique() # if unit in multiple battles they will be duplicated
+    }
+
+
     purrr::imap_dfr(.l, function(.lx, .i) {
       check_loc(game, .lx)
       game$map_df %>%

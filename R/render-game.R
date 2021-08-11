@@ -25,13 +25,19 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
   to_render <- if (isTRUE(players)) {
     .pj <- jsonlite::fromJSON(json_input, simplifyVector = FALSE)$players
     c("GLOBAL", purrr::map_chr(.pj, ~ sanitize_name(.x[["name"]])))
-  } else {
+  } else if (isFALSE(players)) {
     "GLOBAL"
+  } else {
+    to_render <- players
   }
   walk(to_render, ~ {
     data <- list(
       PLAYER = .x,
-      RMD_MD5 = .md5
+      RMD_MD5 = .md5,
+      CODE_HASH = withr::with_dir(
+        here::here(),
+        system("git rev-parse HEAD", intern=TRUE)
+      )
     )
 
     player_hash <- digest::digest(paste(game_name, .x), algo = "md5")
@@ -53,7 +59,7 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
 
       for (.i in 1:(length(moves)-1)) {
         this_move <- text[moves[.i]:moves[.i+1]] %>%
-          str_subset(paste0("(kill|modify)_unit.+", .x)) %>%
+          str_subset(paste0("(kill_|modify_|add_).+", .x)) %>%
           str_replace_all(" ?\\%\\>\\% ?", "") %>%
           paste(collapse = "\n")
 
