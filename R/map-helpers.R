@@ -15,21 +15,54 @@ get_player_map <- function(game, .p) {
 #' Print list of units on the map
 #'
 #' Calls [get_player_map()] and formats for printing
+#' @importFrom dplyr slice_head
 #' @export
-print_map_df <- function(game, .p = NULL) {
+print_map_df <- function(game, .p = NULL, .n = NULL) {
+  checkmate::assert_character(.p, null.ok = TRUE)
+  checkmate::assert_integerish(.n, null.ok = TRUE)
+
   .m <- get_player_map(game, .p)
   # get df of units we care about
-  .m <- if (!is.null(game$conflicts)) {
-    .m %>%
+  if (!is.null(game$conflicts)) {
+    cat("#### CONFLICT! Combatants:\n")
+    .m <- .m %>%
       mutate(
         `CONFLICT!` = ifelse(loc %in% game$conflicts, "TRUE", ""),
         passing_through = str_replace(as.character(passing_through), "FALSE", "")
       )
+
+    if (!is.null(.n)) {
+      cat(glue("(Top {.n} units from each player)\n\n"))
+      .m <- map_dfr(get_player_names(game), ~ {
+        .m %>%
+          filter(player == .x, isTRUE(`CONFLICT!`)) %>%
+          arrange(unit_id) %>%
+          dplyr::slice_head(n = .n)
+      })
+
+    }
   } else {
-    .m %>%
+    cat("#### Visible units:\n")
+    .m <- .m %>%
       select(-passing_through)
+
+    if (!is.null(.n)) {
+      cat(glue("(Top {.n} visible units from each player)\n\n"))
+      .m <- map_dfr(get_player_names(game), ~ {
+        .m %>%
+          filter(player == .x) %>%
+          arrange(unit_id) %>%
+          dplyr::slice_head(n = .n)
+      })
+
+    }
   }
-  return(knitr::kable(.m))
+
+  if (isTRUE(getOption('knitr.in.progress'))) {
+    return(knitr::kable(.m))
+  } else {
+    return(.m)
+  }
 }
 
 #' @export
