@@ -2,7 +2,11 @@
 
 # development
 
+* Added class and print method for `game` object.
+* Players can now only see visible bridges. They look a little better too.
+* Can pass no `.l` to `modify_unit()` and it will infer you mean the `loc` that `.u` is currently in.
 * Turn 4 of `anno_duo`
+* Added Moby's first four turns of Deathwing Captain Lazaar narrative to `anno_duo`
 * Added Rmd hash and git commit hash to the bottom of Rmd game template
 * Can now pass a vector of player names to `render_game()`
 
