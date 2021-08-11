@@ -75,7 +75,8 @@ draw_map <- function(game, .p = NULL) {
     # static loc markers
     geom_point(data = filter(map_data, str_detect(loc, "S", negate = TRUE)), size = 3, shape = 21, aes(fill = factor(loc_fill))) +
     # bridges
-    geom_line(data = get_bridges(game), aes(x_*X_MULT, y_*Y_MULT, group = bridge_id), size = 2.3, alpha = 0.4, colour = "#AA5D06", lineend = "round") +
+    geom_line(data = get_bridges(game, .p), aes(x_*X_MULT, y_*Y_MULT, group = bridge_id), size = 2.3, alpha = 0.4, colour = "#AA5D06") +#, lineend = "round") +
+    geom_line(data = get_bridges(game, .p), aes(x_*X_MULT, y_*Y_MULT, group = bridge_id), size = 1, alpha = 0.6, colour = "#AAAAAA") +
     # battles
     geom_point(data =filter(map_data, visible, loc %in% game$conflicts), size = 18, shape = 21, color = "red", stroke = 3, alpha = 0.38) +
     # comms
@@ -104,7 +105,7 @@ draw_map <- function(game, .p = NULL) {
 
 
 player_vision <- function(game, .p) {
-  if (is.null(.p)) return(names(game$map))
+  if (is.null(.p) || .p == "GLOBAL") return(names(game$map))
   #if (.p == "CONFLICT!") return(unique(game$conflicts))
 
   occ_loc <- game$map_df %>%

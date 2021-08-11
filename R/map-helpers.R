@@ -128,7 +128,8 @@ get_controls <- function(game, .p) {
 }
 
 #' @export
-get_bridges <- function(game) {
+get_bridges <- function(game, .p = NULL) {
+  check_player_name(game, .p)
   imap_dfr(game$map, function(.l1, .n) {
     if(is.null(.l1[["bridges"]])) return(data.frame())
     imap_dfr(.l1[["bridges"]], function(.l2, .i) {
@@ -139,13 +140,12 @@ get_bridges <- function(game) {
 
 
       data.frame(
-        bridge_id = rep(paste(.n, .i, sep = "-"), 2),
+        loc = c(.n, .l2),
+        bridge_id = rep(paste(.n, .l2, sep = "-"), 2),
         bridge_name = c(
           paste(sort(c(.l1$name, game$map[[.l2]]$name)), collapse = "--"),
           paste(sort(c(.l1$name, game$map[[.l2]]$name), decreasing = TRUE), collapse = "--")
         ),
-        # x_ = c(.l1$x_, game$map[[.l2]]$x_),
-        # y_ = c(.l1$y_, game$map[[.l2]]$y_)
         x_ = c(
           mean(c(.x1, .x1, .x2)),
           mean(c(.x1, .x2, .x2))
@@ -157,5 +157,9 @@ get_bridges <- function(game) {
       )
     })
   }) %>%
-    filter(!duplicated(.data$bridge_name))
+    filter(
+      !duplicated(.data$bridge_name),
+      loc %in% player_vision(game, .p)
+    )
+
 }

@@ -19,7 +19,7 @@ game <- do.call(new_game, args = jsonlite::fromJSON("anno_duo.json", simplifyVec
 ```
 
 ```{r, echo = FALSE, results = "asis"}
-cat("# {{PLAYER}}")
+cat("# {{PLAYER}}\n\n")
 print(game, .p = "{{PLAYER}}")
 ```
 
