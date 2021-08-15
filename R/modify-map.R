@@ -6,8 +6,18 @@ add_bridge <- function(game, .l1, .l2) {
   return(game)
 }
 
-#' NOT IMPLEMENTED
+#' Destroy a bridge
 #' @export
 destroy_bridge <- function(game, .l1, .l2) {
-  abort("NOT IMPLEMENTED: destroy_bridge. Consider making this an s3 dispatch on destroy_object", "not_implemented_error")
+  game$map[[.l1]][["bridges"]] <- stringr::str_subset(game$map[[.l1]][["bridges"]], .l2, negate = TRUE)
+  game$map[[.l2]][["bridges"]] <- stringr::str_subset(game$map[[.l2]][["bridges"]], .l1, negate = TRUE)
+  return(game)
 }
+
+
+#' @export
+add_trap <- function(game, .p, .l) {
+  game$map[[.l]][["trap"]] <- .p
+  return(game)
+}
+
