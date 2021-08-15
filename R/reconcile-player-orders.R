@@ -16,11 +16,10 @@ reconcile_player_orders <- function(game) {
     pull(loc)
 
   if (length(conflicts) > 0) {
-    message("CONFLICT(s):")
     warn("Conflict is at hand! Please resolve territorial disputes.", "map_conflict_warning")
     game$conflicts <- conflicts
   } else {
-    message("All units resolved.")
+    cat("All units resolved.\n\n")
     game$conflicts <- NULL
 
     # record comm relays
