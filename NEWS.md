@@ -1,12 +1,13 @@
 # MundusCentrum
 
-# development
+# 0.0.5
 
+* `anno_duo` turn 5.
 * Fixed `B6 <=> C3` vision bug.
 * Added traps!
 * Added destroying bridges.
+* Added `moves_from_gsheet()` connector for Eric's format.
 * Changed so that sneaky units can _never_ be seen, unless they're in the same territory as an opponent. (Previously, they had to actually have "sneak" as their action to be invisible).
-* `anno_duo` turn 5.
 
 # 0.0.4
 
