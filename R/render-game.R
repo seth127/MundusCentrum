@@ -59,7 +59,7 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
 
       for (.i in 1:(length(moves)-1)) {
         this_move <- text[moves[.i]:moves[.i+1]] %>%
-          str_subset(paste0("(kill_|modify_|add_).+", .x)) %>%
+          str_subset(paste0("(kill_|modify_|add_|destroy_).+", .x)) %>%
           str_replace_all(" ?\\%\\>\\% ?", "") %>%
           paste(collapse = "\n")
 

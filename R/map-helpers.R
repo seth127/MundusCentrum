@@ -5,7 +5,9 @@ get_player_map <- function(game, .p) {
     .op <- get_other_players_names(game, .p)
     game$map_df %>%
       filter(.data$loc %in% c(player_vision(game, .p), NA)) %>%
-      filter(!(.data$player %in% .op & .data$action == "sneak"))
+      left_join(UNIT, by = "unit_type") %>%
+      filter(!(.data$player %in% .op & sneak)) %>%
+      select(-dplyr::one_of(str_subset(names(UNIT), "unit_type", negate = TRUE))) # toss UNIT cols
   } else {
     game$map_df
   }
