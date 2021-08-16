@@ -51,7 +51,9 @@ modify_unit <- function(game, .p, .u, .a, .l = NULL) {
       return(NULL)
     }
 
-    # edit player map
+    ## edit player map
+
+    # if .l is NULL, use current location
     if (is.null(.l)) {
       # TODO: maybe refactor this and lines 41-45 into a getter helper?
       .l <- game %>%
@@ -59,6 +61,8 @@ modify_unit <- function(game, .p, .u, .a, .l = NULL) {
         filter(player == .p, unit_name == .ux) %>%
         pull(loc) %>%
         unique() # if unit in multiple battles they will be duplicated
+    } else if (is.na(.l)) {
+      message(glue("Rest In Peace {.ux}, KIA"))
     }
 
 
