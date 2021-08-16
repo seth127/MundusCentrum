@@ -24,7 +24,7 @@ print_map_df <- function(game, .p = NULL, .n = NULL) {
   .m <- get_player_map(game, .p)
   # get df of units we care about
   if (!is.null(game$conflicts)) {
-    cat("#### CONFLICT! Combatants:\n")
+    cat("\n\n#### CONFLICT! Combatants:\n")
     .m <- .m %>%
       mutate(
         `CONFLICT!` = ifelse(loc %in% game$conflicts, "TRUE", ""),
@@ -42,7 +42,7 @@ print_map_df <- function(game, .p = NULL, .n = NULL) {
 
     }
   } else {
-    cat("#### Visible units:\n")
+    cat("\n\n#### Visible units:\n")
     .m <- .m %>%
       select(-passing_through)
 
