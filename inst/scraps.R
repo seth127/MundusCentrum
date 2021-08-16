@@ -57,3 +57,13 @@ View(
 
 render_game("inst/games/anno_duo", players = TRUE, html = TRUE)
 publish_game_html("inst/games/anno_duo", "~/seth127.github.io/MundusCentrum/games", overwrite = TRUE)
+
+
+# Eric's moves
+
+moves_from_gsheet(
+  "eric",
+  5,
+  ss = "https://docs.google.com/spreadsheets/d/1nixuwA_qX0XTXg2LQKyC2nZijZ_LcEuZUhDL7ksXiCc/",
+  sheet = "Moves Only"
+)
