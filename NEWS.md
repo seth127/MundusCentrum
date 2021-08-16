@@ -1,5 +1,11 @@
 # MundusCentrum
 
+# development
+
+* Fixed `B6 <=> C3` vision bug.
+* Added traps!
+* `anno_duo` turn 5.
+
 # 0.0.4
 
 * Added class and print method for `game` object.
