@@ -5,7 +5,9 @@ get_player_map <- function(game, .p) {
     .op <- get_other_players_names(game, .p)
     game$map_df %>%
       filter(.data$loc %in% c(player_vision(game, .p), NA)) %>%
-      filter(!(.data$player %in% .op & .data$action == "sneak"))
+      left_join(UNIT, by = "unit_type") %>%
+      filter(!(.data$player %in% .op & sneak)) %>%
+      select(-dplyr::one_of(str_subset(names(UNIT), "unit_type", negate = TRUE))) # toss UNIT cols
   } else {
     game$map_df
   }
@@ -24,7 +26,7 @@ print_map_df <- function(game, .p = NULL, .n = NULL) {
   .m <- get_player_map(game, .p)
   # get df of units we care about
   if (!is.null(game$conflicts)) {
-    cat("#### CONFLICT! Combatants:\n")
+    cat("\n\n#### CONFLICT! Combatants:\n")
     .m <- .m %>%
       mutate(
         `CONFLICT!` = ifelse(loc %in% game$conflicts, "TRUE", ""),
@@ -42,7 +44,7 @@ print_map_df <- function(game, .p = NULL, .n = NULL) {
 
     }
   } else {
-    cat("#### Visible units:\n")
+    cat("\n\n#### Visible units:\n")
     .m <- .m %>%
       select(-passing_through)
 

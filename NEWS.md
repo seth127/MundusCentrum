@@ -1,5 +1,13 @@
 # MundusCentrum
 
+# development
+
+* Fixed `B6 <=> C3` vision bug.
+* Added traps!
+* Added destroying bridges.
+* Changed so that sneaky units can _never_ be seen, unless they're in the same territory as an opponent. (Previously, they had to actually have "sneak" as their action to be invisible).
+* `anno_duo` turn 5.
+
 # 0.0.4
 
 * Added class and print method for `game` object.

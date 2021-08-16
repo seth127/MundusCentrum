@@ -103,7 +103,7 @@ MAP <- list(
   B6 = list(
     name = "Rhudaur",
     borders = c("C1"),
-    rivers = c("B2", "B8", "B11", "C3", "E2"),
+    rivers = c("B2", "B8", "B11", "E2"),
     bridges = "E2",
     mountains = c("B3", "C3"),
     x_ = 0.505,
@@ -168,7 +168,7 @@ MAP <- list(
   C3 = list(
     name = "Anduin Valley",
     borders = c("C4", "C5", "F7"),
-    rivers = c("B6", "C1", "F2", "F3"),
+    rivers = c("C1", "F2", "F3"),
     bridges = c("C1", "F2"),
     mountains = c("B6", "E2"),
     x_ = 0.61,

@@ -16,27 +16,32 @@ names(NAMES) <- names_keys
 build_name <- function(.u = NULL) {
   assert_string(.u, null.ok = TRUE)
 
-  .u_opts <- UNIT$unit_type
-  if (is.null(.u)) .u <- sample(.u_opts, 1L)
+  # pick keyword to base name choice off of
+  keyword <- if (.u == "trap") {
+    "trap"
+  } else {
+    .u_opts <- UNIT$unit_type
+    if (is.null(.u)) .u <- sample(.u_opts, 1L)
 
-  .u <- sanitize_name(.u)
-  if (!(.u) %in% .u_opts) {
-    abort(glue("Invalid `.u` arg: {.u} -- Use one of: {paste(.u_opts, collapse = ', ')}"))
+    .u <- sanitize_name(.u)
+    if (!(.u) %in% .u_opts) {
+      abort(glue("Invalid `.u` arg: {.u} -- Use one of: {paste(.u_opts, collapse = ', ')}"))
+    }
+
+    # pick a keyword from this unit type
+    keyword_picks <- UNIT %>%
+      filter(unit_type == .u) %>%
+      unlist() %>%
+      map_lgl(~isTRUE(as.logical(.x))) %>%
+      which() %>%
+      names()
+
+    ifelse(
+      length(keyword_picks) > 0,
+      sample(keyword_picks, 1L),
+      "control"
+    )
   }
-
-  # pick a keyword from this unit type
-  keyword_picks <- UNIT %>%
-    filter(unit_type == .u) %>%
-    unlist() %>%
-    map_lgl(~isTRUE(as.logical(.x))) %>%
-    which() %>%
-    names()
-
-  keyword <- ifelse(
-    length(keyword_picks) > 0,
-    sample(keyword_picks, 1L),
-    "control"
-  )
 
   pick <- switch(
     keyword,
@@ -60,6 +65,9 @@ build_name <- function(.u = NULL) {
     },
     sneak = {
       sample_name("grammy_producers")
+    },
+    trap = {
+      paste(sample_name("wu_adj"), sample_name("grammy_producers"))
     }
   )
   pick

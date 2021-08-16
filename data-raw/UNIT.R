@@ -14,6 +14,7 @@ empty <- data.frame(
 
 .l <- rlang::list2(
   empty,
+  create_unit_type("trap", "sneak"),
   create_unit_type("Trazyn The Infinite"),
   create_unit_type("Illuminor Szeras"),
   create_unit_type("Technomancer", "deep"),

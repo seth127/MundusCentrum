@@ -29,11 +29,13 @@ print(game, .p = "{{PLAYER}}")
 * [Turn 2](#turn2)
 * [Turn 3](#turn3)
 * [Turn 4](#turn4)
+* [Turn 5](#turn5)
+* [Turn 6](#turn6)
 
 ### see the starting point
 This is the state of the game at the beginning
 
-```{r}
+```{r, results = "asis"}
 print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
@@ -99,7 +101,7 @@ game <- game %>%
 
 Attempt to reconcile moves.
 
-```{r}
+```{r, results = "asis"}
 print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
@@ -157,7 +159,7 @@ game <- game %>%
 
 Attempt to reconcile moves.
 
-```{r}
+```{r, results = "asis"}
 print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
@@ -173,7 +175,7 @@ game <- game %>%
   reconcile_player_orders()
 ```
 
-```{r}
+```{r, results = "asis"}
 print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
@@ -256,11 +258,12 @@ game <- game %>%
 
 Attempt to reconcile moves.
 
-```{r}
+```{r, results = "asis"}
 print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
+### moves
 
 ```{r}
 # retreats
@@ -272,10 +275,16 @@ game <- game %>%
   reconcile_player_orders()
 ```
 
-```{r}
+```{r, results = "asis"}
 print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
+
+### Discussion Notes
+
+* ~~I updated the multi-territory moves for the first two turns. Are we cool with my decisions?~~ No response.
+* ~~The way I have it, after you move you can only see the units in combat. You don't get to see the full board until _after_ combat is resolved. This was intentional on my part, but do we like this?~~ Ok, I changed this. I think it's much better this way. Red circles on the map show battles and there's a `CONFLICT!` column where relevant in your table. Plus, now you can only see the battles you're involved with.
+* ~~Whose gonna write me a battle story for this turn?~~ Grizzzzz!
 
 # TURN 4 {#turn4}
 
@@ -358,16 +367,164 @@ game <- game %>%
   reconcile_player_orders()
 ```
 
-```{r}
+```{r, results = "asis"}
 print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
-# Discussion Notes
+### moves
 
-* I updated the multi-territory moves for the first two turns. Are we cool with my decisions?
-* ~~The way I have it, after you move you can only see the units in combat. You don't get to see the full board until _after_ combat is resolved. This was intentional on my part, but do we like this?~~ Ok, I changed this. I think it's much better this way. Red circles on the map show battles and there's a `CONFLICT!` column where relevant in your table. Plus, now you can only see the battles you're involved with.
-* Whose gonna write me a battle story for this turn?
+```{r}
+# retreats
+game <- game %>%
+  modify_unit("chris",     "B1",  "move","B2") %>%
+  modify_unit("chris",     c(25, 16),  "move","B2") %>%
+  modify_unit("big_grizz", c(3, 6, 13, 17, 18, 22),   "move",  "H5") %>%
+  reconcile_player_orders()
+```
+
+```{r, results = "asis"}
+print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
+```
+
+
+
+# TURN 5 {#turn5}
+
+```
+252.853.M41: Ravenwing Talonmaster Castiel encountered stiff resistance in the far northern territory of Forodwaith.  He and his accompanying Ravenwing brothers were set upon by wave after wave of Tyranid bio-forms.  The battle was going in their favor until a massive, tentacled spore plummeted from the sky, straight into the heart of the fight.  This new monstrosity would have been difficult enough to deal with on its own, but it came carrying terrible passengers!  Spilling forth from the abomination’s mucus-covered orifices, the large bio-forms (Imperial Designation: Hive Guard) opened fire, and turned the tide of battle against the Ravenwing.  Castiel and his brothers narrowly escaped, but he assures me that they remain combat-ready.
+
+Brother Techmarine Myrdean led a daring assault into the mountain passes of Minas Morgul.  Unfortunately, the Necron host my Deathwing brothers and I had forced to flee the fields of Gorgoroth quickly set up defenses, and ambushed Myrdean in his ascent to meet them.  Repelled from Minas Morgul, our Techmarine has withdrawn back to Gorgoroth to reassess the tactical situation and plan his next attack.  Meanwhile, word has come from Brother Naamand in Nurn that yet another Necron craft has entered his airspace.  Truly, the arrogance of these “undying” legions is staggering.
+
+Every day brings more clues as to the whereabouts of our quarry, and while significantly slowed by antagonistic, xenos elements in the field, our command of this continent’s star ports is all but assured within the month.
+
+Success is measured in blood; yours or your enemy’s.
+```
+
+### moves
+
+```{r}
+game <- game %>%
+
+  modify_unit("big_grizz", c(1, 10, 11, 12, 16),   "move",  c("C1", "B6")) %>%
+  modify_unit("big_grizz", 7,   "control",  "D1") %>%
+  modify_unit("big_grizz", 6,   "control",  "H6") %>%
+  modify_unit("big_grizz", 5,   "move",  "H1") %>%
+  modify_unit("big_grizz", c(3, 13, 17, 18, 22),   "move",  c("H6")) %>%
+  modify_unit("big_grizz", c(8, 23),   "move",  c("F2", "F1")) %>%
+  modify_unit("big_grizz", 21,   "move",  "F1") %>%
+  modify_unit("big_grizz", 9,   "move",  "C2") %>%
+  modify_unit("big_grizz", c(4, 15, 19, 20),   "sneak",  "F1") %>%
+  modify_unit("big_grizz", 14,   "move",  "F7") %>%
+  modify_unit("big_grizz", 2,   "reinforce",  "H2") %>%
+  add_trap("big_grizz", "H5") %>%
+  
+  modify_unit("eric", 1, "move",  "F3") %>%
+  modify_unit("eric", 2, "move",  "F3") %>%
+  modify_unit("eric", 3, "move",  "F3") %>%
+  modify_unit("eric", 4, "move",  "F3") %>%
+  modify_unit("eric", 5, "move",  "F3") %>%
+  modify_unit("eric", 6, "move",  "F3") %>%
+  modify_unit("eric", 7, "move",  "E7") %>%
+  modify_unit("eric", 8, "move",  "F3") %>%
+  modify_unit("eric", 9, "move",  "F3") %>%
+  modify_unit("eric", 10, "move",  "F3") %>%
+  modify_unit("eric", 11, "move",  "F3") %>%
+  modify_unit("eric", 12, "move",  "F3") %>%
+  modify_unit("eric", 13, "move",  "F3") %>%
+  modify_unit("eric", 14, "move",  "H5") %>%
+  modify_unit("eric", 15, "descend",  "H5") %>%
+  modify_unit("eric", 16, "move",  "H5") %>%
+  modify_unit("eric", 17, "move",  "H5") %>%
+  modify_unit("eric", 18, "move",  "H5") %>%
+  modify_unit("eric", 19, "move",  "G5") %>%
+  modify_unit("eric", 20, "defend",  "E4") %>%
+  modify_unit("eric", 21, "regenerate",  "G7") %>%
+  modify_unit("eric", 22, "move",  "H5") %>%
+  modify_unit("eric", 23, "move",  "H5") %>%
+  modify_unit("eric", 24, "move",  "H5") %>%
+  modify_unit("eric", 25, "move",  "I1") %>%
+  modify_unit("eric", 26, "move",  "H5") %>%
+  modify_unit("eric", 27, "defend",  "F7") %>%
+  modify_unit("eric", 28, "defend",  "H1") %>%
+  destroy_bridge("E4", "E7") %>% # eric
+  add_trap("eric", "E4") %>%
+  
+  modify_unit("chris", c(2, 17, 18), "move", "F1") %>%  
+  modify_unit("chris", c(1,12,23),  "move", c("B1")) %>%
+  modify_unit("chris", c(3, 10, 24),  "move", c("E4")) %>%
+  modify_unit("chris", c(4, 22),  "move", c("B6")) %>%
+  modify_unit("chris", c(5 , 16, 25),  "move", c("B5")) %>%
+  modify_unit("chris", 6, "move", "A4") %>%
+  modify_unit("chris", 7, "control", "B6") %>%
+  modify_unit("chris", 8, "move", "B2") %>%
+  modify_unit("chris", 9, "control", "B10") %>%
+  modify_unit("chris", 11, "control", "B8") %>%
+  modify_unit("chris", 13,  "move", "A5") %>%
+  modify_unit("chris", 14, "move", "E1") %>%
+  modify_unit("chris", 15, "control", "B11") %>%
+  modify_unit("chris", 19, "move", c("E2", "F1")) %>%
+  modify_unit("chris", 20, "reinforce") %>%
+  modify_unit("chris", 21, "move", "B3") %>%
+  
+
+  reconcile_player_orders()
+```
+
+```{r, results = "asis"}
+print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
+```
+
+
+
+### moves
+
+```{r}
+# retreats
+game <- game %>%
+  kill_unit("chris", 24) %>%
+  modify_unit("chris", "F1", "move",  "E2") %>%
+  modify_unit("chris", "B6", "move",  "B2") %>%
+  modify_unit("eric", 28, "move",  "F8") %>%
+  modify_unit("eric", 27, "move",  "F3") %>%
+  modify_unit("eric", 20, "move",  "E5") %>%
+  destroy_trap("big_grizz", "H5") %>%
+  destroy_trap("eric", "E4") %>%
+  
+  reconcile_player_orders()
+```
+
+```{r, results = "asis"}
+print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
+```
+
+### Discussion Notes
+
+* ~~Here's an interesting question: in Turn 4, Moby was trying to move `B3 => B1 => B4` but ran into Chris in `B1`. Mobes wins the battle and, the way I have it now, he proceeds to `B4` (his original destination) leaving `B1` (the site of the battle) unoccupied. I guess this could make sense theoretically, but it seems a little weird. Or maybe,~~ if he had wanted to leave anybody in `B1` then he would have to specify that during the retreat phase? Thoughts? **Yes**
+* ~~Also, I'm pretty sure Eric and Moby are just passing in the night in `H5` and `H6`. Is that right? If so... this shouldn't be legal, right? They have to fight?~~ **They didn't** actually cross paths. They went around each other `eric H6 => H5` and `moby H4 => H6`.
+* I made the change where sneaky units can _never_ be seen, unless they're in the same territory as an opponent. (Previously, they had to actually have "sneak" as their action to be invisible). Lemme know if this is still the rule you want and, if so, if it appears to be rendering right on your maps.
+* How does the die-and-replace thing happen? Do you get to respawn in the retreat phase and then immediately move next turn? Or do you spend a turn respawning?
+
+# TURN 6 {#turn6}
+
+```
+253.853.M41: Our grim resolve has not gone unrewarded!  Intelligence on the presence of Fallen on Mundus Centrum has proven valid and actionable. Thanks to the investigatory measures of our forces in the field, it is believed by my brothers of the Inner Circle that a captain of our ancient enemy is behind many of the xenos machinations on the continent.  Every action we take is removing options for his escape, and I am certain that his capture is imminent.
+
+Brother Epistolary Larathiel informs me that with the capture of space port Moria, he can begin to set up suitable chambers for interrogation.  This space port, located in the continent’s largest mountain range, has many deep passages and hidden chambers, not unlike The Rock.  Larathiel assures me that Moria provides an ideal location for offering deliverance.
+
+Possession of Moria was hard-won, though.  Psychic abominations of the Tyranid host were also drawn to the strategic location, and had it not been for our phobos-bedecked brethren catching them off-guard, the fight for the space port could have easily gone the other way.  The Emperor truly does protect, and we are his wrath made manifest.
+
+Castiel continues his pressure campaign in the North to great success, beating back tyranid bio-forms along the mountain ranges.  His quick strike and withdrawal doctrines of war are well-suited for the terrain. 
+
+To the South, only small confrontations to report as scarab constructs flee before the might of Honorable Brother Seraphus and squad Kazaral.  I fear, though, that our resiliency in Mordor has not yet truly been tested.  Traps were set in Gorgoroth to slow the Necron advance on my position in the Barad-Dur star port, but they seem to have done little to disabuse the soulless shamblers of their conquest-driven notions.  Without a doubt, the siege on Barad-Dur will commence within the next eight hours.  Let them come.
+
+Only in death does duty end. 
+```
+
+### moves...
 
 **Rmd Hash:** {{RMD_MD5}}
 

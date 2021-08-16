@@ -124,8 +124,6 @@ player_vision <- function(game, .p) {
   comms <- get_comms(game, .p)
   controls <- get_controls(game, .p)
 
-  ### TODO: add territories moved through by flyers and fast ones?
-
   c(occ_loc, borders, comms, controls) %>%
     unique() %>%
     sort()
