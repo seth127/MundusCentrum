@@ -30,6 +30,7 @@ print(game, .p = "{{PLAYER}}")
 * [Turn 3](#turn3)
 * [Turn 4](#turn4)
 * [Turn 5](#turn5)
+* [Turn 6](#turn6)
 
 ### see the starting point
 This is the state of the game at the beginning
@@ -279,6 +280,12 @@ print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
+### Discussion Notes
+
+* ~~I updated the multi-territory moves for the first two turns. Are we cool with my decisions?~~ No response.
+* ~~The way I have it, after you move you can only see the units in combat. You don't get to see the full board until _after_ combat is resolved. This was intentional on my part, but do we like this?~~ Ok, I changed this. I think it's much better this way. Red circles on the map show battles and there's a `CONFLICT!` column where relevant in your table. Plus, now you can only see the battles you're involved with.
+* ~~Whose gonna write me a battle story for this turn?~~ Grizzzzz!
+
 # TURN 4 {#turn4}
 
 ```
@@ -382,6 +389,7 @@ print_map_df(game, "{{PLAYER}}")
 ```
 
 
+
 # TURN 5 {#turn5}
 
 ```
@@ -441,7 +449,7 @@ game <- game %>%
   modify_unit("eric", 27, "defend",  "F7") %>%
   modify_unit("eric", 28, "defend",  "H1") %>%
   destroy_bridge("E4", "E7") %>%
-  add_trap("eric", "E7") %>%
+  add_trap("eric", "E4") %>%
   
   modify_unit("chris", c(2, 17, 18), "move", "F1") %>%  
   modify_unit("chris", c(1,12,23),  "move", c("B1")) %>%
@@ -470,10 +478,97 @@ print_map_df(game, "{{PLAYER}}")
 ```
 
 
-# Discussion Notes
 
-* Here's an interesting question: in Turn 4, Moby was trying to move `B3 => B1 => B4` but ran into Chris in `B1`. Mobes wins the battle and, the way I have it now, he proceeds to `B4` (his original destination) leaving `B1` (the site of the battle) unoccupied. I guess this could make sense theoretically, but it seems a little weird. Or maybe, if he had wanted to leave anybody in `B1` then he would have to specify that during the retreat phase? Thoughts?
-* Also, I'm pretty sure Eric and Moby are just passing in the night in `H5` and `H6`. Is that right? If so... this shouldn't be legal, right? They have to fight?
+### moves
+
+```{r}
+# retreats
+game <- game %>%
+  kill_unit("chris", 24) %>%
+  modify_unit("chris", "F1", "move",  "E2") %>%
+  modify_unit("chris", "B6", "move",  "B8") %>%
+  modify_unit("eric", 28, "move",  "F8") %>%
+  modify_unit("eric", 27, "move",  "F3") %>%
+  modify_unit("eric", 20, "move",  "E5") %>%
+  destroy_trap("big_grizz", "H5") %>%
+  destroy_trap("eric", "E4") %>%
+  
+  reconcile_player_orders()
+```
+
+```{r, results = "asis"}
+print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
+```
+
+### Discussion Notes
+
+* ~~Here's an interesting question: in Turn 4, Moby was trying to move `B3 => B1 => B4` but ran into Chris in `B1`. Mobes wins the battle and, the way I have it now, he proceeds to `B4` (his original destination) leaving `B1` (the site of the battle) unoccupied. I guess this could make sense theoretically, but it seems a little weird. Or maybe,~~ if he had wanted to leave anybody in `B1` then he would have to specify that during the retreat phase? Thoughts? **Yes**
+* ~~Also, I'm pretty sure Eric and Moby are just passing in the night in `H5` and `H6`. Is that right? If so... this shouldn't be legal, right? They have to fight?~~ **They didn't** actually cross paths. They went around each other `eric H6 => H5` and `moby H4 => H6`.
+
+# TURN 6 {#turn6}
+
+```
+
+```
+
+### moves
+
+```{r}
+game <- game %>%
+
+  
+  modify_unit("big_grizz", c(1, 10, 11, 12, 16),   "move",  c("E2", "F1")) %>%
+  modify_unit("big_grizz", 7,   "move",  "D3") %>%
+  modify_unit("big_grizz", c(17),   "move",  "H5") %>%
+  modify_unit("big_grizz", c(6),   "move",  "I4") %>%
+  modify_unit("big_grizz", 5,   "control",  "H1") %>%
+  modify_unit("big_grizz", c(3, 13, 18, 22),   "move",  c("H5", "H2")) %>%
+  modify_unit("big_grizz", c(8),   "control",  c("F1")) %>%
+  modify_unit("big_grizz", c(21, 23) ,  "reinforce",  "F1") %>%
+  modify_unit("big_grizz", 9,   "control",  "C2") %>%
+  modify_unit("big_grizz", c(4, 15, 19, 20),   "reinforce",  "F1") %>%
+  modify_unit("big_grizz", 14,   "move",  "F4") %>%
+  modify_unit("big_grizz", 2,   "reinforce",  "H2") %>%
+  add_trap("big_grizz", "H5") %>%
+  
+  modify_unit('eric', '1', 'move', 'F2') %>%
+  modify_unit('eric', '2', 'move', 'F2') %>%
+  modify_unit('eric', '3', 'move', 'F2') %>%
+  modify_unit('eric', '4', 'move', 'F2') %>%
+  modify_unit('eric', '5', 'move', 'F2') %>%
+  modify_unit('eric', '6', 'move', 'F2') %>%
+  modify_unit('eric', '7', 'control', 'E7') %>%
+  modify_unit('eric', '8', 'move', 'F2') %>%
+  modify_unit('eric', '9', 'move', 'F2') %>%
+  modify_unit('eric', '10', 'move', 'F2') %>%
+  modify_unit('eric', '11', 'move', 'F2') %>%
+  modify_unit('eric', '12', 'move', 'F2') %>%
+  modify_unit('eric', '13', 'move', 'F2') %>%
+  modify_unit('eric', '14', 'move', 'H2') %>%
+  modify_unit('eric', '15', 'move', 'H2') %>%
+  modify_unit('eric', '16', 'move', 'H2') %>%
+  modify_unit('eric', '17', 'move', 'H2') %>%
+  modify_unit('eric', '18', 'move', 'H2') %>%
+  modify_unit('eric', '19', 'control', 'G5') %>%
+  modify_unit('eric', '20', 'defend', 'E5') %>%
+  modify_unit('eric', '21', 'move', 'H4') %>%
+  modify_unit('eric', '22', 'move', 'H2') %>%
+  modify_unit('eric', '23', 'move', 'H2') %>%
+  modify_unit('eric', '24', 'move', 'H2') %>%
+  modify_unit('eric', '25', 'control', 'I1') %>%
+  modify_unit('eric', '26', 'move', 'H2') %>%
+  modify_unit('eric', '27', 'defend', 'F3') %>%
+  modify_unit('eric', '28', 'defend', 'F8') %>%
+  
+  reconcile_player_orders()
+```
+
+```{r, results = "asis"}
+print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
+```
+
 
 **Rmd Hash:** {{RMD_MD5}}
 
