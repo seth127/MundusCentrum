@@ -51,6 +51,7 @@ new_game <- function(name, players, points = NULL) {
 
   game <- list(
     name = name,
+    turn = "000A",
     # create hashes for serving html
     players = as.list(
       map_chr(paste(name, c("GLOBAL", ids)), ~digest::digest(.x, algo = "md5")) %>%
@@ -64,6 +65,7 @@ new_game <- function(name, players, points = NULL) {
   # assign class
   class(game) <- c(GAME_CLASS, class(game))
 
+  game_json_to_disk(game)
   return(reconcile_player_orders(game))
 }
 

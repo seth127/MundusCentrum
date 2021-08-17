@@ -51,5 +51,7 @@ reconcile_player_orders <- function(game) {
     }
   }
 
+  game <- increment_turn_phase(game)
+  save_game(game)
   game
 }
