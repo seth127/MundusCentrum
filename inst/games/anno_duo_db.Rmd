@@ -1,0 +1,42 @@
+---
+title: "The First Real Game"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  fig.width=8,
+  fig.height=8
+)
+```
+
+
+```{r, include=FALSE}
+devtools::load_all()
+library(MundusCentrum)
+```
+
+```{r}
+# set player you want to render (this would come from shiny input)
+PLAYER <- "big_grizz"
+TURN <- "006A"
+```
+
+
+```{r, echo = FALSE, results = "asis"}
+cat(glue("# {PLAYER} :: Turn {TURN}\n\n"))
+game <- load_game("anno_duo_db", TURN)
+print(game, .p = PLAYER)
+```
+
+
+### Current state
+
+This is the state of the game.
+
+```{r, results = "asis"}
+print(draw_map(game, PLAYER))
+print_map_df(game, PLAYER)
+```
+

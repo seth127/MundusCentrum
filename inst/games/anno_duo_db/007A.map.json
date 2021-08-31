@@ -1,0 +1,1001 @@
+{
+  "A1": {
+    "name": "Forlinden",
+    "borders": "A4",
+    "mountains": "A2",
+    "x_": 0.041,
+    "y_": 0.82,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "A2": {
+    "name": "Lune Valley",
+    "borders": ["A4", "A3", "B2"],
+    "rivers": "A5",
+    "bridges": "A5",
+    "mountains": "A1",
+    "x_": 0.16,
+    "y_": 0.815,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "A3": {
+    "name": "Evendim Hills",
+    "borders": ["A2", "A5", "B2"],
+    "x_": 0.26,
+    "y_": 0.845,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "A4": {
+    "name": "North Mithlond",
+    "borders": ["A1", "A2"],
+    "rivers": ["A5", "A6"],
+    "power": true,
+    "x_": 0.13,
+    "y_": 0.785,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "A5": {
+    "name": "Tower Hills",
+    "borders": ["A3", "A6", "A7"],
+    "rivers": ["A2", "B5", "B7"],
+    "x_": 0.196,
+    "y_": 0.765,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "A6": {
+    "name": "South Mithlond",
+    "borders": ["A5", "A8"],
+    "rivers": "A4",
+    "x_": 0.14,
+    "y_": 0.71,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "A7": {
+    "name": "The Shire",
+    "borders": "A5",
+    "rivers": ["B9", "B11", "E1"],
+    "bridges": "B9",
+    "mountains": "A8",
+    "power": true,
+    "x_": 0.22,
+    "y_": 0.66,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "A8": {
+    "name": "Harlindon",
+    "borders": "A6",
+    "rivers": "E1",
+    "mountains": ["A5", "A7"],
+    "power": true,
+    "x_": 0.09,
+    "y_": 0.645,
+    "comm": "chris",
+    "bridges": "E1",
+    "control": "chris"
+  },
+  "B1": {
+    "name": "Forodwaith",
+    "borders": ["B2", "B3", "B4", "D1", "D2"],
+    "mountains": "C2",
+    "power": true,
+    "x_": 0.5,
+    "y_": 0.965,
+    "comm": "chris"
+  },
+  "B2": {
+    "name": "Borderlands",
+    "borders": ["A2", "A3", "B1", "B3", "B5", "B7", "B8"],
+    "rivers": "B6",
+    "x_": 0.375,
+    "y_": 0.825,
+    "comm": "chris",
+    "control": "chris",
+    "bridges": "B6"
+  },
+  "B3": {
+    "name": "Angmar",
+    "borders": ["B1", "B2"],
+    "mountains": ["B4", "B6", "C1"],
+    "x_": 0.425,
+    "y_": 0.85,
+    "comm": "chris"
+  },
+  "B4": {
+    "name": "Eastern Angmar",
+    "borders": ["B1", "C1"],
+    "mountains": ["B3", "C2"],
+    "x_": 0.55,
+    "y_": 0.915,
+    "comm": "chris"
+  },
+  "B5": {
+    "name": "North Downs",
+    "borders": ["B2", "B7"],
+    "rivers": "A5",
+    "x_": 0.34,
+    "y_": 0.795,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "B6": {
+    "name": "Rhudaur",
+    "borders": "C1",
+    "rivers": ["B2", "B8", "B11", "E2"],
+    "bridges": ["E2", "B2"],
+    "mountains": ["B3", "C3"],
+    "x_": 0.505,
+    "y_": 0.76,
+    "comm": "chris"
+  },
+  "B7": {
+    "name": "Fornost",
+    "borders": ["B2", "B5", "B8", "B9", "B10"],
+    "rivers": "A5",
+    "power": true,
+    "x_": 0.34,
+    "y_": 0.745,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "B8": {
+    "name": "Weather Hills",
+    "borders": ["B2", "B7", "B10", "B11"],
+    "rivers": "B6",
+    "bridges": "B6",
+    "power": true,
+    "x_": 0.4,
+    "y_": 0.72,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "B9": {
+    "name": "Buckland",
+    "borders": ["B7", "B10", "B11"],
+    "rivers": "A7",
+    "x_": 0.29,
+    "y_": 0.68,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "B10": {
+    "name": "Old Forest",
+    "borders": ["B7", "B8", "B9", "B11"],
+    "x_": 0.35,
+    "y_": 0.68,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "B11": {
+    "name": "South Downs",
+    "borders": ["B8", "B9", "B10", "E1"],
+    "rivers": ["A7", "B6", "E2", "E3"],
+    "x_": 0.34,
+    "y_": 0.615,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "C1": {
+    "name": "Carrock",
+    "borders": ["B4", "B6", "C2"],
+    "rivers": "C3",
+    "bridges": "C3",
+    "mountains": "B3",
+    "x_": 0.585,
+    "y_": 0.82,
+    "comm": "big_grizz"
+  },
+  "C2": {
+    "name": "North Mirkwood",
+    "borders": "C1",
+    "rivers": ["C4", "D3"],
+    "bridges": ["C4", "D3"],
+    "mountains": ["B1", "D1"],
+    "power": true,
+    "x_": 0.69,
+    "y_": 0.79,
+    "comm": "big_grizz",
+    "control": "big_grizz"
+  },
+  "C3": {
+    "name": "Anduin Valley",
+    "borders": ["C4", "C5", "F7"],
+    "rivers": ["C1", "F2", "F3"],
+    "bridges": ["C1", "F2"],
+    "mountains": ["B6", "E2"],
+    "x_": 0.61,
+    "y_": 0.65,
+    "comm": "big_grizz",
+    "control": "big_grizz"
+  },
+  "C4": {
+    "name": "Eastern Mirkwood",
+    "borders": ["C3", "C5", "F5"],
+    "rivers": ["C2", "D3"],
+    "x_": 0.705,
+    "y_": 0.65,
+    "comm": "big_grizz",
+    "control": "big_grizz"
+  },
+  "C5": {
+    "name": "South Mirkwood",
+    "borders": ["C3", "C4", "F5", "F7"],
+    "x_": 0.7,
+    "y_": 0.595,
+    "comm": "big_grizz",
+    "control": "big_grizz"
+  },
+  "D1": {
+    "name": "Weathered Heath",
+    "borders": ["B1", "D2", "D3"],
+    "mountains": ["C2", "D4"],
+    "x_": 0.81,
+    "y_": 0.92,
+    "comm": "big_grizz",
+    "control": "big_grizz"
+  },
+  "D2": {
+    "name": "North Rhun",
+    "borders": ["B1", "D1", "D4"],
+    "mountains": "D3",
+    "x_": 0.95,
+    "y_": 0.93,
+    "comm": "big_grizz",
+    "control": "big_grizz"
+  },
+  "D3": {
+    "name": "Esgaroth",
+    "borders": "D1",
+    "rivers": ["C2", "C4", "D4"],
+    "mountains": ["B1", "D2"],
+    "power": true,
+    "x_": 0.8,
+    "y_": 0.795,
+    "comm": "big_grizz"
+  },
+  "D4": {
+    "name": "South Rhun",
+    "borders": "D2",
+    "rivers": ["D3", "F5"],
+    "bridges": "F5",
+    "mountains": "D1",
+    "x_": 0.94,
+    "y_": 0.755,
+    "comm": "big_grizz",
+    "control": "big_grizz"
+  },
+  "E1": {
+    "name": "Minhiriath",
+    "borders": "B11",
+    "rivers": ["A7", "A8", "E3", "E4"],
+    "bridges": ["E3", "E4", "A8"],
+    "power": true,
+    "x_": 0.24,
+    "y_": 0.555,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "E2": {
+    "name": "Eregion",
+    "borders": "F1",
+    "rivers": ["B6", "B11", "E3"],
+    "bridges": "E3",
+    "mountains": ["F2", "F3"],
+    "power": true,
+    "x_": 0.45,
+    "y_": 0.59,
+    "comm": "chris"
+  },
+  "E3": {
+    "name": "Dunland",
+    "borders": "E4",
+    "rivers": ["B11", "E1", "E2"],
+    "mountains": ["E5", "F2", "F3"],
+    "x_": 0.395,
+    "y_": 0.52,
+    "comm": "chris"
+  },
+  "E4": {
+    "name": "Enedwaith",
+    "borders": "E3",
+    "rivers": ["E1", "E5", "E6", "E7"],
+    "bridges": [],
+    "x_": 0.35,
+    "y_": 0.435,
+    "comm": "chris",
+    "control": "chris"
+  },
+  "E5": {
+    "name": "Fangorn",
+    "borders": ["E7", "F3", "F4"],
+    "rivers": "E4",
+    "mountains": "E3",
+    "x_": 0.495,
+    "y_": 0.385,
+    "comm": "eric",
+    "control": "eric"
+  },
+  "E6": {
+    "name": "West Rohan",
+    "borders": ["E7", "G1"],
+    "rivers": "E4",
+    "mountains": ["G3", "G4"],
+    "x_": 0.295,
+    "y_": 0.3,
+    "comm": "eric"
+  },
+  "E7": {
+    "name": "Gap of Rohan",
+    "borders": ["E5", "E6", "G7"],
+    "rivers": ["E4", "F4", "F8"],
+    "bridges": "F4",
+    "mountains": ["G4", "G5", "G6"],
+    "power": true,
+    "x_": 0.5,
+    "y_": 0.285,
+    "comm": "eric",
+    "control": "eric"
+  },
+  "F1": {
+    "name": "Moria",
+    "borders": ["E2", "F2"],
+    "x_": 0.5,
+    "y_": 0.61,
+    "comm": "big_grizz"
+  },
+  "F2": {
+    "name": "Gladden Fields",
+    "borders": ["F1", "F3"],
+    "rivers": "C3",
+    "mountains": "E3",
+    "x_": 0.565,
+    "y_": 0.6,
+    "comm": "eric"
+  },
+  "F3": {
+    "name": "Lorien",
+    "borders": ["E5", "F2", "F4"],
+    "rivers": ["C3", "F7"],
+    "mountains": ["E2", "E3"],
+    "power": true,
+    "x_": 0.575,
+    "y_": 0.52,
+    "comm": "eric"
+  },
+  "F4": {
+    "name": "The Wold",
+    "borders": ["E5", "F3"],
+    "rivers": ["E7", "F7", "F8"],
+    "bridges": "F7",
+    "power": true,
+    "x_": 0.59,
+    "y_": 0.43,
+    "comm": "big_grizz"
+  },
+  "F5": {
+    "name": "Brown Lands",
+    "borders": ["C4", "C5", "F6", "F7", "F8"],
+    "rivers": ["D3", "D4"],
+    "mountains": ["H2", "H3"],
+    "power": true,
+    "x_": 0.85,
+    "y_": 0.48,
+    "comm": "big_grizz",
+    "control": "big_grizz"
+  },
+  "F6": {
+    "name": "Rhun Hills",
+    "borders": "F5",
+    "x_": 0.95,
+    "y_": 0.4
+  },
+  "F7": {
+    "name": "Emen Muil",
+    "borders": ["C3", "C5", "F5", "F8"],
+    "rivers": ["F3", "F4"],
+    "x_": 0.685,
+    "y_": 0.41,
+    "comm": "big_grizz"
+  },
+  "F8": {
+    "name": "Dead Marshes",
+    "borders": ["F5", "F7", "G8", "H1"],
+    "rivers": ["E7", "F4"],
+    "mountains": ["H2", "H3"],
+    "power": true,
+    "x_": 0.73,
+    "y_": 0.31,
+    "comm": "eric"
+  },
+  "G1": {
+    "name": "Druwaith Iaur",
+    "borders": ["E6", "G3"],
+    "mountains": ["G2", "G4"],
+    "x_": 0.18,
+    "y_": 0.225
+  },
+  "G2": {
+    "name": "Andrast",
+    "borders": "G3",
+    "mountains": "G1",
+    "x_": 0.175,
+    "y_": 0.175
+  },
+  "G3": {
+    "name": "Anfalas",
+    "borders": ["G1", "G2", "G4"],
+    "mountains": "E6",
+    "x_": 0.265,
+    "y_": 0.19
+  },
+  "G4": {
+    "name": "Vale of Erech",
+    "borders": ["G3", "G5"],
+    "mountains": ["E6", "E7", "G1"],
+    "power": true,
+    "x_": 0.33,
+    "y_": 0.205
+  },
+  "G5": {
+    "name": "Lamedon",
+    "borders": ["G4", "G6", "G9"],
+    "mountains": ["E7", "G4"],
+    "x_": 0.395,
+    "y_": 0.21,
+    "comm": "eric",
+    "control": "eric"
+  },
+  "G6": {
+    "name": "Lebennin",
+    "borders": ["G5", "G7", "G9"],
+    "rivers": "G8",
+    "mountains": "E7",
+    "power": true,
+    "x_": 0.48,
+    "y_": 0.16,
+    "comm": "eric",
+    "control": "eric"
+  },
+  "G7": {
+    "name": "Minas Tirith",
+    "borders": ["E7", "G5"],
+    "rivers": "G8",
+    "bridges": "G8",
+    "x_": 0.54,
+    "y_": 0.195,
+    "comm": "eric",
+    "control": "eric"
+  },
+  "G8": {
+    "name": "Ithilien",
+    "borders": ["F8", "G10", "H4"],
+    "rivers": ["G6", "G7"],
+    "mountains": ["H1", "H3"],
+    "power": true,
+    "x_": 0.605,
+    "y_": 0.15,
+    "comm": "eric",
+    "control": "eric"
+  },
+  "G9": {
+    "name": "Belfalas",
+    "borders": ["G5", "G6"],
+    "power": true,
+    "x_": 0.43,
+    "y_": 0.11,
+    "comm": "eric",
+    "control": "eric"
+  },
+  "G10": {
+    "name": "South Ithilien",
+    "borders": ["G8", "I1"],
+    "mountains": ["H4", "H5", "H6"],
+    "x_": 0.585,
+    "y_": 0.1,
+    "comm": "eric",
+    "control": "eric"
+  },
+  "H1": {
+    "name": "Udun Vale",
+    "borders": ["F8", "H3"],
+    "mountains": ["G8", "H2"],
+    "x_": 0.745,
+    "y_": 0.2,
+    "comm": "big_grizz",
+    "control": "big_grizz"
+  },
+  "H2": {
+    "name": "Barad Dur",
+    "borders": ["H3", "H5"],
+    "mountains": ["F5", "F8", "H1"],
+    "x_": 0.92,
+    "y_": 0.21,
+    "comm": "eric",
+    "control": "big_grizz"
+  },
+  "H3": {
+    "name": "Mount Doom",
+    "borders": ["H1", "H2", "H5"],
+    "mountains": ["F5", "F8", "G8"],
+    "power": true,
+    "x_": 0.8,
+    "y_": 0.175,
+    "comm": "big_grizz",
+    "control": "big_grizz"
+  },
+  "H4": {
+    "name": "Minas Morgul",
+    "borders": ["G8", "H5"],
+    "mountains": ["G10", "H3", "H6"],
+    "x_": 0.695,
+    "y_": 0.14,
+    "comm": "eric",
+    "control": "eric"
+  },
+  "H5": {
+    "name": "Gorgoroth",
+    "borders": ["H2", "H3", "H4", "H6"],
+    "mountains": ["G10", "I5"],
+    "x_": 0.92,
+    "y_": 0.135,
+    "comm": "big_grizz",
+    "control": "big_grizz"
+  },
+  "H6": {
+    "name": "Nurn",
+    "borders": "H5",
+    "mountains": ["G10", "H4", "I1", "I3", "I4", "I5"],
+    "x_": 0.775,
+    "y_": 0.09,
+    "comm": "big_grizz",
+    "control": "big_grizz"
+  },
+  "I1": {
+    "name": "Harondor",
+    "borders": "G10",
+    "rivers": ["I2", "I3"],
+    "bridges": "I3",
+    "mountains": "H6",
+    "x_": 0.52,
+    "y_": 0.05,
+    "comm": "eric",
+    "control": "eric"
+  },
+  "I2": {
+    "name": "Umbar",
+    "borders": "I3",
+    "rivers": "I1",
+    "x_": 0.425,
+    "y_": 0.015
+  },
+  "I3": {
+    "name": "Harad",
+    "borders": ["I2", "I4"],
+    "rivers": "I1",
+    "mountains": "H6",
+    "x_": 0.645,
+    "y_": 0.03,
+    "comm": "eric",
+    "control": "eric"
+  },
+  "I4": {
+    "name": "Near Harad",
+    "borders": ["I3", "I4"],
+    "mountains": "H6",
+    "x_": 0.81,
+    "y_": 0.035,
+    "comm": "big_grizz",
+    "control": "eric"
+  },
+  "I5": {
+    "name": "Khand",
+    "borders": "I4",
+    "mountains": ["H5", "H6"],
+    "power": true,
+    "x_": 0.9,
+    "y_": 0.05,
+    "comm": "eric"
+  },
+  "A1S": {
+    "name": "Forlinden - Sky",
+    "sky": ["A4S", "A2S"],
+    "x_": 0.041,
+    "y_": 0.82
+  },
+  "A2S": {
+    "name": "Lune Valley - Sky",
+    "sky": ["A4S", "A3S", "B2S", "A5S", "A1S"],
+    "x_": 0.16,
+    "y_": 0.815
+  },
+  "A3S": {
+    "name": "Evendim Hills - Sky",
+    "sky": ["A2S", "A5S", "B2S"],
+    "x_": 0.26,
+    "y_": 0.845
+  },
+  "A4S": {
+    "name": "North Mithlond - Sky",
+    "sky": ["A1S", "A2S", "A5S", "A6S"],
+    "x_": 0.13,
+    "y_": 0.785
+  },
+  "A5S": {
+    "name": "Tower Hills - Sky",
+    "sky": ["A3S", "A6S", "A7S", "A2S", "B5S", "B7S"],
+    "x_": 0.196,
+    "y_": 0.765
+  },
+  "A6S": {
+    "name": "South Mithlond - Sky",
+    "sky": ["A5S", "A8S", "A4S"],
+    "x_": 0.14,
+    "y_": 0.71
+  },
+  "A7S": {
+    "name": "The Shire - Sky",
+    "sky": ["A5S", "B9S", "B11S", "E1S", "A8S"],
+    "x_": 0.22,
+    "y_": 0.66
+  },
+  "A8S": {
+    "name": "Harlindon - Sky",
+    "sky": ["A6S", "E1S", "A5S", "A7S"],
+    "x_": 0.09,
+    "y_": 0.645
+  },
+  "B1S": {
+    "name": "Forodwaith - Sky",
+    "sky": ["B2S", "B3S", "B4S", "D1S", "D2S", "C2S"],
+    "x_": 0.5,
+    "y_": 0.965
+  },
+  "B2S": {
+    "name": "Borderlands - Sky",
+    "sky": ["A2S", "A3S", "B1S", "B3S", "B5S", "B7S", "B8S", "B6S"],
+    "x_": 0.375,
+    "y_": 0.825
+  },
+  "B3S": {
+    "name": "Angmar - Sky",
+    "sky": ["B1S", "B2S", "B4S", "B6S", "C1S"],
+    "x_": 0.425,
+    "y_": 0.85
+  },
+  "B4S": {
+    "name": "Eastern Angmar - Sky",
+    "sky": ["B1S", "C1S", "B3S", "C2S"],
+    "x_": 0.55,
+    "y_": 0.915
+  },
+  "B5S": {
+    "name": "North Downs - Sky",
+    "sky": ["B2S", "B7S", "A5S"],
+    "x_": 0.34,
+    "y_": 0.795
+  },
+  "B6S": {
+    "name": "Rhudaur - Sky",
+    "sky": ["C1S", "B2S", "B8S", "B11S", "E2S", "B3S", "C3S"],
+    "x_": 0.505,
+    "y_": 0.76
+  },
+  "B7S": {
+    "name": "Fornost - Sky",
+    "sky": ["B2S", "B5S", "B8S", "B9S", "B10S", "A5S"],
+    "x_": 0.34,
+    "y_": 0.745
+  },
+  "B8S": {
+    "name": "Weather Hills - Sky",
+    "sky": ["B2S", "B7S", "B10S", "B11S", "B6S"],
+    "x_": 0.4,
+    "y_": 0.72
+  },
+  "B9S": {
+    "name": "Buckland - Sky",
+    "sky": ["B7S", "B10S", "B11S", "A7S"],
+    "x_": 0.29,
+    "y_": 0.68
+  },
+  "B10S": {
+    "name": "Old Forest - Sky",
+    "sky": ["B7S", "B8S", "B9S", "B11S"],
+    "x_": 0.35,
+    "y_": 0.68
+  },
+  "B11S": {
+    "name": "South Downs - Sky",
+    "sky": ["B8S", "B9S", "B10S", "E1S", "A7S", "B6S", "E2S", "E3S"],
+    "x_": 0.34,
+    "y_": 0.615
+  },
+  "C1S": {
+    "name": "Carrock - Sky",
+    "sky": ["B4S", "B6S", "C2S", "C3S", "B3S"],
+    "x_": 0.585,
+    "y_": 0.82
+  },
+  "C2S": {
+    "name": "North Mirkwood - Sky",
+    "sky": ["C1S", "C4S", "D3S", "B1S", "D1S"],
+    "x_": 0.69,
+    "y_": 0.79
+  },
+  "C3S": {
+    "name": "Anduin Valley - Sky",
+    "sky": ["C4S", "C5S", "F7S", "C1S", "F2S", "F3S", "B6S", "E2S"],
+    "x_": 0.61,
+    "y_": 0.65
+  },
+  "C4S": {
+    "name": "Eastern Mirkwood - Sky",
+    "sky": ["C3S", "C5S", "F5S", "C2S", "D3S"],
+    "x_": 0.705,
+    "y_": 0.65
+  },
+  "C5S": {
+    "name": "South Mirkwood - Sky",
+    "sky": ["C3S", "C4S", "F5S", "F7S"],
+    "x_": 0.7,
+    "y_": 0.595
+  },
+  "D1S": {
+    "name": "Weathered Heath - Sky",
+    "sky": ["B1S", "D2S", "D3S", "C2S", "D4S"],
+    "x_": 0.81,
+    "y_": 0.92
+  },
+  "D2S": {
+    "name": "North Rhun - Sky",
+    "sky": ["B1S", "D1S", "D4S", "D3S"],
+    "x_": 0.95,
+    "y_": 0.93
+  },
+  "D3S": {
+    "name": "Esgaroth - Sky",
+    "sky": ["D1S", "C2S", "C4S", "D4S", "B1S", "D2S"],
+    "x_": 0.8,
+    "y_": 0.795
+  },
+  "D4S": {
+    "name": "South Rhun - Sky",
+    "sky": ["D2S", "D3S", "F5S", "D1S"],
+    "x_": 0.94,
+    "y_": 0.755
+  },
+  "E1S": {
+    "name": "Minhiriath - Sky",
+    "sky": ["B11S", "A7S", "A8S", "E3S", "E4S"],
+    "x_": 0.24,
+    "y_": 0.555
+  },
+  "E2S": {
+    "name": "Eregion - Sky",
+    "sky": ["F1S", "B6S", "B11S", "E3S", "F2S", "F3S"],
+    "x_": 0.45,
+    "y_": 0.59
+  },
+  "E3S": {
+    "name": "Dunland - Sky",
+    "sky": ["E4S", "B11S", "E1S", "E2S", "E5S", "F2S", "F3S"],
+    "x_": 0.395,
+    "y_": 0.52
+  },
+  "E4S": {
+    "name": "Enedwaith - Sky",
+    "sky": ["E3S", "E1S", "E5S", "E6S", "E7S"],
+    "x_": 0.35,
+    "y_": 0.435
+  },
+  "E5S": {
+    "name": "Fangorn - Sky",
+    "sky": ["E7S", "F3S", "F4S", "E4S", "E3S"],
+    "x_": 0.495,
+    "y_": 0.385
+  },
+  "E6S": {
+    "name": "West Rohan - Sky",
+    "sky": ["E7S", "G1S", "E4S", "G3S", "G4S"],
+    "x_": 0.295,
+    "y_": 0.3
+  },
+  "E7S": {
+    "name": "Gap of Rohan - Sky",
+    "sky": ["E5S", "E6S", "G7S", "E4S", "F4S", "F8S", "G4S", "G5S", "G6S"],
+    "x_": 0.5,
+    "y_": 0.285
+  },
+  "F1S": {
+    "name": "Moria - Sky",
+    "sky": ["E2S", "F2S"],
+    "x_": 0.5,
+    "y_": 0.61
+  },
+  "F2S": {
+    "name": "Gladden Fields - Sky",
+    "sky": ["F1S", "F3S", "C3S", "E3S"],
+    "x_": 0.565,
+    "y_": 0.6
+  },
+  "F3S": {
+    "name": "Lorien - Sky",
+    "sky": ["E5S", "F2S", "F4S", "C3S", "F7S", "E2S", "E3S"],
+    "x_": 0.575,
+    "y_": 0.52
+  },
+  "F4S": {
+    "name": "The Wold - Sky",
+    "sky": ["E5S", "F3S", "E7S", "F7S", "F8S"],
+    "x_": 0.59,
+    "y_": 0.43
+  },
+  "F5S": {
+    "name": "Brown Lands - Sky",
+    "sky": ["C4S", "C5S", "F6S", "F7S", "F8S", "D3S", "D4S", "H2S", "H3S"],
+    "x_": 0.85,
+    "y_": 0.48,
+    "comm": "big_grizz"
+  },
+  "F6S": {
+    "name": "Rhun Hills - Sky",
+    "sky": "F5S",
+    "x_": 0.95,
+    "y_": 0.4
+  },
+  "F7S": {
+    "name": "Emen Muil - Sky",
+    "sky": ["C3S", "C5S", "F5S", "F8S", "F3S", "F4S"],
+    "x_": 0.685,
+    "y_": 0.41
+  },
+  "F8S": {
+    "name": "Dead Marshes - Sky",
+    "sky": ["F5S", "F7S", "G8S", "H1S", "E7S", "F4S", "H2S", "H3S"],
+    "x_": 0.73,
+    "y_": 0.31
+  },
+  "G1S": {
+    "name": "Druwaith Iaur - Sky",
+    "sky": ["E6S", "G3S", "G2S", "G4S"],
+    "x_": 0.18,
+    "y_": 0.225
+  },
+  "G2S": {
+    "name": "Andrast - Sky",
+    "sky": ["G3S", "G1S"],
+    "x_": 0.175,
+    "y_": 0.175
+  },
+  "G3S": {
+    "name": "Anfalas - Sky",
+    "sky": ["G1S", "G2S", "G4S", "E6S"],
+    "x_": 0.265,
+    "y_": 0.19
+  },
+  "G4S": {
+    "name": "Vale of Erech - Sky",
+    "sky": ["G3S", "G5S", "E6S", "E7S", "G1S"],
+    "x_": 0.33,
+    "y_": 0.205
+  },
+  "G5S": {
+    "name": "Lamedon - Sky",
+    "sky": ["G4S", "G6S", "G9S", "E7S", "G4S"],
+    "x_": 0.395,
+    "y_": 0.21
+  },
+  "G6S": {
+    "name": "Lebennin - Sky",
+    "sky": ["G5S", "G7S", "G9S", "G8S", "E7S"],
+    "x_": 0.48,
+    "y_": 0.16
+  },
+  "G7S": {
+    "name": "Minas Tirith - Sky",
+    "sky": ["E7S", "G5S", "G8S"],
+    "x_": 0.54,
+    "y_": 0.195
+  },
+  "G8S": {
+    "name": "Ithilien - Sky",
+    "sky": ["F8S", "G10S", "H4S", "G6S", "G7S", "H1S", "H3S"],
+    "x_": 0.605,
+    "y_": 0.15,
+    "comm": "eric"
+  },
+  "G9S": {
+    "name": "Belfalas - Sky",
+    "sky": ["G5S", "G6S"],
+    "x_": 0.43,
+    "y_": 0.11
+  },
+  "G10S": {
+    "name": "South Ithilien - Sky",
+    "sky": ["G8S", "I1S", "H4S", "H5S", "H6S"],
+    "x_": 0.585,
+    "y_": 0.1,
+    "comm": "eric"
+  },
+  "H1S": {
+    "name": "Udun Vale - Sky",
+    "sky": ["F8S", "H3S", "G8S", "H2S"],
+    "x_": 0.745,
+    "y_": 0.2
+  },
+  "H2S": {
+    "name": "Barad Dur - Sky",
+    "sky": ["H3S", "H5S", "F5S", "F8S", "H1S"],
+    "x_": 0.92,
+    "y_": 0.21,
+    "comm": "big_grizz"
+  },
+  "H3S": {
+    "name": "Mount Doom - Sky",
+    "sky": ["H1S", "H2S", "H5S", "F5S", "F8S", "G8S"],
+    "x_": 0.8,
+    "y_": 0.175,
+    "comm": "eric"
+  },
+  "H4S": {
+    "name": "Minas Morgul - Sky",
+    "sky": ["G8S", "H5S", "G10S", "H3S", "H6S"],
+    "x_": 0.695,
+    "y_": 0.14
+  },
+  "H5S": {
+    "name": "Gorgoroth - Sky",
+    "sky": ["H2S", "H3S", "H4S", "H6S", "G10S", "I5S"],
+    "x_": 0.92,
+    "y_": 0.135
+  },
+  "H6S": {
+    "name": "Nurn - Sky",
+    "sky": ["H5S", "G10S", "H4S", "I1S", "I3S", "I4S", "I5S"],
+    "x_": 0.775,
+    "y_": 0.09,
+    "comm": "eric"
+  },
+  "I1S": {
+    "name": "Harondor - Sky",
+    "sky": ["G10S", "I2S", "I3S", "H6S"],
+    "x_": 0.52,
+    "y_": 0.05,
+    "comm": "eric"
+  },
+  "I2S": {
+    "name": "Umbar - Sky",
+    "sky": ["I3S", "I1S"],
+    "x_": 0.425,
+    "y_": 0.015
+  },
+  "I3S": {
+    "name": "Harad - Sky",
+    "sky": ["I2S", "I4S", "I1S", "H6S"],
+    "x_": 0.645,
+    "y_": 0.03,
+    "comm": "eric"
+  },
+  "I4S": {
+    "name": "Near Harad - Sky",
+    "sky": ["I3S", "I4S", "H6S"],
+    "x_": 0.81,
+    "y_": 0.035,
+    "comm": "eric"
+  },
+  "I5S": {
+    "name": "Khand - Sky",
+    "sky": ["I4S", "H5S", "H6S"],
+    "x_": 0.9,
+    "y_": 0.05,
+    "comm": "eric"
+  },
+  "129": {
+    "comm": "chris"
+  }
+}
