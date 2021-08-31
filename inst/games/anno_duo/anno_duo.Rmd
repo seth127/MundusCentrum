@@ -31,6 +31,7 @@ print(game, .p = "{{PLAYER}}")
 * [Turn 4](#turn4)
 * [Turn 5](#turn5)
 * [Turn 6](#turn6)
+* [Turn 7](#turn7)
 
 ### see the starting point
 This is the state of the game at the beginning
@@ -524,7 +525,203 @@ To the South, only small confrontations to report as scarab constructs flee befo
 Only in death does duty end. 
 ```
 
-### moves...
+### moves
+
+```{r}
+game <- game %>%
+  
+  modify_unit("big_grizz", c(1, 10, 11, 12, 16),   "move",  c("E2", "F1")) %>%
+  modify_unit("big_grizz", 7,   "move",  "D3") %>%
+  modify_unit("big_grizz", c(17),   "move",  "H5") %>%
+  modify_unit("big_grizz", c(6),   "move",  "I4") %>%
+  modify_unit("big_grizz", 5,   "control",  "H1") %>%
+  modify_unit("big_grizz", c(3, 13, 18, 22),   "move",  c("H5", "H2")) %>%
+  modify_unit("big_grizz", c(8),   "control",  c("F1")) %>%
+  modify_unit("big_grizz", c(21, 23) ,  "reinforce",  "F1") %>%
+  modify_unit("big_grizz", 9,   "control",  "C2") %>%
+  modify_unit("big_grizz", c(4, 15, 19, 20),   "reinforce",  "F1") %>%
+  modify_unit("big_grizz", 14,   "move",  "F4") %>%
+  modify_unit("big_grizz", 2,   "reinforce",  "H2") %>%
+  add_trap("big_grizz", "H5") %>%
+  
+  modify_unit('eric', '1', 'move', 'F2') %>%
+  modify_unit('eric', '2', 'move', 'F2') %>%
+  modify_unit('eric', '3', 'move', 'F2') %>%
+  modify_unit('eric', '4', 'move', 'F2') %>%
+  modify_unit('eric', '5', 'move', 'F2') %>%
+  modify_unit('eric', '6', 'move', 'F2') %>%
+  modify_unit('eric', '7', 'control', 'E7') %>%
+  modify_unit('eric', '8', 'move', 'F2') %>%
+  modify_unit('eric', '9', 'move', 'F2') %>%
+  modify_unit('eric', '10', 'move', 'F2') %>%
+  modify_unit('eric', '11', 'move', 'F2') %>%
+  modify_unit('eric', '12', 'move', 'F2') %>%
+  modify_unit('eric', '13', 'move', 'F2') %>%
+  modify_unit('eric', '14', 'move', 'H2') %>%
+  modify_unit('eric', '15', 'move', 'H2') %>%
+  modify_unit('eric', '16', 'move', 'H2') %>%
+  modify_unit('eric', '17', 'move', 'H2') %>%
+  modify_unit('eric', '18', 'move', 'H2') %>%
+  modify_unit('eric', '19', 'control', 'G5') %>%
+  modify_unit('eric', '20', 'defend', 'E5') %>%
+  modify_unit('eric', '21', 'move', 'H4') %>%
+  modify_unit('eric', '22', 'move', 'H2') %>%
+  modify_unit('eric', '23', 'move', 'H2') %>%
+  modify_unit('eric', '24', 'move', 'H2') %>%
+  modify_unit('eric', '25', 'control', 'I1') %>%
+  modify_unit('eric', '26', 'move', 'H2') %>%
+  modify_unit('eric', '27', 'defend', 'F3') %>%
+  modify_unit('eric', '28', 'defend', 'F8') %>%
+  
+  add_bridge("B2", "B6") %>% # chris
+  modify_unit('chris', c(1, 12), "move", "B4") %>%
+  modify_unit('chris', c(2,17,19,20), "reinforce", "E2") %>%
+  modify_unit('chris', c(4, 11, 22), "move", "B6") %>%
+  modify_unit('chris', c(5, 16, 25), "reinforce", "B5") %>%
+  modify_unit('chris', c(14,24), "move", "E3" ) %>%
+  modify_unit('chris', 3,"reinforce",  "E4") %>% 
+  modify_unit('chris', 6,"move",  "A2") %>% 
+  modify_unit('chris', 7,"move",  "B3") %>% 
+  modify_unit('chris', 8,"move",  "B1") %>% 
+  modify_unit('chris', 9,"move",  "B11") %>% 
+  modify_unit('chris', 10,"control", "E4") %>% 
+  modify_unit('chris', 13,"reinforce", "A5") %>% 
+  modify_unit('chris', 15,"move",  "B8") %>% 
+  modify_unit('chris', 18,"move",  "B2") %>% 
+  modify_unit('chris', 21,"move",  c("B1", "B4")) %>%
+  modify_unit('chris', 23,"defend",  "B1") %>% 
+  
+  reconcile_player_orders()
+```
+
+```{r, results = "asis"}
+print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
+```
+
+### moves
+
+```{r}
+# retreats
+game <- game %>%
+  modify_unit("big_grizz", c(3, 13, 17, 18, 22),   "move",  "H5") %>%
+  modify_unit("big_grizz", 2,   "move",  "H3") %>%
+  modify_unit("big_grizz", c(1, 4, 8, 10, 11, 12, 15, 16, 19, 20, 21, 23), "move",  "F1") %>%
+  reconcile_player_orders()
+```
+
+```{r, results = "asis"}
+print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
+```
+
+
+# TURN 7 {#turn7}
+
+```
+254.853.M41: I bring fell tidings.  We were met with conflict on two fronts today, and the fates did not see fit to grace us with victory.  The greatness of our failures in the field may only be matched by the rage in my hearts, which burns hotter than the fires of a Nocturne caldera.  We must be vigilant and strong.  The Emperor knows what evil lurks in the vacillation of the weak.  We will cleanse ourselves in the blood of our enemies.
+
+On the northern front, Talonmaster Castiel and his brothers of the Ravenwing made haste to help fortify the Epistolary Larathiel’s position in Moria.  Not only will the 2nd company’s method of war be useful in what portends to be a protracted siege, but our Fallen quarry had also left sign of his passing within those deep, stygian chasms. Ever on the hunt, the Ravenwing wished to investigate the area further. 
+
+Upon approach to Moria, through the sparse ruins and thorny trees of Eregion, Brother Nithael spotted our prey as he fled from Larathiel’s occupying forces out of the star port’s West-gate.  Caught in the open, the betrayer turned South and made to escape by covering his retreat with the growing Tyranid presence in the territory.  Castiel and his brothers gave chase, and were all but upon the malefactor when they lost sight of him over one of the many rises in that region of hillocks.  When they reached the ridge, woe and bafflement befell them in equal measure at what their eyes did see in the shallow valley below!
+
+There was the Fallen captain, walking unhurriedly through what seemed to be thousands of chittering, yet becalmed, Tyranid gargoyles.  Whether through some warp-spawned sorcery, or by use of an unknown and powerful artifact, the traitor was able to walk among the Tyranid bio-forms as though invisible to their many, hungry eyes.  Unfortunately for our Ravenwing brothers, the roar of their engines alerted the larger beasts of the swarm to their arrival, and battle was joined before more suitable conditions for the conflict could be attained.
+
+Within seconds, the largest of the beasts (Imperial Designation: Hive Tyrant) was ripping into the ranks of Nithael’s bike squad, all of whom quickly succumbed to the monstrosity’s wicked attentions. With that, the tone for the battle was set, and even the quick sortie of Larathiel’s forces from Moria could not adequately change the momentum of those opening, xenos attacks.  A hasty retreat back into the star port was the only option.  Both Nithael’s squad and Castiel himself were injured to the point of death, but I have been assured that all available resources are being spared to bring them back from the brink.
+
+To the South, we faired little better.  The Necron host was somehow able to avoid most of the traps we laid in the marshy fields of Gorgoroth, and came in force to the gates of Barad-Dur star port.  Screaming through the skies to our defense was Brother Techmarine Myrdean, with Apharan’s Deathwing Knights and Honorable Brother Helah, all loaded within the Storm Raven. Though we had the upper-hand in our defensible position, with so few of us to man the ramparts, it was only a matter of time before that soulless, mechanical tide would rise over our walls.  The Storm Raven was critically damaged in the opening volleys, leaving the eight of us on the ground to bring the Emperor’s mercy to the xenos scum.
+
+To a man, we fought without fear of death.  To a man, we fell before the unnumbered constructs.
+
+The Fallen fugitive has escaped capture.  Barad-Dur is in the hands of the filthy, Necron abominations.  This day will live in infamy within the halls of The Rock for years to come.  We are beaten today, but unbroken.  May the Emperor and the Lion guide us.  The Unforgiven cry out for blood, and there is never enough.
+```
+
+### moves
+
+```{r}
+game <- game %>%
+  
+  modify_unit("big_grizz", c(1, 4, 8, 10, 11, 12, 15, 16, 19, 20, 21, 23),   "defend",  c("F1")) %>%
+  modify_unit("big_grizz", 7,   "control",  "D3") %>%
+  modify_unit("big_grizz", c(6),   "control",  "I4") %>%
+  modify_unit("big_grizz", 5,   "move",  "F8") %>%
+  modify_unit("big_grizz", c(2, 3, 13, 17, 18, 22),   "move",  c("H2")) %>%
+  modify_unit("big_grizz", 9,   "sneak",  "C1") %>%
+  modify_unit("big_grizz", 14,   "move",  "F3") %>%
+  add_trap("big_grizz", "H5") %>%
+  add_trap("big_grizz", "F1") %>%
+  
+  modify_unit('eric', '1', 'move', 'F1') %>%
+  modify_unit('eric', '2', 'move', 'F1') %>%
+  modify_unit('eric', '3', 'move', 'F1') %>%
+  modify_unit('eric', '4', 'move', 'F1') %>%
+  modify_unit('eric', '5', 'move', 'F1') %>%
+  modify_unit('eric', '6', 'move', 'F1') %>%
+  modify_unit('eric', '7', 'move', 'F4') %>%
+  modify_unit('eric', '8', 'move', 'F1') %>%
+  modify_unit('eric', '9', 'move', 'F1') %>%
+  modify_unit('eric', '10', 'move', 'F1') %>%
+  modify_unit('eric', '11', 'move', 'F1') %>%
+  modify_unit('eric', '12', 'move', 'F1') %>%
+  modify_unit('eric', '13', 'move', 'F1') %>%
+  modify_unit('eric', '14', 'defend', 'H2') %>%
+  modify_unit('eric', '15', 'transport', c('H2S', 'I5S')) %>%
+  modify_unit('eric', '16', 'transport', c('H2S', 'I5S')) %>%
+  modify_unit('eric', '17', 'defend', 'H2') %>%
+  modify_unit('eric', '18', 'defend', 'H2') %>%
+  modify_unit('eric', '19', 'move', 'G4') %>%
+  modify_unit('eric', '20', 'defend', 'E5') %>%
+  modify_unit('eric', '21', 'defend', 'H4') %>%
+  modify_unit('eric', '22', 'defend', 'H2') %>%
+  modify_unit('eric', '23', 'defend', 'H2') %>%
+  modify_unit('eric', '24', 'defend', 'H2') %>%
+  modify_unit('eric', '25', 'move', 'I3') %>%
+  modify_unit('eric', '26', 'control', 'H2') %>%
+  modify_unit('eric', '27', 'defend', 'F3') %>%
+  modify_unit('eric', '28', 'defend', 'F8') %>%
+
+  add_bridge("B11", "E2") %>% # chris -2 RP
+  modify_unit("chris", c(1, 21),  "move", c("B1", "D2")) %>%
+  modify_unit("chris", c(2, 16, 17, 19, 20, 25), "move", "F1") %>%
+  modify_unit("chris", c(3, 10),  "move", "E3") %>%
+  modify_unit("chris", c(4, 9, 22, 24),  "move", "E2") %>%
+  modify_unit("chris", 5,  "defend", "B5") %>%
+  modify_unit("chris", 6,  "move", "B2") %>%
+  modify_unit("chris", 7,  "control", "B3") %>%
+  modify_unit("chris", 8,  "control", "B1") %>%
+  modify_unit("chris", 11,  "control", "B6") %>%
+  modify_unit("chris", 12,  "control", "B4") %>%
+  modify_unit("chris", 13,  "control", "E2") %>%
+  modify_unit("chris", 14,  "control", "E3") %>%
+  modify_unit("chris", 15,  "move", "B7") %>%
+  modify_unit("chris", 18,  "move", "B6") %>%
+  modify_unit("chris", 23,  "move", "D2") %>%
+  
+  reconcile_player_orders()
+```
+
+```{r, results = "asis"}
+print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
+```
+
+### Discussion Notes
+
+My next big task is to encode legal movements, and the first step of that is to get a complete set of what the possible actions are. So far I have the following:
+
+* move (aka attack)
+* defend (the space you’re in)
+* reinforce (an army in an adjacent space)
+* ~~soar~~ (just move, see below)
+* control
+* ~~sneak (not needed anymore because sneaking is automatic?)~~ **Moby:** If automatic, doesn't seem needed
+* respawn/regenerate ~~(does this take a full turn or can you respawn and move in the same turn?)~~ **Moby:** I think they can move and do stuff after being brought in since they showed up before the movement phase.
+
+Other thoughts: 
+
+* ~~does “transport” need to be an action or can it just be “move” and we check for the transport keyword?~~ **Moby:** "Transport" might be a good one to have.  Maybe both the transport and the units using it have to say "transport,"
+* ~~same question about “soar”. Seems like it could just be “move” as well.~~ **Seth:** I kinda like having “soar” just be move because otherwise what do you mark a soaring transport? I’m trying to avoid having hybrid moves like “soar-transport.” **Eric:** if we're using a secondary designation for the aerial spaces, you don't need to soar, you're just moving or transporting from `A1` to `A1S`
+* ~~does building and destroying bridges or traps require a unit to actually do it? It sorta seems like it should, but not necessary if you don’t wanna go that way.~~ **Moby:** Traps do not require someone to be there, as the territory has to be controlled... Bridges, I think, are written such that a unit does have to be adjacent.
 
 **Rmd Hash:** {{RMD_MD5}}
 
