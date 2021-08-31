@@ -27,6 +27,16 @@ input_unit <- function(game, .p, .u) {
     ), "input_moves_error")
   }
 
+  return(unit_df)
+}
+
+
+#' @describeIn input_moves Takes units (from `input_units()`) and adds the chosen action
+#' @param unit_df The tibble of units that's acting
+#' @return The `unit_df` with the choosen action filled in
+#' @export
+input_action <- function(unit_df) {
+
   actions <- c(
     "move",
     "defend",
@@ -59,3 +69,5 @@ input_unit <- function(game, .p, .u) {
   unit_df %>%
     mutate(action = pick)
 }
+
+
