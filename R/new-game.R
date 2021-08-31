@@ -57,7 +57,7 @@ new_game <- function(name, players, points = NULL) {
       map_chr(paste(name, c("GLOBAL", ids)), ~digest::digest(.x, algo = "md5")) %>%
         rlang::set_names(c("GLOBAL", ids))
     ),
-    player_colors = rlang::set_names(brewer.pal(length(ids), "Spectral"), ids),
+    player_colors = as.list(rlang::set_names(brewer.pal(length(ids), "Spectral"), ids)),
     map = add_sky(MAP)
   )
   game[["map_df"]] <- setup_map_df(name, players)
