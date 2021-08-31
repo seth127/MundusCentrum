@@ -12,23 +12,7 @@
 modify_unit <- function(game, .p, .u, .a, .l = NULL) {
   check_player_name(game, .p)
 
-  # check if a loc was passed
-  if ((length(.u) == 1) && (.u %in% names(game$map))) {
-    .loc_u <- game$map_df %>%
-      filter(
-        .data$player == .p,
-        .data$loc == .u
-      ) %>%
-      pull(unit_name)
-
-    if (length(.loc_u) == 0) {
-      warning(glue("{.p} has no units in {.u}"))
-      return(invisible(NULL))
-    } else {
-      .u <- .loc_u
-    }
-  }
-  .u <- unique(.u) # if unit in multiple battles they will be duplicated
+  .u <- loc_to_unit(game, .p, .u)
 
   ## TODO: this feels like it might be super inefficient, making a lot of copies of game$map_df maybe... should look into that
   ## * should this be some kind of map instead of walk?
@@ -37,19 +21,7 @@ modify_unit <- function(game, .p, .u, .a, .l = NULL) {
     if(is.null(.ux) || is.na(.ux)) return(NULL)
 
     # translate unit_id to unit_name (probably here)
-    if (!is.na(suppressWarnings(as.numeric(.ux)))) {
-      .ux <- game %>%
-        get_player_map(.p) %>%
-        filter(player == .p, unit_id == .ux) %>%
-        pull(unit_name) %>%
-        unique() # if unit in multiple battles they will be duplicated
-    }
-
-    if (length(.ux) > 1) warn(glue("length(.ux) > 1 :: {paste(.ux, collapse = ', ')}"), "modify_unit_warning")
-    if (!(.ux %in% pull(get_player_map(game, .p), unit_name))) {
-      warning(glue("{.ux} is not a unit in {.p}'s army"))
-      return(NULL)
-    }
+    .ux <- unit_id_to_name(game, .p, .ux)
 
     ## edit player map
 
@@ -129,4 +101,45 @@ sort_map_df <- function(map_df) {
     arrange(loc, player, action, unit_id, unit_type, unit_name) %>%
     select(player, loc, unit_id, unit_type, action, unit_name, passing_through)
 
+}
+
+#' check for loc passed as .u and convert to units in loc
+#' @keywords internal
+loc_to_unit <- function(game, .p, .u) {
+  # check if a loc was passed
+  if ((length(.u) == 1) && (.u %in% names(game$map))) {
+    .loc_u <- game$map_df %>%
+      filter(
+        .data$player == .p,
+        .data$loc == .u
+      ) %>%
+      pull(unit_name)
+
+    if (length(.loc_u) == 0) {
+      warning(glue("{.p} has no units in {.u}"))
+      return(invisible(NULL))
+    } else {
+      .u <- .loc_u
+    }
+  }
+  unique(.u) # if unit in multiple battles they will be duplicated
+}
+
+#' check for unit_id passed as .u and convert to unit_name
+#' @keywords internal
+unit_id_to_name <- function(game, .p, .ux) {
+  if (!is.na(suppressWarnings(as.numeric(.ux)))) {
+    .ux <- game %>%
+      get_player_map(.p) %>%
+      filter(player == .p, unit_id == .ux) %>%
+      pull(unit_name) %>%
+      unique() # if unit in multiple battles they will be duplicated
+  }
+
+  if (length(.ux) > 1) warn(glue("length(.ux) > 1 :: {paste(.ux, collapse = ', ')}"), "modify_unit_warning")
+  if (!(.ux %in% pull(get_player_map(game, .p), unit_name))) {
+    warning(glue("{.ux} is not a unit in {.p}'s army"))
+    return(NULL)
+  }
+  .ux
 }
