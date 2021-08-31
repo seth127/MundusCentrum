@@ -103,7 +103,9 @@ draw_map <- function(game, .p = NULL) {
 
 }
 
-
+#' Get locs that player can see
+#' @importFrom stringr str_replace
+#' @keywords internal
 player_vision <- function(game, .p) {
   if (is.null(.p) || .p == "GLOBAL") return(names(game$map))
   #if (.p == "CONFLICT!") return(unique(game$conflicts))
@@ -121,10 +123,14 @@ player_vision <- function(game, .p) {
   }) %>%
     unlist()
 
+  sky <- occ_loc %>%
+    str_replace("S$", "") %>%
+    paste0("S")
+
   comms <- get_comms(game, .p)
   controls <- get_controls(game, .p)
 
-  c(occ_loc, borders, comms, controls) %>%
+  c(occ_loc, borders, sky, comms, controls) %>%
     unique() %>%
     sort()
 }
