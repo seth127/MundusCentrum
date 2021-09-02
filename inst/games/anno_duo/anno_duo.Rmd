@@ -32,6 +32,7 @@ print(game, .p = "{{PLAYER}}")
 * [Turn 5](#turn5)
 * [Turn 6](#turn6)
 * [Turn 7](#turn7)
+* [Turn 8](#turn8)
 
 ### see the starting point
 This is the state of the game at the beginning
@@ -707,9 +708,30 @@ print_map_df(game, "{{PLAYER}}")
 
 ### moves
 
-_Retreats?_
 ```{r}
 game <- game %>%
+  
+  modify_unit("big_grizz", c(3, 13, 17, 18, 22),   "retreat",  "H5") %>%
+  modify_unit("big_grizz", 2,   "retreat",  "H3") %>%
+  
+  modify_unit('eric', '1', 'retreat', 'F2') %>%
+  modify_unit('eric', '2', 'retreat', 'F2') %>%
+  modify_unit('eric', '3', 'retreat', 'F2') %>%
+  modify_unit('eric', '4', 'retreat', 'F2') %>%
+  modify_unit('eric', '5', 'retreat', 'F2') %>%
+  modify_unit('eric', '6', 'retreat', 'F2') %>%
+  modify_unit('eric', '7', 'retreat', 'F2') %>%
+  modify_unit('eric', '8', 'retreat', 'F2') %>%
+  kill_unit('eric', '9') %>%
+  modify_unit('eric', '10', 'retreat', 'F2') %>%
+  modify_unit('eric', '11', 'retreat', 'F2') %>%
+  modify_unit('eric', '12', 'retreat', 'F2') %>%
+  modify_unit('eric', '13', 'retreat', 'F2') %>%
+  modify_unit('eric', '27', 'retreat', 'F2') %>%
+  modify_unit('eric', '28', 'retreat', 'F4') %>%
+  
+  modify_unit("chris", c(2, 16, 17, 19, 20, 25), "retreat", "E2") %>%
+  
   reconcile_player_orders()
 ```
 
@@ -735,6 +757,8 @@ Other thoughts:
 * ~~does “transport” need to be an action or can it just be “move” and we check for the transport keyword?~~ **Moby:** "Transport" might be a good one to have.  Maybe both the transport and the units using it have to say "transport,"
 * ~~same question about “soar”. Seems like it could just be “move” as well.~~ **Seth:** I kinda like having “soar” just be move because otherwise what do you mark a soaring transport? I’m trying to avoid having hybrid moves like “soar-transport.” **Eric:** if we're using a secondary designation for the aerial spaces, you don't need to soar, you're just moving or transporting from `A1` to `A1S`
 * ~~does building and destroying bridges or traps require a unit to actually do it? It sorta seems like it should, but not necessary if you don’t wanna go that way.~~ **Moby:** Traps do not require someone to be there, as the territory has to be controlled... Bridges, I think, are written such that a unit does have to be adjacent.
+
+# TURN 8 {#turn8}
 
 **Rmd Hash:** {{RMD_MD5}}
 
