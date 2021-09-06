@@ -68,10 +68,10 @@ draw_map <- function(game, .p = NULL) {
 
   ggplot(map_data, aes(x = x_*X_MULT, y = y_*Y_MULT)) +
     coord_cartesian(xlim = c(0,1)*X_MULT, ylim = c(0,1)*Y_MULT) +
-    annotation_custom(rasterGrob(map_img,
-                                       width = unit(1,"npc"),
-                                       height = unit(1,"npc")),
-                      0, 1*X_MULT, 0, 1*Y_MULT) +
+    # annotation_custom(rasterGrob(map_img,
+    #                                    width = unit(1,"npc"),
+    #                                    height = unit(1,"npc")),
+    #                   0, 1*X_MULT, 0, 1*Y_MULT) +
     # static loc markers
     geom_point(data = filter(map_data, str_detect(loc, "S", negate = TRUE)), size = 3, shape = 21, aes(fill = factor(loc_fill))) +
     # bridges

@@ -71,3 +71,57 @@ input_action <- function(unit_df) {
 }
 
 
+
+#' @describeIn input_moves Takes units with action (from `input_action()`) and adds the loc(s)
+#' @param unit_df The tibble of units that's acting
+#' @return The `unit_df` with the choosen locs filled in
+#' @export
+input_loc <- function(unit_df) {
+
+  # will this break Shiny?
+  if (!interactive()) abort("Cannot call input_action() when NOT in interactive session", "input_moves_error")
+
+  .a <- unique(unit_df$action) # could just to assert_string, but this is better debugging
+  if (length(.a) > 1) {
+    abort(paste(
+      "Must pass all units in the same action. Got",
+      paste(unique(unit_df$action), collapse = ", ")
+    ), "input_moves_error")
+  }
+
+  num_moves <- if(.a == "transport") {
+
+  }
+
+  # # get df of units we care about
+  # map_df <- get_player_map(game, .p)
+  #
+  #
+  # # get static map coordinates
+  # map_data <- map_dfr(names(game$map), ~{
+  #   .m <- game$map[[.x]]
+  #   list(
+  #     loc = .x,
+  #     name = .m[["name"]]
+  #   )
+  # })
+  #
+  # # get control and visibility
+  # map_data <- map_data %>%
+  #   left_join(get_control_df(game), by = "loc") %>%
+  #   left_join(get_comm_df(game), by = "loc") %>%
+  #   mutate(visible = loc %in% player_vision(game, .p))
+  #
+  # visible_loc <- map_data %>%
+  #   filter(visible) %>%
+  #   pull(loc)
+  #
+  # visible_loc
+
+  visible_loc <- player_vision(game, .p)
+
+
+}
+
+
+########################
