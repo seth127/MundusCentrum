@@ -10,6 +10,7 @@
 reconcile_player_orders <- function(game) {
 
   conflicts <- game$map_df %>%
+    filter(!is.na(loc)) %>%
     group_by(loc) %>%
     summarize(count = length(unique(player))) %>%
     filter(count > 1) %>%
