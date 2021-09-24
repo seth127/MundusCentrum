@@ -35,13 +35,13 @@ print(game, .p = "{{PLAYER}}")
 * [Turn 8](#turn8)
 * [Turn 9](#turn9)
 * [Turn 10](#turn10)
-* [Turn 10](#turn11)
+* [Turn 11](#turn11)
 
 ### see the starting point
 This is the state of the game at the beginning
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
+#print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
@@ -107,8 +107,8 @@ game <- game %>%
 Attempt to reconcile moves.
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
-#print_map_df(game, "{{PLAYER}}")
+#print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 # TURN 2 {#turn2}
@@ -165,8 +165,8 @@ game <- game %>%
 Attempt to reconcile moves.
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
-#print_map_df(game, "{{PLAYER}}")
+#print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 ### moves
@@ -181,8 +181,8 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
-#print_map_df(game, "{{PLAYER}}")
+#print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 
@@ -264,8 +264,8 @@ game <- game %>%
 Attempt to reconcile moves.
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
-#print_map_df(game, "{{PLAYER}}")
+#print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 ### moves
@@ -281,8 +281,8 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
-#print_map_df(game, "{{PLAYER}}")
+#print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 ### Discussion Notes
@@ -373,8 +373,8 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
-#print_map_df(game, "{{PLAYER}}")
+#print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 ### moves
@@ -389,8 +389,8 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
-#print_map_df(game, "{{PLAYER}}")
+#print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 
@@ -478,8 +478,8 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
-#print_map_df(game, "{{PLAYER}}")
+#print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 
@@ -502,8 +502,8 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
-#print_map_df(game, "{{PLAYER}}")
+#print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 ### Discussion Notes
@@ -599,8 +599,8 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
-#print_map_df(game, "{{PLAYER}}")
+#print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 ### moves
@@ -615,8 +615,8 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
-#print_map_df(game, "{{PLAYER}}")
+#print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 
@@ -705,8 +705,8 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
-#print_map_df(game, "{{PLAYER}}")
+#print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 ### moves
@@ -739,8 +739,8 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
-#print_map_df(game, "{{PLAYER}}")
+#print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 ### Discussion Notes
@@ -840,8 +840,8 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
-#print_map_df(game, "{{PLAYER}}")
+#print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
 ```
 
 ### moves
