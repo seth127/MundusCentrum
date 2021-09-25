@@ -27,8 +27,10 @@ reconcile_player_orders <- function(game) {
     locs <- game$map_df$loc
     names(locs) <- game$map_df$player
     locs <- locs[!duplicated(locs)]
-    for(.i in 1:length(locs)) {
-      game$map[[locs[.i]]][["comm"]] <- names(locs)[.i]
+    if (length(locs) > 0) {
+      for(.i in 1:length(locs)) {
+        game$map[[locs[.i]]][["comm"]] <- names(locs)[.i]
+      }
     }
 
     # get rid of passing_through entries
@@ -47,8 +49,10 @@ reconcile_player_orders <- function(game) {
     locs <- control_df$loc
     names(locs) <- control_df$player
     locs <- locs[!duplicated(locs)]
-    for(.i in 1:length(locs)) {
-      game$map[[locs[.i]]][["control"]] <- names(locs)[.i]
+    if (length(locs) > 0) {
+      for(.i in 1:length(locs)) {
+        game$map[[locs[.i]]][["control"]] <- names(locs)[.i]
+      }
     }
   }
 
