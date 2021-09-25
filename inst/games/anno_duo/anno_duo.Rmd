@@ -1049,7 +1049,113 @@ print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
+### moves
+
+```{r}
+game <- game %>%
+  
+  modify_unit("big_grizz", 6,   "respawn",  "C5") %>%
+  modify_unit("chris", "C1",   "retreat",  "B4") %>%
+  destroy_trap("big_grizz", "F1") %>% # chris
+  
+  reconcile_player_orders()
+```
+
+```{r, results = "asis"}
+print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
+```
+
+
+# TURN 11 {#turn11}
+
+```
++++++++++++++++++++++++++++++++++
+
+ 
+
+258.853.M41: The situation on the ground has changed rapidly in the last 24 hours.  Our Northeastern front has been overwhelmed by waves of Tyranid bio-forms, and we must quickly redistribute our forces on the continent to meet and stem the xenos tide.  They may appear to be more tooth and claw than brain, but if they are able to infiltrate many more of the available star ports, I am concerned they will irrevocably damage any of the remaining technological systems that still function on this throne-forsaken planet.
+
+Ravenwing Talonmaster Castiel led a successful strike against the swarms in the forested region of Carrock, driving back those slavering masses that had laid low Galizur’s squad just yesterday.  No trace of Galizur’s squad could be found, and it is as though the bio-forms somehow digested the sacred armour that once protected our brothers.  Castiel assures me that his contingent of the second company will continue to purge the North of the Tyranid foe.
+
+To the South, Squad Naamand tried to make a quick escape through the mountains from Haradwaith back into Mordor so as to avoid any unnecessary contact with the Necron forces encircling their star port position.  Communication with Naamand was lost right as his squad was exiting the tunnels through those hills, and they are assumed dead, caught by constructs waiting for them in Nurn.  Squad Sariel has been requisitioned from orbit to replace Naamand.  May fortune favour them better, and may many xenos fall to their bolter and blade.
+
+We know no fear.  It was cut from our souls at birth.  We can feel it only as an absence, as an empty shadow cast by the light of annihilation.
+```
+
+### moves
+
+```{r}
+game <- game %>%
+  
+  modify_unit("big_grizz", c(1, 10, 11, 12, 16),   "move",  c("C2", "D3")) %>%
+  modify_unit("big_grizz", c(4, 15, 19),   "move",  c("C1")) %>%
+  modify_unit("big_grizz", c(20, 21),   "move",  c("C5")) %>%
+  modify_unit("big_grizz", c(8, 23),   "control",  c("F4")) %>%
+  modify_unit("big_grizz", 7,   "move",  "C1") %>%
+  modify_unit("big_grizz", c(6),   "move",  "F5") %>%
+  modify_unit("big_grizz", 5,   "move",  "F8") %>%
+  modify_unit("big_grizz", 2,   "move",  "C5") %>%
+  modify_unit("big_grizz", 17,   "move",  "F5") %>%
+  modify_unit("big_grizz", c(3, 13, 18, 22),   "move",  c("G8", "F8", "F5")) %>%
+  modify_unit("big_grizz", 9,   "control",  "F7") %>%
+  modify_unit("big_grizz", 14,   "defend",  "F4") %>%
+  
+  modify_unit('eric', '1', 'move', 'F3') %>%
+  add_bridge("E7", "E4") %>% # eric
+  modify_unit('eric', '4', 'move', 'F3') %>%
+  modify_unit('eric', '6', 'move', 'F3') %>%
+  modify_unit('eric', '7', 'move', 'F3') %>%
+  modify_unit('eric', '8', 'move', 'F3') %>%
+  modify_unit('eric', '9', 'defend', 'G7') %>%
+  modify_unit('eric', '10', 'move', 'F3') %>%
+  modify_unit('eric', '11', 'move', 'F3') %>%
+  modify_unit('eric', '15', 'defend', 'I3') %>%
+  modify_unit('eric', '16', 'defend', 'I3') %>%
+  modify_unit('eric', '25', 'defend', 'I3') %>%
+  modify_unit('eric', '17', 'move', 'I4') %>%
+  modify_unit('eric', '18', 'move', 'I4') %>%
+  modify_unit('eric', '22', 'move', 'I4') %>%
+  modify_unit('eric', '23', 'move', 'I4') %>%
+  modify_unit('eric', '24', 'move', 'I4') %>%
+  modify_unit('eric', '26', 'move', 'I4') %>%
+  modify_unit('eric', '2', 'move', 'I4') %>%
+  modify_unit('eric', '3', 'reinforce', 'H2') %>% # siege drill for H6
+  modify_unit('eric', '14', 'reinforce', 'H2') %>%
+  modify_unit('eric', '28', 'move', 'E4') %>%
+  modify_unit('eric', '27', 'move', 'E4') %>%
+  modify_unit('eric', '20', 'move', 'E4') %>%
+  modify_unit('eric', '13', 'move', 'E4') %>%
+  modify_unit('eric', '5', 'move', 'E4') %>%
+  modify_unit('eric', '12', 'move', 'E4') %>%
+  modify_unit('eric', '21', 'move', 'H4') %>%
+  modify_unit('eric', '19', 'move', 'G2') %>%
+
+  modify_unit("chris", 5, "defend", "B5") %>%
+  modify_unit("chris", 6, "move", "D3") %>%
+  modify_unit("chris", 9, "control", "F1") %>%
+  modify_unit("chris", c(1, 7),  "move", "D4") %>%
+  modify_unit("chris", c(2, 4, 10, 11, 14, 22, 24),  "move", "F2") %>%
+  modify_unit("chris", c(3, 13, 16, 25),  "reinforce", "F1") %>%
+  modify_unit("chris", c(8, 17, 21, 23), "defend", "D4") %>%
+  modify_unit("chris", c(12, 15, 18),  "defend", "B4") %>%
+  modify_unit("chris", c(19, 20),  "defend", "F2") %>%
+  modify_unit("chris", 17, "respawn", "D4") %>%
+  destroy_bridge("B2", "B6") %>% # chris
+  destroy_bridge("B8", "B6") %>% # chris
+  add_trap("chris", "B4") %>%
+  
+  reconcile_player_orders()
+```
+
+```{r, results = "asis"}
+print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
+```
+
 ### moves...
+
+
 
 
 **Rmd Hash:** {{RMD_MD5}}
