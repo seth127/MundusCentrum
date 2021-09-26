@@ -66,8 +66,10 @@ input_action <- function(unit_df) {
   ## into two functions to get the shiny input in the middle (and serve actions...)
   pick <- actions[utils::menu(actions)]
 
-  unit_df %>%
+  unit_df <- unit_df %>%
     mutate(action = pick)
+
+  return(unit_df)
 }
 
 
@@ -76,7 +78,7 @@ input_action <- function(unit_df) {
 #' @param unit_df The tibble of units that's acting
 #' @return The `unit_df` with the choosen locs filled in
 #' @export
-input_loc <- function(unit_df) {
+input_loc <- function(unit_df, game) { # should all of them take game (just to be consistent)
 
   # will this break Shiny?
   if (!interactive()) abort("Cannot call input_action() when NOT in interactive session", "input_moves_error")
@@ -89,37 +91,50 @@ input_loc <- function(unit_df) {
     ), "input_moves_error")
   }
 
-  num_moves <- if(.a == "transport") {
-
+  movers_df <- if(.a == "transport") {
+    filter(unit_df, transport)
+  } else {
+    unit_df
   }
 
-  # # get df of units we care about
-  # map_df <- get_player_map(game, .p)
-  #
-  #
-  # # get static map coordinates
-  # map_data <- map_dfr(names(game$map), ~{
-  #   .m <- game$map[[.x]]
-  #   list(
-  #     loc = .x,
-  #     name = .m[["name"]]
-  #   )
-  # })
-  #
-  # # get control and visibility
-  # map_data <- map_data %>%
-  #   left_join(get_control_df(game), by = "loc") %>%
-  #   left_join(get_comm_df(game), by = "loc") %>%
-  #   mutate(visible = loc %in% player_vision(game, .p))
-  #
-  # visible_loc <- map_data %>%
-  #   filter(visible) %>%
-  #   pull(loc)
-  #
-  # visible_loc
+  num_moves <- if (all(movers_df$soar)) {
+    4
+  } else if (all(movers_df$fast)) { # do we need fly here?
+    2
+  } else {
+    1
+  }
 
-  visible_loc <- player_vision(game, .p)
+  current_loc <- unique(movers_df$loc)
+  checkmate::assert_string(current_loc) # should be no way to fail this, but just in case
 
+  # build move options
+  loc_opts <- unlist(game$map[[current_loc]][c("borders", "bridges")])
+
+  if (all(movers_df$fly)) {
+    loc_opts <- c(
+      loc_opts,
+      unlist(game$map[[current_loc]][c("mountains", "rivers")]) # can flyers go over mountains?
+    )
+  }
+
+  if (all(movers_df$soar)) {
+    loc_opts <- c(
+      loc_opts,
+      paste0(current_loc, "S"),
+      unlist(game$map[[current_loc]][["sky"]])
+    )
+  }
+
+  loc_opts <- unique(loc_opts)
+
+  # GET INPUT FROM USER (will switch to something Shiny-ish?)
+  ## need to figure out how we'll refactor this if we have to split it
+  ## into two functions to get the shiny input in the middle (and serve actions...)
+  pick <- actions[utils::menu(loc_opts)]
+
+  # ok this is one move, but we need to put this ^ in a loop for multiple moves
+  #  (and decide how to return the multiple moves...)
 
 }
 
