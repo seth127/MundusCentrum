@@ -47,3 +47,11 @@ destroy_trap <- function(game, .p, .l) {
     )
   return(game)
 }
+
+#' @export
+local_uprising <- function(game, .l) {
+  checkmate::assert_string(.l)
+  checkmate::assert_true(.l %in% names(game$map))
+  game$map[[.l]][["control"]] <- NULL
+  game
+}
