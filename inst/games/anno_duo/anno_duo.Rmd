@@ -36,6 +36,7 @@ print(game, .p = "{{PLAYER}}")
 * [Turn 9](#turn9)
 * [Turn 10](#turn10)
 * [Turn 11](#turn11)
+* [Turn 12](#turn12)
 
 ### see the starting point
 This is the state of the game at the beginning
@@ -860,7 +861,7 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
+#print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
@@ -930,6 +931,8 @@ game <- game %>%
   modify_unit('eric', '26', 'move', 'H5') %>%
   modify_unit('eric', '27', 'defend', 'F2') %>%
   modify_unit('eric', '28', 'move', 'E7') %>%
+  local_uprising('H5') %>% # eric
+  local_uprising('H3') %>% # eric
   
   modify_unit('chris', 1, "defend", "D4") %>%
   modify_unit('chris', 5, "defend", "B5") %>%
@@ -944,7 +947,7 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-print(draw_map(game, "{{PLAYER}}"))
+#print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
@@ -1153,9 +1156,97 @@ print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
+### moves
+
+
+```{r}
+game <- game %>%
+  modify_unit("chris", 6, "retreat", "D1") %>%
+  reconcile_player_orders()
+```
+
+```{r, results = "asis"}
+print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
+```
+
+
+# TURN 12 {#turn12}
+
+```
++++++++++++++++++++++++++++++++++
+
+259.853.M41: Ravenwing Talonmaster Castiel has successfully reentered the Rhun region, pushing back a small tendril of the… [data corruption] …according to plan.  All haste… [data corruption] …imminent! Vox channels are… [data corruption] …disturbing.  The Emperor… …ects.
+
+++++++++++++++++CONNECTION LOST++++++++++++++++
+```
+
+### moves
+
+```{r}
+game <- game %>%
+  
+  modify_unit("big_grizz", c(1, 10, 16),   "move",  c("D4")) %>%
+  modify_unit("big_grizz", c(4, 15, 19),   "defend",  c("C1")) %>%
+  modify_unit("big_grizz", c(2, 20, 21),   "reinforce",  c("C5")) %>%
+  modify_unit("big_grizz", c(8, 23),   "move",  c("F7", "C2")) %>%
+  modify_unit("big_grizz", 7,   "control",  "C1") %>%
+  modify_unit("big_grizz", c(11, 12),   "move",  c("D1", "D2")) %>%
+  modify_unit("big_grizz", 5,   "move",  "F5") %>%
+  modify_unit("big_grizz", c(3, 6, 13, 17, 18, 22), "move",  c("D4")) %>%
+  modify_unit("big_grizz", 9,   "move",  "F4") %>%
+  modify_unit("big_grizz", 14,   "move",  "F7") %>%
+
+  add_trap("chris", "F1") %>%
+  add_trap("chris", "D4") %>%
+  add_bridge("F2", "C3") %>% # chris
+  modify_unit("chris", c(1,7,8,17,21,23), "defend", "D4") %>%
+  modify_unit("chris", c(2,4,10,11,19,20,22,24), "move", "C3") %>%
+  modify_unit("chris", c(3,9), "move", "E2") %>%
+  modify_unit("chris", c(5), "defend", "B5") %>%
+  modify_unit("chris", c(6), "move", "B1") %>%
+  modify_unit("chris", c(12, 15, 18), "move", "C1") %>%
+  modify_unit("chris", c(13, 16, 25), "reinforce", "F1") %>%
+  modify_unit("chris", c(14), "control", "F2") %>%
+  
+  modify_unit('eric', '1', 'move', 'F2') %>%
+  modify_unit('eric', '4', 'move', 'F2') %>%
+  modify_unit('eric', '6', 'move', 'F2') %>%
+  modify_unit('eric', '7', 'move', 'F2') %>%
+  modify_unit('eric', '8', 'move', 'F2') %>%
+  modify_unit('eric', '9', 'defend', 'G7') %>%
+  modify_unit('eric', '10', 'move', 'F2') %>%
+  modify_unit('eric', '11', 'move', 'F2') %>%
+  modify_unit('eric', '15', 'move', c('I4', 'I4S')) %>%
+  modify_unit('eric', '16', 'move', c('I4', 'I4S')) %>%
+  modify_unit('eric', '25', 'move', 'I4') %>%
+  modify_unit('eric', '17', 'move', 'I4S') %>%
+  modify_unit('eric', '18', 'move', c('I4S', 'H6S')) %>%
+  modify_unit('eric', '22', 'move', c('I4S', 'H6S')) %>%
+  modify_unit('eric', '23', 'move', c('I4S', 'H6S')) %>%
+  modify_unit('eric', '24', 'move', c('I4S', 'H6S')) %>%
+  modify_unit('eric', '26', 'move', 'I4S') %>%
+  modify_unit('eric', '2', 'move', c('I4S', 'H6S')) %>%
+  modify_unit('eric', '3', 'reinforce', 'H2') %>%
+  modify_unit('eric', '14', 'reinforce', 'H2') %>%
+  modify_unit('eric', '28', 'move', 'E3') %>%
+  modify_unit('eric', '27', 'move', 'E3') %>%
+  modify_unit('eric', '20', 'move', 'E3') %>%
+  modify_unit('eric', '13', 'move', 'E3') %>%
+  modify_unit('eric', '5', 'move', 'E3') %>%
+  modify_unit('eric', '12', 'move', 'E3') %>%
+  modify_unit('eric', '21', 'defend', 'H4') %>%
+  modify_unit('eric', '19', 'control', 'G2') %>%
+  
+  reconcile_player_orders()
+```
+
+```{r, results = "asis"}
+print(draw_map(game, "{{PLAYER}}"))
+print_map_df(game, "{{PLAYER}}")
+```
+
 ### moves...
-
-
 
 
 **Rmd Hash:** {{RMD_MD5}}
