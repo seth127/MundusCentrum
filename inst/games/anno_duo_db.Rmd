@@ -20,21 +20,27 @@ library(MundusCentrum)
 ```{r}
 # set player you want to render (this would come from shiny input)
 PLAYER <- "big_grizz"
-TURN <- "006A"
+TURN <- "004A"
+.p = PLAYER
 ```
 
 
 ```{r, echo = FALSE, results = "asis"}
 cat(glue("# {PLAYER} :: Turn {TURN}\n\n"))
 game <- load_game("anno_duo_db", TURN)
-print(game, .p = PLAYER)
+print(game, .p)
+```
+
+
+```{r}
+print_map_df(game, .p)
 ```
 
 
 ```{r eval = FALSE}
 # player input
 
-input_unit(game, .p, "F1") %>% 
+input_unit(game, .p, .u = "C3") %>% 
   input_action()
 
 ```
