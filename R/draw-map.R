@@ -4,8 +4,8 @@ Y_MULT <- 10
 #' Draw the game map
 #' @importFrom ggplot2 ggplot geom_point geom_jitter theme coord_cartesian
 #'   annotation_custom aes element_blank element_text scale_size_area
-#'   scale_colour_manual scale_fill_manual ggtitle geom_line
-#' @importFrom grid rasterGrob unit
+#'   scale_colour_manual scale_fill_manual ggtitle geom_line geom_segment
+#' @importFrom grid rasterGrob unit arrow
 #' @importFrom dplyr count full_join rename group_by
 #' @param game The game object that contains the map etc
 #' @return Returns a ggplot object of the map
@@ -56,15 +56,31 @@ draw_map <- function(game, .p = NULL) {
   # get units
   unit_data <- full_join(
     map_data,
-    count(map_df, loc, player),
+    count(filter(map_df, !passing_through), loc, player),
     by = "loc"
   ) %>%
-    filter(!is.na(player), loc %in% visible_loc) %>%
+    filter(
+      !is.na(player),
+      loc %in% visible_loc
+    ) %>%
     mutate(
       soaring = ifelse(str_detect(loc, "S$"), "SOARING", "GROUND"),
       point_size = pmin(ifelse(n < 5, n^1.2, ifelse(n > 5, n^0.8, n)), 20)
       #point_size = pmax(pmin(total_folks/3, 20), 2) #### TODO: adjust this once we get real army sizes
     )
+
+  # create df of paths for drawing arrows
+  path_df <- map_df %>%
+    filter(loc != prev_loc) %>%
+    #mutate(unit_id_group = paste0(prev_loc, "-", loc)) %>%
+    #select(player, unit_id_group, prev_loc, loc) %>%
+    select(player, prev_loc, loc) %>%
+    unique() %>%
+    left_join(select(map_data, loc, x_, y_), by = "loc") %>%
+    left_join(
+      select(map_data, loc, x_, y_) %>% rename(prev_loc = loc),
+      by = "prev_loc",
+      suffix = c("loc", "prev"))
 
   ggplot(map_data, aes(x = x_*X_MULT, y = y_*Y_MULT)) +
     coord_cartesian(xlim = c(0,1)*X_MULT, ylim = c(0,1)*Y_MULT) +
@@ -85,6 +101,9 @@ draw_map <- function(game, .p = NULL) {
     geom_point(data = filter(map_data, !is.na(comm)), size = 1, shape = 21, aes(fill = comm_fill)) +
     # armies
     geom_jitter(data = unit_data, aes(size = point_size, fill = player, color = soaring), alpha = 0.82, width = 0.15, height = 0.15, shape = 21) +
+    # paths
+    geom_segment(data = path_df, aes(x = x_loc*X_MULT,y = y_loc*Y_MULT,xend = x_prev*X_MULT,yend = y_prev*Y_MULT,color=player), arrow=grid::arrow(ends = "first", length = unit(0.35, "cm"), angle = 20), alpha = 0.55) +
+    # formatting
     theme(
       axis.title.x=element_blank(),
       axis.text.x=element_blank(),
@@ -110,9 +129,12 @@ player_vision <- function(game, .p) {
   if (is.null(.p) || .p == "GLOBAL") return(names(game$map))
   #if (.p == "CONFLICT!") return(unique(game$conflicts))
 
+  controls <- get_controls(game, .p)
+
   occ_loc <- game$map_df %>%
     filter(player == .p) %>%
     pull(loc) %>%
+    c(controls) %>%
     unique()
 
   borders <- map(occ_loc, ~ {
@@ -128,7 +150,6 @@ player_vision <- function(game, .p) {
     paste0("S")
 
   comms <- get_comms(game, .p)
-  controls <- get_controls(game, .p)
 
   c(occ_loc, borders, sky, comms, controls) %>%
     unique() %>%

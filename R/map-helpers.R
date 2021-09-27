@@ -46,7 +46,7 @@ print_map_df <- function(game, .p = NULL, .n = NULL) {
   } else {
     cat("\n\n#### Visible units:\n")
     .m <- .m %>%
-      select(-passing_through)
+      mutate(passing_through = str_replace(as.character(passing_through), "FALSE", ""))
 
     if (!is.null(.n)) {
       cat(glue("(Top {.n} visible units from each player)\n\n"))

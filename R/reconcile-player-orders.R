@@ -33,17 +33,6 @@ reconcile_player_orders <- function(game) {
       }
     }
 
-    # get rid of passing_through entries
-    game$map_df <- filter(game$map_df, !passing_through) # !isTRUE(as.logical(passing_through)) # wasn't working
-    .dups <- duplicated(game$map_df$unit_name)
-    if (sum(.dups) > 0) {
-      warn(paste(
-        "DEV ERROR: passing through not filtered. Duplicate units:",
-        paste(game$map_df$player[.dups], game$map_df$unit_id[.dups], game$map_df$unit_name[.dups], sep = " - ", collapse = ', '),
-        "reconcile_error"
-      ))
-    }
-
     # record control
     control_df <- filter(game$map_df, action == "control")
     locs <- control_df$loc

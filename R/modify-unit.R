@@ -43,6 +43,7 @@ modify_unit <- function(game, .p, .u, .a, .l = NULL) {
       game$map_df %>%
         filter(.data$unit_name == .ux) %>%
         mutate(
+          prev_loc = ifelse(.i == 1, loc, .l[.i-1]),
           loc = .lx,
           action = .a,
           passing_through = .i != length(.l)#ifelse(.i != length(.l), "TRUE", "")
@@ -99,7 +100,7 @@ print_modify_unit_call <- function(...) {
 sort_map_df <- function(map_df) {
   map_df %>%
     arrange(loc, player, action, unit_id, unit_type, unit_name) %>%
-    select(player, loc, unit_id, unit_type, action, unit_name, passing_through)
+    select(player, loc, unit_id, unit_type, action, unit_name, prev_loc, passing_through)
 
 }
 
