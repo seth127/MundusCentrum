@@ -110,9 +110,12 @@ player_vision <- function(game, .p) {
   if (is.null(.p) || .p == "GLOBAL") return(names(game$map))
   #if (.p == "CONFLICT!") return(unique(game$conflicts))
 
+  controls <- get_controls(game, .p)
+
   occ_loc <- game$map_df %>%
     filter(player == .p) %>%
     pull(loc) %>%
+    c(controls) %>%
     unique()
 
   borders <- map(occ_loc, ~ {
@@ -128,7 +131,6 @@ player_vision <- function(game, .p) {
     paste0("S")
 
   comms <- get_comms(game, .p)
-  controls <- get_controls(game, .p)
 
   c(occ_loc, borders, sky, comms, controls) %>%
     unique() %>%
