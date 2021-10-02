@@ -21,11 +21,7 @@ add_army_from_csv <- function(in_path, game_name, player_name, starting_loc) {
     ))
   }
 
-  out_path <- file.path(
-    dirname(game_path(game_name)),
-    "starting-armies",
-    fs::path_ext_set(sanitize_name(player_name), "csv")
-  )
+  out_path <- game_starting_armies_path(game_name, player_name)
   write_csv(raw_df, out_path)
 }
 

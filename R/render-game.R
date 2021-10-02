@@ -4,10 +4,12 @@
 #' the markdown(s).
 #' **This is basically how you "play" the game.**
 #' @export
-render_game <- function(game_path, players = FALSE, html = FALSE) {
-  game_name <- basename(game_path)
-  rmd_template <- file.path(game_path, paste0(game_name, ".Rmd"))
-  json_input <- file.path(game_path, paste0(game_name, ".json"))
+render_game <- function(game_name, players = FALSE, html = FALSE) {
+  checkmate::assert_string(game_name)
+  game_name <- sanitize_name(game_name)
+  game_dir <- dirname(game_path(game_name))
+  rmd_template <- game_path(game_name, ".Rmd")
+  json_input <- game_path(game_name, ".json")
   checkmate::assert_file_exists(rmd_template)
   checkmate::assert_file_exists(json_input)
 
@@ -16,7 +18,7 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
 !{game_name}.json
 *.Rmd
 *.html'),
-    file.path(game_path, ".gitignore")
+    file.path(game_dir, ".gitignore")
   )
 
   template_string <- readr::read_lines(rmd_template)
@@ -69,15 +71,15 @@ render_game <- function(game_path, players = FALSE, html = FALSE) {
 
     text <- whisker::whisker.render(text, data)
 
-    write_lines(text, file.path(game_path, paste0(player_hash, ".Rmd")))
+    write_lines(text, file.path(game_dir, paste0(player_hash, ".Rmd")))
 
     if (isTRUE(html)) {
-      rmd_file <- file.path(game_path, paste0(player_hash, ".Rmd"))
+      rmd_file <- file.path(game_dir, paste0(player_hash, ".Rmd"))
       message(glue("  Rendering html from {rmd_file}..."))
       rmarkdown::render(
         rmd_file,
         output_format = "html_document",
-        output_dir = game_path,
+        output_dir = game_dir,
         quiet = TRUE
       )
     }
