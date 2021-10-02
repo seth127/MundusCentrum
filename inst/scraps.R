@@ -63,7 +63,7 @@ publish_game_html("inst/games/anno_duo", "~/seth127.github.io/MundusCentrum/game
 
 moves_from_gsheet(
   "eric",
-  5,
+  "11",
   ss = "https://docs.google.com/spreadsheets/d/1nixuwA_qX0XTXg2LQKyC2nZijZ_LcEuZUhDL7ksXiCc/",
   sheet = "Moves Only"
 )

@@ -85,6 +85,7 @@ setup_map_df <- function(name, players) {
         unit_type = map_chr(unit_type, sanitize_name),
         unit_name = map_chr(unit_type, build_name),
         action = "control",
+        prev_loc = loc,
         passing_through = FALSE
       ) %>%
       sort_map_df()
