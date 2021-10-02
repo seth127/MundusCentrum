@@ -4,7 +4,7 @@
 \alias{render_game}
 \title{Render the Rmd files for a game}
 \usage{
-render_game(game_path, players = FALSE, html = FALSE)
+render_game(game_name, players = FALSE, html = FALSE)
 }
 \description{
 Takes an \code{.Rmd} template and a \code{.json} as input and renders
