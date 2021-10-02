@@ -3,18 +3,15 @@
   "players": [
     {
       "name" : "Big Grizz",
-      "team" : "Dark Angels",
-      "units" : "../../extdata/unit-templates/big_grizz.csv"
+      "team" : "Dark Angels"
     },
     {
       "name" : "Eric",
-      "team" : "Necrons",
-      "units" : "../../extdata/unit-templates/eric.csv"
+      "team" : "Necrons"
     },
     {
       "name" : "Chris",
-      "team" : "Tyranids",
-      "units" : "../../extdata/unit-templates/chris.csv"
+      "team" : "Tyranids"
     }
   ],
   "points" : 3000

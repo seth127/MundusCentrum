@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```{r, include=FALSE}
 devtools::load_all()
 library(MundusCentrum)
-game <- do.call(new_game, args = jsonlite::fromJSON("anno_duo.json", simplifyVector = FALSE))
+game <- do.call(new_game, args = jsonlite::fromJSON(game_path("anno_duo", "json"), simplifyVector = FALSE))
 ```
 
 ```{r, echo = FALSE, results = "asis"}
