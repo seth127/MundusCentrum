@@ -2,3 +2,4 @@
 !anno_duo.json
 *.Rmd
 *.html
+*.R

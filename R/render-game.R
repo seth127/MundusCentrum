@@ -17,7 +17,8 @@ render_game <- function(game_name, players = FALSE, html = FALSE) {
 !{game_name}.Rmd
 !{game_name}.json
 *.Rmd
-*.html'),
+*.html
+*.R'),
     file.path(game_dir, ".gitignore")
   )
 
