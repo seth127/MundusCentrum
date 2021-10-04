@@ -33,5 +33,10 @@ game_script_from_rmd <- function(game_name, run = FALSE) {
   }
 }
 
-
+#' @export
+list_games <- function() {
+  getOption("MC.games_dir") %>%
+    fs::dir_ls() %>%
+    basename()
+}
 
