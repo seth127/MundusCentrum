@@ -1,0 +1,42 @@
+---
+title: "The First Real Game"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  fig.width=8,
+  fig.height=8
+)
+```
+
+```{r}
+devtools::load_all()
+#library(MundusCentrum)
+
+# Parametrize this part
+PLAYER <- "GLOBAL"
+GAME <- "Anno Duo"
+TURN <- "012A"
+GAME <- sanitize_name(GAME)
+
+# game <- do.call(
+#   new_game, 
+#   args = jsonlite::fromJSON(
+#     game_path(GAME, "json"), 
+#     simplifyVector = FALSE
+#   )
+# )
+game <- load_game(GAME, TURN)
+```
+
+```{r, echo = FALSE, results = "asis"}
+cat(glue::glue("# {PLAYER}\n\n"))
+print(game, .p = PLAYER)
+```
+
+```{r, results = "asis"}
+print(draw_map(game, PLAYER))
+print_map_df(game, PLAYER)
+```

@@ -8,6 +8,7 @@
 #' @importFrom dplyr arrange summarize
 #' @export
 reconcile_player_orders <- function(game) {
+  message(glue("Reconciling {game$name} -- turn {game$turn} ..."))
 
   conflicts <- game$map_df %>%
     filter(!is.na(loc)) %>%
@@ -17,10 +18,10 @@ reconcile_player_orders <- function(game) {
     pull(loc)
 
   if (length(conflicts) > 0) {
-    warn("Conflict is at hand! Please resolve territorial disputes.", "map_conflict_warning")
+    message("  Conflict is at hand! Please resolve territorial disputes.")
     game$conflicts <- conflicts
   } else {
-    cat("All units resolved.\n\n")
+    message("  All units resolved.\n\n")
     game$conflicts <- NULL
 
     # record comm relays

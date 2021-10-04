@@ -10,10 +10,10 @@ game_json_to_disk <- function(game) {
   game$map_df <- NULL
 
   # write to disk
-  game_path(game, create = TRUE)
+  game_db_path(game, create = TRUE)
   readr::write_lines(
     jsonlite::toJSON(game, auto_unbox = TRUE, pretty = TRUE),
-    game_json_path(game)
+    game_json_path(game$name)
   )
 }
 
@@ -22,8 +22,10 @@ game_json_to_disk <- function(game) {
 #' Called internally by reconcile_player_moves()
 #' @export
 save_game <- function(game) {
+  message("Saving game to disk...")
   game_map_to_disk(game)
   game_df_to_disk(game)
+  game_img_to_disk(game)
 }
 
 #' @describeIn save_game Write map json to disk
@@ -44,14 +46,36 @@ game_df_to_disk <- function(game) {
   )
 }
 
+#' @describeIn save_game Draw the map and save as a png
+#' @importFrom ggplot2 ggsave
+#' @export
+game_img_to_disk <- function(game) {
+  for (.p in c("GLOBAL", get_player_names(game))) {
+    .m <- draw_map(game, .p)
+    ggsave(
+      filename = basename(game_img_path(game, .p)),
+      plot = .m,
+      path = dirname(game_img_path(game, .p)) ,
+      width = 7.5,
+      height = 8,
+      units = "in",
+      device = "png",
+      dpi = 300
+    )
+  }
+}
+
 
 #' Load game state from disk
 #' @export
-load_game <- function(path, turn) {
-  game_json <- file.path(path, 'game.json')
+load_game <- function(game_name, turn) {
+  game_json <- game_json_path(game_name)
   checkmate::assert_file_exists(game_json)
 
-  turns <- path %>%
+  game <- jsonlite::fromJSON(game_json)
+
+  turns <- game %>%
+    game_db_path() %>%
     fs::dir_ls() %>%
     str_subset(glue("^{game_json}$"), negate = TRUE) %>%
     str_replace_all("\\..+$", "") %>%
@@ -60,7 +84,7 @@ load_game <- function(path, turn) {
 
   if (!(turn %in% turns)) abort(glue("{turn} is not a valid turn. Try one of {paste(turns, collapse = ', ')}"))
 
-  game <- jsonlite::fromJSON(game_json)
+
   class(game) <- c(GAME_CLASS, class(game)) ### do I need this?
   game$turn <- turn
   game$map <- jsonlite::fromJSON(game_map_path(game))
@@ -96,13 +120,52 @@ increment_turn_phase <- function(game) {
 # PRIVATE HELPERS
 ##################
 
-#' Get path to game files on disk
+
+#' Takes a game name and returns the path to a relevant file
+#' @keywords internal
+game_path <- function(game_name, ext = "") {
+  checkmate::assert_string(game_name)
+  game_name <- sanitize_name(game_name)
+  file.path(
+    getOption("MC.games_dir"),
+    game_name,
+    fs::path_ext_set(game_name, ext)
+  )
+}
+
+#' @describeIn game_path Path to the game directory
+#' @keywords internal
+game_dir_path <- function(game_name) {
+  checkmate::assert_string(game_name)
+  dirname(game_path(game_name))
+}
+
+#' @describeIn game_path Path to the player's starting army .csv file
+#' @keywords internal
+game_starting_armies_path <- function(game_name, player_name) {
+  file.path(
+    game_dir_path(game_name),
+    "starting_armies",
+    fs::path_ext_set(sanitize_name(player_name), "csv")
+  )
+}
+
+
+#' Get path to game db files on disk
 #' @param game game object
 #' @param ext extension, if NULL returns dir
 #' @param create if TRUE, create it. Only works for dir.
 #' @keywords internal
-game_path <- function(game, ext = NULL, create = FALSE) {
-  .g <- file.path(getwd(), glue("{sanitize_name(game$name)}_db"))
+game_db_path <- function(game, ext = NULL, create = FALSE) {
+
+  game_name <- sanitize_name(game$name)
+
+  .g <- file.path(
+    getOption("MC.games_dir"),
+    game_name,
+    glue("{game_name}_db")
+  )
+
   if (isTRUE(create)) fs::dir_create(.g) # add if_exists checking and overwrite?
 
   if (!is.null(ext)) {
@@ -111,21 +174,30 @@ game_path <- function(game, ext = NULL, create = FALSE) {
   return(.g)
 }
 
-#' @describeIn game_path Path to general game info json
+#' @describeIn game_db_path Path to general game info json
 #' @keywords internal
-game_json_path <- function(game) {
-
-  file.path(game_path(game), glue("game.json"))
+game_json_path <- function(game_name) {
+  file.path(
+    paste0(game_path("anno duo"), "_db"),
+    "game.json"
+  )
 }
 
-#' @describeIn game_path Path to map_df csv
+#' @describeIn game_db_path Path to map_df csv
 #' @keywords internal
 game_csv_path <- function(game) {
-  game_path(game, ext = "csv")
+  game_db_path(game, ext = "csv")
 }
 
-#' @describeIn game_path Path to map json
+#' @describeIn game_db_path Path to map json
 #' @keywords internal
 game_map_path <- function(game) {
-  game_path(game, ext = "map.json")
+  game_db_path(game, ext = "map.json")
+}
+
+#' @describeIn game_db_path Path to map json
+#' @keywords internal
+game_img_path <- function(game, .p) {
+  check_player_name(game, .p)
+  game_db_path(game, ext = glue("map.{game$players[[.p]]}.png"))
 }

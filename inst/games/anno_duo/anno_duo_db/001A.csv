@@ -1,0 +1,77 @@
+player,loc,unit_id,unit_type,action,unit_name,prev_loc,passing_through
+big_grizz,D4,1,ravenwing_talonmaster,control,Mighty Contender,D4,FALSE
+big_grizz,D4,2,deathwing_captain,control,Madan Gupta,D4,FALSE
+big_grizz,D4,3,techmarine,control,Joshua Shelton,D4,FALSE
+big_grizz,D4,4,phobos_librarian,control,"Marina A. Ledin, Victor Ledin",D4,FALSE
+big_grizz,D4,5,tactical_squad,control,Nicholas Mullins,D4,FALSE
+big_grizz,D4,6,tactical_squad,control,Isabelle Stevenson,D4,FALSE
+big_grizz,D4,7,tactical_squad,control,William Lee,D4,FALSE
+big_grizz,D4,8,tactical_squad,control,Steven Francis,D4,FALSE
+big_grizz,D4,9,infiltrators,control,Nolan Barrett,D4,FALSE
+big_grizz,D4,10,ravenwing_bike_squad,control,Frank Welker,D4,FALSE
+big_grizz,D4,11,ravenwing_attack_bike,control,Jon Favreau,D4,FALSE
+big_grizz,D4,12,ravenwing_attack_bike,control,Robert Downey,D4,FALSE
+big_grizz,D4,13,dreadnought,control,Nevaeh Fletcher,D4,FALSE
+big_grizz,D4,14,redemptor_dreadnought,control,Lila Wang,D4,FALSE
+big_grizz,D4,15,invictor_tactical_warsuit,control,Larry Butler,D4,FALSE
+big_grizz,D4,16,ravenwing_apothecary,control,Don Cheadle,D4,FALSE
+big_grizz,D4,17,deathwing_terminators,control,John Pratt,D4,FALSE
+big_grizz,D4,18,deathwing_knights,control,Morris West,D4,FALSE
+big_grizz,D4,19,vindicare_assassin,control,Adam Abeshouse,D4,FALSE
+big_grizz,D4,20,eliminators,control,T Bone Burnett,D4,FALSE
+big_grizz,D4,21,eradicators,control,Nova Morgan,D4,FALSE
+big_grizz,D4,22,storm_raven,control,Spencer Tracy,D4,FALSE
+big_grizz,D4,23,rhino,control,Bob Bergen,D4,FALSE
+eric,G7,1,trazyn_the_infinite,control,Valerie Pacheco,G7,FALSE
+eric,G7,2,illuminor_szeras,control,Silas Fowler,G7,FALSE
+eric,G7,3,technomancer,control,Mario Bunge,G7,FALSE
+eric,G7,4,lychgaurd,control,Jayce Scott,G7,FALSE
+eric,G7,5,skorpekh_destroyers,control,Paisley Dunn,G7,FALSE
+eric,G7,6,canoptek_plasmacyte,control,Crazy Wanderer,G7,FALSE
+eric,G7,7,immortals,control,Max Brooks,G7,FALSE
+eric,G7,8,canoptek_spyders,control,Thunderous Killah,G7,FALSE
+eric,G7,9,canoptek_spyders,control,X-pert Desperado,G7,FALSE
+eric,G7,10,cryptothralls,control,Parker Ruiz,G7,FALSE
+eric,G7,11,cryptothralls,control,Eden Wolf,G7,FALSE
+eric,G7,12,canoptek_scarab_swarms,control,The Magician,G7,FALSE
+eric,G7,13,canoptek_wraiths,control,Paul Bettany,G7,FALSE
+eric,G7,14,deathmarks,control,Adam Stern,G7,FALSE
+eric,G7,15,night_scythe,control,Richard Burton Sullivan,G7,FALSE
+eric,G7,16,overlord,control,Jesse Kim,G7,FALSE
+eric,G7,17,royal_warden,control,Addison Watson,G7,FALSE
+eric,G7,18,necron_warriors,control,Carlos Guzman,G7,FALSE
+eric,G7,19,immortals,control,Caden Ward,G7,FALSE
+eric,G7,20,canoptek_scarab_swarms,control,Ghostface Warrior,G7,FALSE
+eric,G7,21,canoptek_scarab_swarms,control,Gentlemen Mastermind,G7,FALSE
+eric,G7,22,night_scythe,control,Hussain Zaidi Andrews,G7,FALSE
+eric,G7,23,overlord,control,Landon Adkins,G7,FALSE
+eric,G7,24,royal_warden,control,Cameron Mills,G7,FALSE
+eric,G7,25,immortals,control,Ayden Powell,G7,FALSE
+eric,G7,26,necron_warriors,control,Sydney Gibson,G7,FALSE
+eric,G7,27,canoptek_scarab_swarms,control,Tha Swami,G7,FALSE
+eric,G7,28,canoptek_scarab_swarms,control,Jack Lemmon,G7,FALSE
+chris,A5,1,flying_hive_tryant,control,"The Chef, Man",A5,FALSE
+chris,A5,2,flying_hive_tryant,control,Andy Serkis,A5,FALSE
+chris,A5,3,broodlord,control,Rob Cavallo,A5,FALSE
+chris,A5,4,broodlord,control,Narada Michael Walden,A5,FALSE
+chris,A5,5,neurothrope,control,Violent Commander,A5,FALSE
+chris,A5,6,tyranid_warriors,control,Izabella Wade,A5,FALSE
+chris,A5,7,tyranid_warriors,control,Piper Molina,A5,FALSE
+chris,A5,8,tyranid_warriors,control,Nora Harvey,A5,FALSE
+chris,A5,9,genestealers,control,Jaxson Hunter,A5,FALSE
+chris,A5,10,genestealers,control,Eli Washington,A5,FALSE
+chris,A5,11,termagants,control,Kinsley Ellis,A5,FALSE
+chris,A5,12,hormagaunts,control,Maya Guerra,A5,FALSE
+chris,A5,13,ripper_swarms,control,Nick Bostrom,A5,FALSE
+chris,A5,14,ripper_swarms,control,Natalia Graham,A5,FALSE
+chris,A5,15,ripper_swarms,control,Peter Dickinson,A5,FALSE
+chris,A5,16,hive_guard,control,Delilah Daniels,A5,FALSE
+chris,A5,17,maleceptor,control,Colton Hart,A5,FALSE
+chris,A5,18,venomthropes,control,Tyler Huang,A5,FALSE
+chris,A5,19,raveners,control,Drew Conway,A5,FALSE
+chris,A5,20,gargoyles,control,Frank Sinatra,A5,FALSE
+chris,A5,21,gargoyles,control,Unlucky Wizard,A5,FALSE
+chris,A5,22,exocrine,control,Brandon Williamson,A5,FALSE
+chris,A5,23,biovores,control,Chase Smith,A5,FALSE
+chris,A5,24,biovores,control,Luna Wells,A5,FALSE
+chris,A5,25,tyrannocyte,control,Richard Bach,A5,FALSE

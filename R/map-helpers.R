@@ -67,6 +67,16 @@ print_map_df <- function(game, .p = NULL, .n = NULL) {
   }
 }
 
+#' Return the map_df for displaying in shiny sidebar
+#' @export
+print_shiny_df <- function(game, .p = NULL) {
+  print_map_df(game, .p) %>%
+    mutate(
+      unit_id = as.integer(unit_id)
+    )# %>%
+    #select(loc, unit_id, unit_type, action, unit_name, prev_loc, passing_through)
+}
+
 #' @export
 get_comm_df <- function(game) {
   map_dfr(names(game$map), ~ {

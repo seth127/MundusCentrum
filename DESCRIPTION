@@ -23,6 +23,7 @@ Imports:
   RColorBrewer,
   readr,
   rlang,
+  shiny,
   stringr,
   whisker
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a

@@ -31,7 +31,6 @@ new_game <- function(name, players, points = NULL) {
   players <- map(players, function(.p) {
     assert_string(.p[["name"]])
     assert_string(.p[["team"]])
-    assert_string(.p[["units"]])
     .p[["id"]] <- sanitize_name(.p[["name"]])
     .p
   })
@@ -49,15 +48,20 @@ new_game <- function(name, players, points = NULL) {
     if (any(map_lgl(players, ~ is.null(.x[["points"]])))) abort("Must either pass new_game(points) or specify points for each player")
   }
 
+  player_colors <- length(ids) %>%
+    brewer.pal("Spectral") %>%
+    as.list() %>%
+    rlang::set_names(ids)
+
   game <- list(
     name = name,
     turn = "000A",
     # create hashes for serving html
     players = as.list(
-      map_chr(paste(name, c("GLOBAL", ids)), ~digest::digest(.x, algo = "md5")) %>%
+      map_chr(c("GLOBAL", ids), ~ player_hash(name, .x)) %>%
         rlang::set_names(c("GLOBAL", ids))
     ),
-    player_colors = as.list(rlang::set_names(brewer.pal(length(ids), "Spectral"), ids)),
+    player_colors = player_colors,
     map = add_sky(MAP)
   )
   game[["map_df"]] <- setup_map_df(name, players)
@@ -76,8 +80,9 @@ setup_map_df <- function(name, players) {
   clear_used_names()
   map_dfr(players, function(.p) {
     # load input units file
-    if (!file_exists(.p[["units"]])) abort(glue("{.p[['name']]} passed {.p[['units']]} but that file doesn't exist."))
-    .u <- read_csv(.p[["units"]], col_types = "cc")
+    unit_file <- game_starting_armies_path(name, .p[['name']])
+    if (!file_exists(unit_file)) abort(glue("{.p[['name']]} passed {unit_file} but that file doesn't exist."))
+    .u <- read_csv(unit_file, col_types = "cc")
     .u %>%
       mutate(
         player = .p[["id"]],
@@ -119,5 +124,15 @@ add_sky <- function(.m) {
 #' @keywords internal
 sanitize_name <- function(.n) {
   tolower(str_replace_all(.n, "[^[:alnum:]]", "_"))
+}
+
+player_hash <- function(game_name, player_name) {
+  digest::digest(
+    paste(
+      game_name,
+      sanitize_name(player_name)
+    ),
+    algo = "md5"
+  )
 }
 

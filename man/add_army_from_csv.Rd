@@ -4,16 +4,16 @@
 \alias{add_army_from_csv}
 \title{Create csv needed to start game from an input csv}
 \usage{
-add_army_from_csv(in_path, out_path, starting_loc, player_name = NULL)
+add_army_from_csv(in_path, game_name, player_name, starting_loc)
 }
 \arguments{
 \item{in_path}{Path to input CSV}
 
-\item{out_path}{Path to write army CSV to}
+\item{player_name}{Optional string, if passed with filter input df with \code{filter(.data$player == player_name)}}
 
 \item{starting_loc}{Map location to start units in}
 
-\item{player_name}{Optional string, if passed with filter input df with \code{filter(.data$player == player_name)}}
+\item{out_path}{Path to write army CSV to}
 }
 \description{
 Create csv needed to start game from an input csv

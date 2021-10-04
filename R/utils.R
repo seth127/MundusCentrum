@@ -23,7 +23,8 @@ check_player_name <- function(game, .p) {
   valid_players <- c(names(game$players), "CONFLICT!") # just need to get this
   if (!is.null(.p)) {
     checkmate::assert_string(.p)
-    if (!(.p %in% valid_players)) abort(glue("`{.p}` is not a valid player. Choose from {paste(valid_players, collapse = ', ')}"))
+    #if (!(.p %in% valid_players)) abort(glue("`{.p}` is not a valid player. Choose from {paste(valid_players, collapse = ', ')}"))
+    if (!(.p %in% valid_players)) abort(glue("`{.p}` is not a valid player"))
   }
 }
 

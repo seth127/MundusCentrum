@@ -1,0 +1,92 @@
+player,loc,unit_id,unit_type,action,unit_name,prev_loc,passing_through
+chris,B4,12,hormagaunts,defend,Maya Guerra,B4,FALSE
+chris,B4,15,ripper_swarms,defend,Peter Dickinson,B4,FALSE
+chris,B4,18,venomthropes,defend,Tyler Huang,B4,FALSE
+chris,B4,26,trap,sneak,Master Babyface,NA,FALSE
+chris,B5,5,neurothrope,defend,Violent Commander,B5,FALSE
+big_grizz,C1,4,phobos_librarian,move,"Marina A. Ledin, Victor Ledin",C3,FALSE
+big_grizz,C1,7,tactical_squad,move,William Lee,C2,FALSE
+big_grizz,C1,15,invictor_tactical_warsuit,move,Larry Butler,C3,FALSE
+big_grizz,C1,19,vindicare_assassin,move,Adam Abeshouse,C3,FALSE
+big_grizz,C2,1,ravenwing_talonmaster,move,Mighty Contender,C1,TRUE
+big_grizz,C2,10,ravenwing_bike_squad,move,Frank Welker,C1,TRUE
+big_grizz,C2,11,ravenwing_attack_bike,move,Jon Favreau,C1,TRUE
+big_grizz,C2,12,ravenwing_attack_bike,move,Robert Downey,C1,TRUE
+big_grizz,C2,16,ravenwing_apothecary,move,Don Cheadle,C1,TRUE
+big_grizz,C5,2,deathwing_captain,move,Madan Gupta,F7,FALSE
+big_grizz,C5,20,eliminators,move,T Bone Burnett,C3,FALSE
+big_grizz,C5,21,eradicators,move,Nova Morgan,C3,FALSE
+chris,D1,6,tyranid_warriors,retreat,Izabella Wade,D3,FALSE
+big_grizz,D3,1,ravenwing_talonmaster,move,Mighty Contender,C2,FALSE
+big_grizz,D3,10,ravenwing_bike_squad,move,Frank Welker,C2,FALSE
+big_grizz,D3,11,ravenwing_attack_bike,move,Jon Favreau,C2,FALSE
+big_grizz,D3,12,ravenwing_attack_bike,move,Robert Downey,C2,FALSE
+big_grizz,D3,16,ravenwing_apothecary,move,Don Cheadle,C2,FALSE
+chris,D4,8,tyranid_warriors,defend,Nora Harvey,D4,FALSE
+chris,D4,21,gargoyles,defend,Unlucky Wizard,D4,FALSE
+chris,D4,23,biovores,defend,Chase Smith,D4,FALSE
+chris,D4,1,flying_hive_tryant,move,"The Chef, Man",D3,FALSE
+chris,D4,7,tyranid_warriors,move,Piper Molina,D2,FALSE
+chris,D4,17,maleceptor,respawn,Colton Hart,D4,FALSE
+eric,E4,5,skorpekh_destroyers,move,Paisley Dunn,E7,FALSE
+eric,E4,12,canoptek_scarab_swarms,move,The Magician,E6,FALSE
+eric,E4,13,canoptek_wraiths,move,Paul Bettany,E7,FALSE
+eric,E4,20,canoptek_scarab_swarms,move,Ghostface Warrior,E7,FALSE
+eric,E4,27,canoptek_scarab_swarms,move,Tha Swami,E7,FALSE
+eric,E4,28,canoptek_scarab_swarms,move,Jack Lemmon,G7,FALSE
+chris,F1,9,genestealers,control,Jaxson Hunter,F1,FALSE
+chris,F1,3,broodlord,reinforce,Rob Cavallo,F1,FALSE
+chris,F1,13,ripper_swarms,reinforce,Nick Bostrom,F1,FALSE
+chris,F1,16,hive_guard,reinforce,Delilah Daniels,F1,FALSE
+chris,F1,25,tyrannocyte,reinforce,Richard Bach,F1,FALSE
+chris,F2,19,raveners,defend,Drew Conway,F2,FALSE
+chris,F2,20,gargoyles,defend,Frank Sinatra,F2,FALSE
+chris,F2,2,flying_hive_tryant,move,Andy Serkis,F1,FALSE
+chris,F2,4,broodlord,move,Narada Michael Walden,F1,FALSE
+chris,F2,10,genestealers,move,Eli Washington,F1,FALSE
+chris,F2,11,termagants,move,Kinsley Ellis,F1,FALSE
+chris,F2,14,ripper_swarms,move,Natalia Graham,F1,FALSE
+chris,F2,22,exocrine,move,Brandon Williamson,F1,FALSE
+chris,F2,24,biovores,move,Luna Wells,F1,FALSE
+eric,F3,1,trazyn_the_infinite,move,Valerie Pacheco,E5,FALSE
+eric,F3,4,lychgaurd,move,Jayce Scott,E5,FALSE
+eric,F3,6,canoptek_plasmacyte,move,Crazy Wanderer,E5,FALSE
+eric,F3,7,immortals,move,Max Brooks,E5,FALSE
+eric,F3,8,canoptek_spyders,move,Thunderous Killah,E5,FALSE
+eric,F3,10,cryptothralls,move,Parker Ruiz,E5,FALSE
+eric,F3,11,cryptothralls,move,Eden Wolf,E5,FALSE
+big_grizz,F4,8,tactical_squad,control,Steven Francis,F3,FALSE
+big_grizz,F4,23,rhino,control,Bob Bergen,F3,FALSE
+big_grizz,F4,14,redemptor_dreadnought,defend,Lila Wang,F4,FALSE
+big_grizz,F4,28,trap,sneak,Amateur Judith Sherman,NA,FALSE
+big_grizz,F5,3,techmarine,move,Joshua Shelton,F8,FALSE
+big_grizz,F5,6,tactical_squad,move,Isabelle Stevenson,C5,FALSE
+big_grizz,F5,13,dreadnought,move,Nevaeh Fletcher,F8,FALSE
+big_grizz,F5,17,deathwing_terminators,move,John Pratt,F8,FALSE
+big_grizz,F5,18,deathwing_knights,move,Morris West,F8,FALSE
+big_grizz,F5,22,storm_raven,move,Spencer Tracy,F8,FALSE
+big_grizz,F7,9,infiltrators,control,Nolan Barrett,F7,FALSE
+big_grizz,F8,3,techmarine,move,Joshua Shelton,G8,TRUE
+big_grizz,F8,5,tactical_squad,move,Nicholas Mullins,G8,FALSE
+big_grizz,F8,13,dreadnought,move,Nevaeh Fletcher,G8,TRUE
+big_grizz,F8,18,deathwing_knights,move,Morris West,G8,TRUE
+big_grizz,F8,22,storm_raven,move,Spencer Tracy,G8,TRUE
+eric,G2,19,immortals,move,Caden Ward,G3,FALSE
+eric,G7,9,canoptek_spyders,defend,X-pert Desperado,G7,FALSE
+big_grizz,G8,3,techmarine,move,Joshua Shelton,G10S,TRUE
+big_grizz,G8,13,dreadnought,move,Nevaeh Fletcher,G10S,TRUE
+big_grizz,G8,18,deathwing_knights,move,Morris West,G10S,TRUE
+big_grizz,G8,22,storm_raven,move,Spencer Tracy,G10S,TRUE
+eric,H2,3,technomancer,reinforce,Mario Bunge,H2,FALSE
+eric,H2,14,deathmarks,reinforce,Adam Stern,H2,FALSE
+eric,H4,21,canoptek_scarab_swarms,move,Gentlemen Mastermind,H4,FALSE
+eric,I3,15,night_scythe,defend,Richard Burton Sullivan,I3,FALSE
+eric,I3,16,overlord,defend,Jesse Kim,I3,FALSE
+eric,I3,25,immortals,defend,Ayden Powell,I3,FALSE
+eric,I4,2,illuminor_szeras,move,Silas Fowler,H6,FALSE
+eric,I4,17,royal_warden,move,Addison Watson,H6,FALSE
+eric,I4,18,necron_warriors,move,Carlos Guzman,H6,FALSE
+eric,I4,22,night_scythe,move,Hussain Zaidi Andrews,H6,FALSE
+eric,I4,23,overlord,move,Landon Adkins,H6,FALSE
+eric,I4,24,royal_warden,move,Cameron Mills,H6,FALSE
+eric,I4,26,necron_warriors,move,Sydney Gibson,H6,FALSE

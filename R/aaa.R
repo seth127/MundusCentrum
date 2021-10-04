@@ -18,3 +18,5 @@ UNIT_KEYWORDS <- c(
   "deep",
   "sneak"
 )
+
+options("MC.games_dir" = system.file("games", package = "MundusCentrum"))
