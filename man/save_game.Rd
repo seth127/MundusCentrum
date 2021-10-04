@@ -4,6 +4,7 @@
 \alias{save_game}
 \alias{game_map_to_disk}
 \alias{game_df_to_disk}
+\alias{game_img_to_disk}
 \title{Save game state to disk}
 \usage{
 save_game(game)
@@ -11,6 +12,8 @@ save_game(game)
 game_map_to_disk(game)
 
 game_df_to_disk(game)
+
+game_img_to_disk(game)
 }
 \description{
 Called internally by reconcile_player_moves()
@@ -20,5 +23,7 @@ Called internally by reconcile_player_moves()
 \item \code{game_map_to_disk}: Write map json to disk
 
 \item \code{game_df_to_disk}: Write df csv to disk
+
+\item \code{game_img_to_disk}: Draw the map and save as a png
 }}
 
