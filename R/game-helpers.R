@@ -41,8 +41,8 @@ list_games <- function() {
 }
 
 #' @export
-list_turns <- function(game) {
-  game_db_path(game) %>%
+list_turns <- function(game_name) {
+  paste0(game_path(game_name), "_db") %>%
     fs::dir_ls() %>%
     basename() %>%
     str_replace("\\..+$", "") %>%

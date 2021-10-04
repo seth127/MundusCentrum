@@ -19,7 +19,12 @@ ui <- fluidPage(
     mainPanel(
       selectInput("game_name", label = "Game", choices = list_games()),
       textInput("player_code", label = "Player Code", ""),
-      textInput("turn", label = "Turn", "001A"),
+      #textInput("turn", label = "Turn", "001A"),
+      selectInput(
+        "turn",
+        label = "Select Turn",
+        choices = "001A"
+      ),
       #plotOutput("map", width = "750px", height = "800px")
       imageOutput("map_png", width = "750px", height = "800px")
     )
@@ -68,8 +73,15 @@ server <- function(input, output, session) {
          units = "px",
          alt = "game map")
   }, deleteFile = FALSE)
-
-
+  observe({
+    all_turns <- list_turns(input$game_name)
+    updateSelectInput(
+      session,
+      "turn",
+      choices = all_turns,
+      selected = all_turns[length(all_turns)]
+    )
+  })
 }
 
 shinyApp(ui, server)
