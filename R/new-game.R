@@ -58,7 +58,7 @@ new_game <- function(name, players, points = NULL) {
     turn = "000A",
     # create hashes for serving html
     players = as.list(
-      map_chr(paste(name, c("GLOBAL", ids)), ~digest::digest(.x, algo = "md5")) %>%
+      map_chr(c("GLOBAL", ids), ~ player_hash(name, .x)) %>%
         rlang::set_names(c("GLOBAL", ids))
     ),
     player_colors = player_colors,
@@ -124,5 +124,15 @@ add_sky <- function(.m) {
 #' @keywords internal
 sanitize_name <- function(.n) {
   tolower(str_replace_all(.n, "[^[:alnum:]]", "_"))
+}
+
+player_hash <- function(game_name, player_name) {
+  digest::digest(
+    paste(
+      game_name,
+      sanitize_name(player_name)
+    ),
+    algo = "md5"
+  )
 }
 
