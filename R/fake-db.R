@@ -13,7 +13,7 @@ game_json_to_disk <- function(game) {
   game_db_path(game, create = TRUE)
   readr::write_lines(
     jsonlite::toJSON(game, auto_unbox = TRUE, pretty = TRUE),
-    game_json_path(game)
+    game_json_path(game$name)
   )
 }
 
@@ -47,11 +47,14 @@ game_df_to_disk <- function(game) {
 
 #' Load game state from disk
 #' @export
-load_game <- function(path, turn) {
-  game_json <- file.path(path, 'game.json')
+load_game <- function(game_name, turn) {
+  game_json <- game_json_path(game_name)
   checkmate::assert_file_exists(game_json)
 
-  turns <- path %>%
+  game <- jsonlite::fromJSON(game_json)
+
+  turns <- game %>%
+    game_db_path() %>%
     fs::dir_ls() %>%
     str_subset(glue("^{game_json}$"), negate = TRUE) %>%
     str_replace_all("\\..+$", "") %>%
@@ -60,7 +63,7 @@ load_game <- function(path, turn) {
 
   if (!(turn %in% turns)) abort(glue("{turn} is not a valid turn. Try one of {paste(turns, collapse = ', ')}"))
 
-  game <- jsonlite::fromJSON(game_json)
+
   class(game) <- c(GAME_CLASS, class(game)) ### do I need this?
   game$turn <- turn
   game$map <- jsonlite::fromJSON(game_map_path(game))
@@ -109,11 +112,18 @@ game_path <- function(game_name, ext = "") {
   )
 }
 
-#' @describeIn game_path
+#' @describeIn game_path Path to the game directory
+#' @keywords internal
+game_dir_path <- function(game_name) {
+  checkmate::assert_string(game_name)
+  dirname(game_path(game_name))
+}
+
+#' @describeIn game_path Path to the player's starting army .csv file
 #' @keywords internal
 game_starting_armies_path <- function(game_name, player_name) {
   file.path(
-    dirname(game_path(game_name)),
+    game_dir_path(game_name),
     "starting_armies",
     fs::path_ext_set(sanitize_name(player_name), "csv")
   )
@@ -145,9 +155,11 @@ game_db_path <- function(game, ext = NULL, create = FALSE) {
 
 #' @describeIn game_db_path Path to general game info json
 #' @keywords internal
-game_json_path <- function(game) {
-
-  file.path(game_db_path(game), glue("game.json"))
+game_json_path <- function(game_name) {
+  file.path(
+    paste0(game_path("anno duo"), "_db"),
+    "game.json"
+  )
 }
 
 #' @describeIn game_db_path Path to map_df csv

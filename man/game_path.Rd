@@ -2,11 +2,24 @@
 % Please edit documentation in R/fake-db.R
 \name{game_path}
 \alias{game_path}
+\alias{game_dir_path}
+\alias{game_starting_armies_path}
 \title{Takes a game name and returns the path to a relevant file}
 \usage{
 game_path(game_name, ext = "")
+
+game_dir_path(game_name)
+
+game_starting_armies_path(game_name, player_name)
 }
 \description{
 Takes a game name and returns the path to a relevant file
 }
+\section{Functions}{
+\itemize{
+\item \code{game_dir_path}: Path to the game directory
+
+\item \code{game_starting_armies_path}: Path to the player's starting army .csv file
+}}
+
 \keyword{internal}

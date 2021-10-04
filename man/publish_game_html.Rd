@@ -4,7 +4,7 @@
 \alias{publish_game_html}
 \title{Copy game HTML files to a new dir (for publishing and hosting)}
 \usage{
-publish_game_html(game_dir, dest_dir, overwrite = FALSE)
+publish_game_html(game_name, dest_dir, overwrite = FALSE)
 }
 \description{
 Copy game HTML files to a new dir (for publishing and hosting)

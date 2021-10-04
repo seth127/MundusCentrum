@@ -4,7 +4,7 @@
 \alias{load_game}
 \title{Load game state from disk}
 \usage{
-load_game(path, turn)
+load_game(game_name, turn)
 }
 \description{
 Load game state from disk

@@ -48,6 +48,11 @@ new_game <- function(name, players, points = NULL) {
     if (any(map_lgl(players, ~ is.null(.x[["points"]])))) abort("Must either pass new_game(points) or specify points for each player")
   }
 
+  player_colors <- length(ids) %>%
+    brewer.pal("Spectral") %>%
+    as.list() %>%
+    rlang::set_names(ids)
+
   game <- list(
     name = name,
     turn = "000A",
@@ -56,7 +61,7 @@ new_game <- function(name, players, points = NULL) {
       map_chr(paste(name, c("GLOBAL", ids)), ~digest::digest(.x, algo = "md5")) %>%
         rlang::set_names(c("GLOBAL", ids))
     ),
-    player_colors = rlang::set_names(brewer.pal(length(ids), "Spectral"), ids),
+    player_colors = player_colors,
     map = add_sky(MAP)
   )
   game[["map_df"]] <- setup_map_df(name, players)

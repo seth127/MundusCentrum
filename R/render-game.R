@@ -7,7 +7,7 @@
 render_game <- function(game_name, players = FALSE, html = FALSE) {
   checkmate::assert_string(game_name)
   game_name <- sanitize_name(game_name)
-  game_dir <- dirname(game_path(game_name))
+  game_dir <- game_dir_path(game_name)
   rmd_template <- game_path(game_name, ".Rmd")
   json_input <- game_path(game_name, ".json")
   checkmate::assert_file_exists(rmd_template)
@@ -90,7 +90,8 @@ render_game <- function(game_name, players = FALSE, html = FALSE) {
 
 #' Copy game HTML files to a new dir (for publishing and hosting)
 #' @export
-publish_game_html <- function(game_dir, dest_dir, overwrite = FALSE) {
+publish_game_html <- function(game_name, dest_dir, overwrite = FALSE) {
+  game_dir <- game_dir_path(game_name)
   html_files <- fs::dir_ls(game_dir, glob = "*.html")
   dest_dir <- file.path(dest_dir, basename(game_dir))
   if (isTRUE(overwrite) && fs::dir_exists(dest_dir)) fs::dir_delete(dest_dir)
