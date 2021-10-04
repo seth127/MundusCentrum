@@ -1,6 +1,5 @@
 .Rprofile
 renv/*
-inst/games/anno_uno*/*
 inst/extdata/name-files/USED.txt
 
 .DS_Store
