@@ -15,6 +15,7 @@ render_game <- function(game_name, players = FALSE, html = FALSE) {
 
   write_lines(glue('
 !{game_name}.Rmd
+!{game_name}_db.Rmd
 !{game_name}.json
 *.Rmd
 *.html
