@@ -7,5 +7,9 @@
     "eric": "a1ccf8d0f7a8411fb76416a91849ce5b",
     "chris": "fe936cf0412afe8f48465a3e3ab9e64f"
   },
-  "player_colors": ["#FC8D59", "#FFFFBF", "#99D594"]
+  "player_colors": {
+    "big_grizz": "#FC8D59",
+    "eric": "#FFFFBF",
+    "chris": "#99D594"
+  }
 }
