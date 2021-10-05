@@ -18,11 +18,13 @@ ui <- fluidPage(
 
     mainPanel(
       # inputs
-      selectInput("game_name", label = "Game", choices = list_games()),
-      textInput("player_code", label = "Player Code", ""),
+      selectInput("game_name", label = "Game", choices = list_games(), selected = "sloth_v_grizz"),
+      textInput("player_code", label = "Player Code", "047a45d5b4a91f1c56387070a270da4b"),
       selectInput("turn", label = "Select Turn", choices = "001A"),
-      actionButton("input_moves", "Input Moves", style="simple"),
-      verbatimTextOutput(outputId = "moves_preview"),
+
+      #actionButton("input_moves", "Input Moves", style="simple"),
+      #verbatimTextOutput(outputId = "moves_preview"),
+
       # map
       #plotOutput("map", width = "750px", height = "800px")
       imageOutput("map_png", width = "750px", height = "800px")
@@ -39,15 +41,7 @@ server <- function(input, output, session) {
     load_game(input$game_name, input$turn)
   })
   player <- reactive({
-    # stop the cheaters
-    if(input$player_code %in% names(game()$players)) {
-      stop("Please specify player code, not player name")
-    }
-
-    # load the name
-    winner <- names(which(game()$players == input$player_code))
-    if (length(winner) == 0) return(input$player_code)
-    return(winner)
+    input_player_code(game(), input$player_code)
   })
 
   game_title <- reactive({
@@ -86,29 +80,29 @@ server <- function(input, output, session) {
     )
   })
 
-  # submitting moves
-  observeEvent(input$input_moves, {
-    # display a modal dialog with a header, textinput and action buttons
-    showModal(modalDialog(
-      tags$h2('Enter moves'),
-      textInput('units', 'Unit(s)'),
-      footer=tagList(
-        actionButton('submit', 'Submit'),
-        modalButton('cancel')
-      )
-    ))
-  })
-
-  observeEvent(input$submit, {
-    removeModal()
-    l$units <- unlist(stringr::str_split(input$units, "[, ]+"))
-  })
-
-  # display whatever is listed in l
-  output$moves_preview <- renderPrint({
-    if (is.null(l$units)) return(NULL)
-    paste('Units:', paste(l$units, collapse = " :: "))
-  })
+  # # submitting moves
+  # observeEvent(input$input_moves, {
+  #   # display a modal dialog with a header, textinput and action buttons
+  #   showModal(modalDialog(
+  #     tags$h2('Enter moves'),
+  #     textInput('units', 'Unit(s)'),
+  #     footer=tagList(
+  #       actionButton('submit', 'Submit'),
+  #       modalButton('cancel')
+  #     )
+  #   ))
+  # })
+  #
+  # observeEvent(input$submit, {
+  #   removeModal()
+  #   l$units <- unlist(stringr::str_split(input$units, "[, ]+"))
+  # })
+  #
+  # # display whatever is listed in l
+  # output$moves_preview <- renderPrint({
+  #   if (is.null(l$units)) return(NULL)
+  #   paste('Units:', paste(l$units, collapse = " :: "))
+  # })
 }
 
 shinyApp(ui, server)
