@@ -17,14 +17,13 @@ ui <- fluidPage(
     ),
 
     mainPanel(
+      # inputs
       selectInput("game_name", label = "Game", choices = list_games()),
       textInput("player_code", label = "Player Code", ""),
-      #textInput("turn", label = "Turn", "001A"),
-      selectInput(
-        "turn",
-        label = "Select Turn",
-        choices = "001A"
-      ),
+      selectInput("turn", label = "Select Turn", choices = "001A"),
+      actionButton("input_moves", "Input Moves", style="simple"),
+      verbatimTextOutput(outputId = "moves_preview"),
+      # map
       #plotOutput("map", width = "750px", height = "800px")
       imageOutput("map_png", width = "750px", height = "800px")
     )
@@ -33,6 +32,8 @@ ui <- fluidPage(
 
 
 server <- function(input, output, session) {
+
+  l <- reactiveValues()
 
   game <- reactive({
     load_game(input$game_name, input$turn)
@@ -73,6 +74,8 @@ server <- function(input, output, session) {
          units = "px",
          alt = "game map")
   }, deleteFile = FALSE)
+
+  # filling in the options for turn
   observe({
     all_turns <- list_turns(input$game_name)
     updateSelectInput(
@@ -81,6 +84,30 @@ server <- function(input, output, session) {
       choices = all_turns,
       selected = all_turns[length(all_turns)]
     )
+  })
+
+  # submitting moves
+  observeEvent(input$input_moves, {
+    # display a modal dialog with a header, textinput and action buttons
+    showModal(modalDialog(
+      tags$h2('Enter moves'),
+      textInput('units', 'Unit(s)'),
+      footer=tagList(
+        actionButton('submit', 'Submit'),
+        modalButton('cancel')
+      )
+    ))
+  })
+
+  observeEvent(input$submit, {
+    removeModal()
+    l$units <- unlist(stringr::str_split(input$units, "[, ]+"))
+  })
+
+  # display whatever is listed in l
+  output$moves_preview <- renderPrint({
+    if (is.null(l$units)) return(NULL)
+    paste('Units:', paste(l$units, collapse = " :: "))
   })
 }
 
