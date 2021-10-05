@@ -5,15 +5,18 @@
 \alias{game_json_path}
 \alias{game_csv_path}
 \alias{game_map_path}
+\alias{game_img_path}
 \title{Get path to game db files on disk}
 \usage{
 game_db_path(game, ext = NULL, create = FALSE)
 
-game_json_path(game)
+game_json_path(game_name)
 
 game_csv_path(game)
 
 game_map_path(game)
+
+game_img_path(game, .p)
 }
 \arguments{
 \item{game}{game object}
@@ -32,6 +35,8 @@ Get path to game db files on disk
 \item \code{game_csv_path}: Path to map_df csv
 
 \item \code{game_map_path}: Path to map json
+
+\item \code{game_img_path}: Path to map json
 }}
 
 \keyword{internal}

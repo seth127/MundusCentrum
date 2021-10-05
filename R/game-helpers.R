@@ -33,5 +33,20 @@ game_script_from_rmd <- function(game_name, run = FALSE) {
   }
 }
 
+#' @export
+list_games <- function() {
+  getOption("MC.games_dir") %>%
+    fs::dir_ls() %>%
+    basename()
+}
 
+#' @export
+list_turns <- function(game_name) {
+  paste0(game_path(game_name), "_db") %>%
+    fs::dir_ls() %>%
+    basename() %>%
+    str_replace("\\..+$", "") %>%
+    str_subset("game", negate = TRUE) %>%
+    unique()
+}
 

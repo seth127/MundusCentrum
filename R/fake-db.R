@@ -22,8 +22,10 @@ game_json_to_disk <- function(game) {
 #' Called internally by reconcile_player_moves()
 #' @export
 save_game <- function(game) {
+  message("Saving game to disk...")
   game_map_to_disk(game)
   game_df_to_disk(game)
+  game_img_to_disk(game)
 }
 
 #' @describeIn save_game Write map json to disk
@@ -42,6 +44,25 @@ game_df_to_disk <- function(game) {
     game$map_df,
     game_csv_path(game)
   )
+}
+
+#' @describeIn save_game Draw the map and save as a png
+#' @importFrom ggplot2 ggsave
+#' @export
+game_img_to_disk <- function(game) {
+  for (.p in c("GLOBAL", get_player_names(game))) {
+    .m <- draw_map(game, .p)
+    ggsave(
+      filename = basename(game_img_path(game, .p)),
+      plot = .m,
+      path = dirname(game_img_path(game, .p)) ,
+      width = 7.5,
+      height = 8,
+      units = "in",
+      device = "png",
+      dpi = 300
+    )
+  }
 }
 
 
@@ -172,4 +193,11 @@ game_csv_path <- function(game) {
 #' @keywords internal
 game_map_path <- function(game) {
   game_db_path(game, ext = "map.json")
+}
+
+#' @describeIn game_db_path Path to map json
+#' @keywords internal
+game_img_path <- function(game, .p) {
+  check_player_name(game, .p)
+  game_db_path(game, ext = glue("map.{game$players[[.p]]}.png"))
 }
