@@ -1,5 +1,11 @@
 # MundusCentrum
 
+# development
+
+* Added basic shiny app to show map and troops
+* Added basic interactive console move input
+* Added bare map img
+
 # 0.0.5
 
 * `anno_duo` turn 5.
