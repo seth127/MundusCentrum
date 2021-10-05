@@ -11,7 +11,12 @@ Y_MULT <- 10
 #' @return Returns a ggplot object of the map
 #' @export
 draw_map <- function(game, .p = NULL) {
-  map_img <- jpeg::readJPEG(system.file("extdata", "img", "MundusCentrumAlpha.jpeg", package = "MundusCentrum"))
+  map_file <- if (isTRUE(getOption("MC.render_map"))) {
+    system.file("extdata", "img", "MundusCentrumAlpha.jpeg", package = "MundusCentrum")
+  } else {
+    system.file("extdata", "img", "MundusCentrumAlpha_bare_small.jpeg", package = "MundusCentrum")
+  }
+  map_img <- jpeg::readJPEG(map_file)
 
   if (!is.null(.p) && .p == "GLOBAL") .p <- NULL
   check_player_name(game, .p)
@@ -82,12 +87,12 @@ draw_map <- function(game, .p = NULL) {
       by = "prev_loc",
       suffix = c("loc", "prev"))
 
-  .map <- ggplot(map_data, aes(x = x_*X_MULT, y = y_*Y_MULT)) +
+  ggplot(map_data, aes(x = x_*X_MULT, y = y_*Y_MULT)) +
     coord_cartesian(xlim = c(0,1)*X_MULT, ylim = c(0,1)*Y_MULT) +
-    # annotation_custom(rasterGrob(map_img,
-    #                                    width = unit(1,"npc"),
-    #                                    height = unit(1,"npc")),
-    #                   0, 1*X_MULT, 0, 1*Y_MULT) +
+    annotation_custom(rasterGrob(map_img,
+                                       width = unit(1,"npc"),
+                                       height = unit(1,"npc")),
+                      0, 1*X_MULT, 0, 1*Y_MULT) +
     # static loc markers
     geom_point(data = filter(map_data, str_detect(loc, "S", negate = TRUE)), size = 3, shape = 21, aes(fill = factor(loc_fill))) +
     # bridges
@@ -119,14 +124,6 @@ draw_map <- function(game, .p = NULL) {
     scale_colour_manual(values = c(game$player_colors, c("SOARING" = "#87ECEC", "GROUND" = "#A9A9A9")), guide = "none") + # unit borders
     scale_fill_manual(values = c(game$player_colors, "FREE" = "#00000000", "DARK" = "#000000"), guide = "none") + # visibility and control
     ggtitle(map_title)
-
-  if (isTRUE(getOption("MC.render_map"))) {
-    .map <- .map + annotation_custom(rasterGrob(map_img,
-                                             width = unit(1,"npc"),
-                                             height = unit(1,"npc")),
-                                  0, 1*X_MULT, 0, 1*Y_MULT)
-  }
-  return(.map)
 }
 
 #' Get locs that player can see
