@@ -1,5 +1,10 @@
 devtools::load_all()
 game_name <- "Sloth v Grizz"
+options("MC.render_map" = FALSE)
+
+# "GLOBAL": "93c791f11f6bf4d3871bed645fa2cee7",
+# "big_grizz": "6a45c6b9c8d0f251662fabcdca52cc43",
+# "slothfire": "047a45d5b4a91f1c56387070a270da4b"
 
 # Start the game over
 fs::dir_delete(game_dir_path(game_name))
