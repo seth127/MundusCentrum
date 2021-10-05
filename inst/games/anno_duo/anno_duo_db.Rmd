@@ -16,18 +16,10 @@ devtools::load_all()
 #library(MundusCentrum)
 
 # Parametrize this part
-PLAYER <- "GLOBAL"
-GAME <- "Anno Duo"
-TURN <- "012A"
-GAME <- sanitize_name(GAME)
+PLAYER <- "slothfire"
+GAME <- "sloth v grizz"
+TURN <- "002A"
 
-# game <- do.call(
-#   new_game, 
-#   args = jsonlite::fromJSON(
-#     game_path(GAME, "json"), 
-#     simplifyVector = FALSE
-#   )
-# )
 game <- load_game(GAME, TURN)
 ```
 
@@ -40,3 +32,5 @@ print(game, .p = PLAYER)
 print(draw_map(game, PLAYER))
 print_map_df(game, PLAYER)
 ```
+
+
