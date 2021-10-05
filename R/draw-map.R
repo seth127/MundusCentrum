@@ -14,7 +14,7 @@ draw_map <- function(game, .p = NULL) {
   map_file <- if (isTRUE(getOption("MC.render_map"))) {
     system.file("extdata", "img", "MundusCentrumAlpha.jpeg", package = "MundusCentrum")
   } else {
-    system.file("extdata", "img", "MundusCentrumAlpha_bare_small.jpeg", package = "MundusCentrum")
+    system.file("extdata", "img", "MundusCentrumAlpha_bare.jpeg", package = "MundusCentrum")
   }
   map_img <- jpeg::readJPEG(map_file)
 
