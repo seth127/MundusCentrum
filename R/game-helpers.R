@@ -1,3 +1,18 @@
+#' Set up the directories to start the game
+#' @export
+setup_game_dirs <- function(game_name) {
+  dirs_to_create <- c(
+    game_dir_path(game_name), # game_dir
+    paste0(game_path(game_name), "_db"), # db_dir
+    dirname(game_starting_armies_path(game_name, "naw")) # armies_dir
+  )
+
+  walk(dirs_to_create, ~ {
+    if (!fs::dir_exists(.x)) fs::dir_create(.x)
+  })
+}
+
+
 #' Render a game Rmd into a game R script
 #'
 #' @param game_name name of the game. Will look for a dir in

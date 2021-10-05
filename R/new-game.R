@@ -31,6 +31,7 @@ new_game <- function(name, players, points = NULL) {
   players <- map(players, function(.p) {
     assert_string(.p[["name"]])
     assert_string(.p[["team"]])
+    assert_string(.p[["units"]])
     .p[["id"]] <- sanitize_name(.p[["name"]])
     .p
   })
@@ -48,8 +49,13 @@ new_game <- function(name, players, points = NULL) {
     if (any(map_lgl(players, ~ is.null(.x[["points"]])))) abort("Must either pass new_game(points) or specify points for each player")
   }
 
-  player_colors <- length(ids) %>%
-    brewer.pal("Spectral") %>%
+  player_colors <- if (length(ids) >= 3) {
+    brewer.pal(length(ids), "Spectral")
+  } else {
+    brewer.pal(3, "Spectral")[1:length(ids)]
+  }
+
+  player_colors <- player_colors %>%
     as.list() %>%
     rlang::set_names(ids)
 
@@ -64,6 +70,9 @@ new_game <- function(name, players, points = NULL) {
     player_colors = player_colors,
     map = add_sky(MAP)
   )
+
+  setup_game_dirs(name)
+
   game[["map_df"]] <- setup_map_df(name, players)
 
   # assign class
@@ -80,8 +89,9 @@ setup_map_df <- function(name, players) {
   clear_used_names()
   map_dfr(players, function(.p) {
     # load input units file
+    if (!file_exists(.p[['units']])) abort(glue("{.p[['name']]} passed {.p[['units']]} but that file doesn't exist."))
     unit_file <- game_starting_armies_path(name, .p[['name']])
-    if (!file_exists(unit_file)) abort(glue("{.p[['name']]} passed {unit_file} but that file doesn't exist."))
+    fs::file_copy(.p[['units']], unit_file)
     .u <- read_csv(unit_file, col_types = "cc")
     .u %>%
       mutate(

@@ -3,6 +3,20 @@
 # * eric H6 has a full plane soaring
 
 
+#' Input player code to trigger move
+#' @export
+input_player_code <- function(game, player_code) {
+  player_names <- get_player_names(game)
+  # stop the cheaters
+  if(player_code %in% player_names) {
+    rlang::abort("Please specify player code, not player name", "input_moves_error")
+  }
+
+  # load the name
+  winner <- names(which(game$players == player_code))
+  if (length(winner) == 0) rlang::abort(glue("Invalid player code: {player_code}"), "input_moves_error")
+  return(winner)
+}
 
 #' inputs unit(s) and returns legal actions
 #' @export
@@ -115,47 +129,49 @@ input_loc <- function(unit_df, game) {
 
   loc_picks <- c()
   current_loc <- unique(movers_df$loc)
-  for (.i in 1:num_moves) {
-    checkmate::assert_string(current_loc) # should be no way to fail this, but just in case
 
-    # build move options
-    loc_opts <- unlist(game$map[[current_loc]][c("borders", "bridges")])
+  if (.a %in% c("control", "defend")) {
+    loc_picks <- current_loc
+  } else {
+    for (.i in 1:num_moves) {
+      checkmate::assert_string(current_loc) # should be no way to fail this, but just in case
 
-    if (all(movers_df$fly)) {
-      loc_opts <- c(
-        loc_opts,
-        unlist(game$map[[current_loc]][c("rivers")]) # can flyers go over mountains?
-      )
+      # build move options
+      loc_opts <- unlist(game$map[[current_loc]][c("borders", "bridges")])
+
+      if (all(movers_df$fly)) {
+        loc_opts <- c(
+          loc_opts,
+          unlist(game$map[[current_loc]][c("rivers")]) # can flyers go over mountains?
+        )
+      }
+
+      if (all(movers_df$soar)) {
+        loc_opts <- c(
+          loc_opts,
+          paste0(current_loc, "S"),
+          unlist(game$map[[current_loc]][[c("mountains", "rivers", "sky")]])
+        )
+      }
+
+      loc_opts <- unique(loc_opts)
+
+      # GET INPUT FROM USER (will switch to something Shiny-ish?)
+      ## need to figure out how we'll refactor this if we have to split it
+      ## into two functions to get the shiny input in the middle (and serve actions...)
+      new_loc <- loc_opts[utils::menu(loc_opts)]
+      current_loc <- new_loc
+      loc_picks <- c(loc_picks, new_loc)
+
+      # check here whether they came down from the sky
     }
-
-    if (all(movers_df$soar)) {
-      loc_opts <- c(
-        loc_opts,
-        paste0(current_loc, "S"),
-        unlist(game$map[[current_loc]][[c("mountains", "rivers", "sky")]])
-      )
-    }
-
-    loc_opts <- unique(loc_opts)
-
-    # GET INPUT FROM USER (will switch to something Shiny-ish?)
-    ## need to figure out how we'll refactor this if we have to split it
-    ## into two functions to get the shiny input in the middle (and serve actions...)
-    new_loc <- loc_opts[utils::menu(loc_opts)]
-    current_loc <- new_loc
-    loc_picks <- c(loc_picks, new_loc)
-
-    # check here whether they came down from the sky
   }
-
-  # ok this is one move, but we need to put this ^ in a loop for multiple moves
-  #  (and decide how to return the multiple moves...)
 
   player <- unique(unit_df$player)
   unit_ids <- paste(unit_df$unit_id, collapse = ', ')
   action <- unique(unit_df$action)
-  loc_picks <- paste(loc_picks, collapse = ', ')
-  glue("modify_unit('{player}', c({unit_ids}), '{action}', c({loc_picks}))")
+  loc_picks <- paste0("'", paste0(loc_picks, collapse = "', '"), "'")
+  glue("modify_unit('{player}', c({unit_ids}), '{action}', c({loc_picks})) %>%")
 }
 
 

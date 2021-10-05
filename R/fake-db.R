@@ -67,8 +67,16 @@ game_img_to_disk <- function(game) {
 
 
 #' Load game state from disk
+#'
+#' @param turn String for turn to load. If NULL, loads most recent turn.
 #' @export
-load_game <- function(game_name, turn) {
+load_game <- function(game_name, turn = NULL) {
+
+  if (is.null(turn)) {
+    all_turns <- list_turns(game_name)
+    turn <- all_turns[length(all_turns)]
+  }
+
   game_json <- game_json_path(game_name)
   checkmate::assert_file_exists(game_json)
 
@@ -99,20 +107,26 @@ load_game <- function(game_name, turn) {
 #' @importFrom stringr str_replace_all str_pad
 #' @keywords internal
 increment_turn_phase <- function(game) {
+  game$turn <- get_next_turn(game)
+  return(game)
+}
+
+#' @export
+get_next_turn <- function(game) {
   .t <- str_replace_all(game$turn, "[^0-9]", "")
   .p <- str_replace_all(game$turn, "[^A-Z]", "")
-  if (is.null(game$conflicts)) {
-    game$turn <- paste0(
+  next_turn <- if (is.null(game$conflicts)) {
+    paste0(
       str_pad(as.numeric(.t)+1, 3, pad = "0"),
       "A"
     )
   } else {
-    game$turn <- paste0(
+    paste0(
       .t,
       LETTERS[which(LETTERS == .p)+1]
     )
   }
-  return(game)
+  next_turn
 }
 
 
@@ -149,6 +163,13 @@ game_starting_armies_path <- function(game_name, player_name) {
     fs::path_ext_set(sanitize_name(player_name), "csv")
   )
 }
+
+#' @describeIn game_path Path to temp file for executing turns
+#' @keywords internal
+game_turnfile_path <- function(game) {
+  file.path(game_dir_path(game$name), TURN_TEMP_FILE)
+}
+
 
 
 #' Get path to game db files on disk
