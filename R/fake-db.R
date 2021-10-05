@@ -178,7 +178,7 @@ game_db_path <- function(game, ext = NULL, create = FALSE) {
 #' @keywords internal
 game_json_path <- function(game_name) {
   file.path(
-    paste0(game_path("anno duo"), "_db"),
+    paste0(game_path(game_name), "_db"),
     "game.json"
   )
 }
