@@ -111,6 +111,7 @@ loc_to_unit <- function(game, .p, .u) {
   if ((length(.u) == 1) && (.u %in% names(game$map))) {
     .loc_u <- game$map_df %>%
       filter(
+        !.data$passing_through,
         .data$player == .p,
         .data$loc == .u
       ) %>%
