@@ -37,3 +37,17 @@ check_loc <- function(game, .l) {
     if (!(.l %in% valid_locs)) abort(glue("`{.l}` is not a valid loc Choose from {paste(valid_locs, collapse = ', ')}"))
   }
 }
+
+#' Suppress a warning that matches `regexpr`
+#' @importFrom stringr str_detect
+#' @param expr Expression to run
+#' @param regexpr Regex to match against any generated warning. Warning will be suppressed if this matches the warning message.
+#' @export
+suppressSpecificWarning <- function(expr, regexpr) {
+  withCallingHandlers({
+    expr
+  }, warning=function(w) {
+    if (stringr::str_detect(w$message, regexpr))
+      invokeRestart("muffleWarning")
+  })
+}
