@@ -16,9 +16,9 @@ devtools::load_all()
 #library(MundusCentrum)
 
 # Parametrize this part
-PLAYER <- "slothfire"
-GAME <- "sloth v grizz"
-TURN <- "002A"
+PLAYER <- "big_grizz"
+GAME <- "anno_duo"#"sloth v grizz"
+TURN <- "008B"
 
 game <- load_game(GAME, TURN)
 ```

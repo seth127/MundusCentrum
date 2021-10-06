@@ -265,7 +265,7 @@ game <- game %>%
 Attempt to reconcile moves.
 
 ```{r, results = "asis"}
-#print(draw_map(game, "{{PLAYER}}"))
+##print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
@@ -601,7 +601,7 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-#print(draw_map(game, "{{PLAYER}}"))
+print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
@@ -617,7 +617,7 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-#print(draw_map(game, "{{PLAYER}}"))
+print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
@@ -707,7 +707,7 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-#print(draw_map(game, "{{PLAYER}}"))
+print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
@@ -741,7 +741,7 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-#print(draw_map(game, "{{PLAYER}}"))
+print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
@@ -843,7 +843,7 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-#print(draw_map(game, "{{PLAYER}}"))
+print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
@@ -863,7 +863,7 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-#print(draw_map(game, "{{PLAYER}}"))
+print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 
@@ -949,7 +949,7 @@ game <- game %>%
 ```
 
 ```{r, results = "asis"}
-#print(draw_map(game, "{{PLAYER}}"))
+print(draw_map(game, "{{PLAYER}}"))
 print_map_df(game, "{{PLAYER}}")
 ```
 

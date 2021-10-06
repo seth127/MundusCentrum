@@ -121,7 +121,7 @@ input_loc <- function(unit_df, game) {
 
   num_moves <- if (all(movers_df$soar)) {
     3
-  } else if (all(movers_df$fast)) { # do we need fly here?
+  } else if (all(movers_df$fast) | all(movers_df$transport)) {
     2
   } else {
     1

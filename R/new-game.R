@@ -89,8 +89,9 @@ setup_map_df <- function(name, players) {
   clear_used_names()
   map_dfr(players, function(.p) {
     # load input units file
-    if (!file_exists(.p[['units']])) abort(glue("{.p[['name']]} passed {.p[['units']]} but that file doesn't exist."))
+    if (!file_exists(.p[['units']])) abort(glue("{.p[['name']]} passed {.p[['units']]} but that file doesn't exist from {getwd()}"))
     unit_file <- game_starting_armies_path(name, .p[['name']])
+    if(file_exists(unit_file)) file_delete(unit_file)
     fs::file_copy(.p[['units']], unit_file)
     .u <- read_csv(unit_file, col_types = "cc")
     .u %>%
