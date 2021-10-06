@@ -48,6 +48,7 @@ finalize_turn <- function(game) {
   write_lines("reconcile_player_orders()\n", .tf, append = TRUE)
   source(.tf)
   if (fs::file_exists(.tf)) fs::file_delete(.tf)
+  load_game(game$name)
 }
 
 #' @keywords internal
