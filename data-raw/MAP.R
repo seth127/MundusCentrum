@@ -390,7 +390,7 @@ MAP <- list(
   ),
   G7 = list(
     name = "Minas Tirith",
-    borders = c("E7", "G5"),
+    borders = c("E7", "G6"),
     rivers = c("G8"),
     bridges = c("G8"),
     x_ = 0.54,
