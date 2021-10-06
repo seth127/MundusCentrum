@@ -120,7 +120,7 @@ input_loc <- function(unit_df, game) {
   }
 
   num_moves <- if (all(movers_df$soar)) {
-    4
+    3
   } else if (all(movers_df$fast)) { # do we need fly here?
     2
   } else {
@@ -128,7 +128,7 @@ input_loc <- function(unit_df, game) {
   }
 
   loc_picks <- c()
-  current_loc <- unique(movers_df$loc)
+  current_loc <- orig_loc <- unique(movers_df$loc)
 
   if (.a %in% c("control", "defend")) {
     loc_picks <- current_loc
@@ -139,19 +139,32 @@ input_loc <- function(unit_df, game) {
       # build move options
       loc_opts <- unlist(game$map[[current_loc]][c("borders", "bridges")])
 
-      if (all(movers_df$fly)) {
+      if (all(movers_df$fly) | all(movers_df$soar)) {
         loc_opts <- c(
           loc_opts,
-          unlist(game$map[[current_loc]][c("rivers")]) # can flyers go over mountains?
+          unlist(game$map[[current_loc]][c("rivers")])
         )
       }
 
+
+      #' Soaring Rules
+      #' * you can only change altitude once per turn
+      #' * when you land, you're done
+
       if (all(movers_df$soar)) {
+
         loc_opts <- c(
           loc_opts,
-          paste0(current_loc, "S"),
-          unlist(game$map[[current_loc]][[c("mountains", "rivers", "sky")]])
+          unlist(game$map[[current_loc]][["sky"]])
         )
+
+        if (!has_changed_altitude(c(orig_loc, loc_picks))) {
+          loc_opts <- c(
+            loc_opts,
+            altitude_change_opts(current_loc)
+          )
+        }
+
       }
 
       loc_opts <- unique(loc_opts)
@@ -163,7 +176,8 @@ input_loc <- function(unit_df, game) {
       current_loc <- new_loc
       loc_picks <- c(loc_picks, new_loc)
 
-      # check here whether they came down from the sky
+      # if you're on the ground after your 2nd move then you're done
+      if (.i == 2 && !all_the_way_up(current_loc)) break
     }
   }
 
@@ -174,5 +188,24 @@ input_loc <- function(unit_df, game) {
   glue("modify_unit('{player}', c({unit_ids}), '{action}', c({loc_picks})) %>%")
 }
 
+#' @keywords internal
+has_changed_altitude <- function(moves) {
+  any(all_the_way_up(moves)) &&
+    any(!all_the_way_up(moves))
+}
+
+#' if soaring can land, if grounded can take off
+#' @keywords internal
+altitude_change_opts <- function(.l) {
+  ifelse(
+    all_the_way_up(.l),
+    str_replace(.l, "S$", ""),
+    paste0(.l, "S")
+  )
+}
+
+all_the_way_up <- function(.l) {
+  str_detect(.l, "S$")
+}
 
 ########################
