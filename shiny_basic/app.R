@@ -18,8 +18,12 @@ ui <- fluidPage(
 
     mainPanel(
       # inputs
-      selectInput("game_name", label = "Game", choices = list_games(), selected = "sloth_v_grizz"),
-      textInput("player_code", label = "Player Code", "047a45d5b4a91f1c56387070a270da4b"),
+      selectInput("game_name", label = "Game", choices = list_games(), selected = "anno_duo"),
+      textInput("player_code", label = "Player Code", "cf544766a36ebf8439ea851a14ba33aa"),
+
+      # selectInput("game_name", label = "Game", choices = list_games(), selected = "sloth_v_grizz"),
+      # textInput("player_code", label = "Player Code", "047a45d5b4a91f1c56387070a270da4b"),
+
       selectInput("turn", label = "Select Turn", choices = "001A"),
 
       #actionButton("input_moves", "Input Moves", style="simple"),
