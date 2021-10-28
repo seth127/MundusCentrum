@@ -12,9 +12,9 @@ input_player_code(game, player_code)
 
 input_unit(game, .p, .u)
 
-input_action(unit_df)
+input_action(unit_df, .test = NULL)
 
-input_loc(unit_df, game)
+input_loc(unit_df, game, .test = NULL)
 }
 \arguments{
 \item{unit_df}{The tibble of units that's acting}
