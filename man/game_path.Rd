@@ -4,6 +4,7 @@
 \alias{game_path}
 \alias{game_dir_path}
 \alias{game_starting_armies_path}
+\alias{game_turnfile_path}
 \title{Takes a game name and returns the path to a relevant file}
 \usage{
 game_path(game_name, ext = "")
@@ -11,6 +12,8 @@ game_path(game_name, ext = "")
 game_dir_path(game_name)
 
 game_starting_armies_path(game_name, player_name)
+
+game_turnfile_path(game)
 }
 \description{
 Takes a game name and returns the path to a relevant file
@@ -20,6 +23,8 @@ Takes a game name and returns the path to a relevant file
 \item \code{game_dir_path}: Path to the game directory
 
 \item \code{game_starting_armies_path}: Path to the player's starting army .csv file
+
+\item \code{game_turnfile_path}: Path to temp file for executing turns
 }}
 
 \keyword{internal}

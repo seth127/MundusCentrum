@@ -4,7 +4,10 @@
 \alias{load_game}
 \title{Load game state from disk}
 \usage{
-load_game(game_name, turn)
+load_game(game_name, turn = NULL)
+}
+\arguments{
+\item{turn}{String for turn to load. If NULL, loads most recent turn.}
 }
 \description{
 Load game state from disk
