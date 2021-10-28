@@ -8,7 +8,8 @@
 #'
 #' * `team` -- One of the legal teams. See list with `teams()`.
 #'
-#' * `units` -- Path to a units.csv file to load.
+#' * `units` -- Path to a units.csv file to load, or a tibble of units (if
+#' players is an `MC_bpl` object created by [bpl()]).
 #'
 #' * `points` (optional) -- how many points to start the game with. Overriden if
 #' anything is passed to `points` argument of the function.
@@ -31,7 +32,7 @@ new_game <- function(name, players, points = NULL) {
   players <- map(players, function(.p) {
     assert_string(.p[["name"]])
     assert_string(.p[["team"]])
-    assert_string(.p[["units"]])
+
     .p[["id"]] <- sanitize_name(.p[["name"]])
     .p
   })
@@ -88,12 +89,18 @@ setup_map_df <- function(name, players) {
 
   clear_used_names()
   map_dfr(players, function(.p) {
-    # load input units file
-    if (!file_exists(.p[['units']])) abort(glue("{.p[['name']]} passed {.p[['units']]} but that file doesn't exist from {getwd()}"))
-    unit_file <- game_starting_armies_path(name, .p[['name']])
-    if(file_exists(unit_file)) file_delete(unit_file)
-    fs::file_copy(.p[['units']], unit_file)
-    .u <- read_csv(unit_file, col_types = "cc")
+    # load input units
+    if (inherits(.p, "MC_bpl")) {
+      .u <- .p[['units']]
+    } else {
+      assert_string(.p[['units']])
+      if (!file_exists(.p[['units']])) abort(glue("{.p[['name']]} passed {.p[['units']]} but that file doesn't exist from {getwd()}"))
+      unit_file <- game_starting_armies_path(name, .p[['name']])
+      if(file_exists(unit_file)) file_delete(unit_file)
+      fs::file_copy(.p[['units']], unit_file)
+      .u <- read_csv(unit_file, col_types = "cc")
+    }
+
     .u %>%
       mutate(
         player = .p[["id"]],
@@ -145,5 +152,26 @@ player_hash <- function(game_name, player_name) {
     ),
     algo = "md5"
   )
+}
+
+#' Build Player List
+#'
+#' Build the list that can be passed in (as part of a list)
+#' to [new_game()] `players` argument.
+bpl <- function(.name, .starting_loc, .units) {
+  assert_string(.name)
+  assert_string(.starting_loc)
+  assert_character(.units)
+  .bpl <- list(
+    name = .name,
+    team = glue("Team {.name}"),
+    units = tibble::tibble(
+      unit_type = .units,
+      loc = .starting_loc
+    )
+  )
+
+  class(.bpl) <- c("MC_bpl", class(.bpl))
+  return(.bpl)
 }
 
