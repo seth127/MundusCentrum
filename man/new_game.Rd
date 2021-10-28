@@ -23,7 +23,8 @@ have the following elements:
 \itemize{
 \item \code{name} -- Player name. Must be unique amongst players.
 \item \code{team} -- One of the legal teams. See list with \code{teams()}.
-\item \code{units} -- Path to a units.csv file to load.
+\item \code{units} -- Path to a units.csv file to load, or a tibble of units (if
+players is an \code{MC_bpl} object created by \code{\link[=bpl]{bpl()}}).
 \item \code{points} (optional) -- how many points to start the game with. Overriden if
 anything is passed to \code{points} argument of the function.
 }
