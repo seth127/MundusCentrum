@@ -9,7 +9,7 @@ input_new_move <- function(game, player_code) {
 
   move <- game %>%
     input_unit(.p, .u) %>%
-    input_action(game) %>%
+    input_action() %>%
     input_loc(game)
 
   # write out
