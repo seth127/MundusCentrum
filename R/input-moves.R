@@ -26,7 +26,7 @@ input_player_code <- function(game, player_code) {
 input_unit <- function(game, .p, .u) {
 
   # will this break Shiny?
-  if (!interactive()) abort("Cannot call input_unit() when NOT in interactive session", "input_moves_error")
+  #if (!interactive()) abort("Cannot call input_unit() when NOT in interactive session", "input_moves_error")
 
   check_player_name(game, .p)
 
@@ -60,7 +60,7 @@ input_unit <- function(game, .p, .u) {
 #'  Returns the `unit_df` with the chosen action filled in.
 #' @param unit_df The tibble of units that's actin
 #' @export
-input_action <- function(unit_df) {
+input_action <- function(unit_df, .test = NULL) {
 
   actions <- c(
     "move",
@@ -86,6 +86,15 @@ input_action <- function(unit_df) {
     actions <- "respawn"
   }
 
+  ### TEST ###
+  if (!is.null(.test)) {
+    assert_string(.test)
+    if (!(.test %in% actions)) abort(glue("{.test} not in {paste(actions, collapse = ', ')}"), "input_moves_test_error")
+    return(list(
+      df = mutate(unit_df, action = .test),
+      actions = actions
+    ))
+  }
   # GET INPUT FROM USER (will switch to something Shiny-ish?)
   ## need to figure out how we'll refactor this if we have to split it
   ## into two functions to get the shiny input in the middle (and serve actions...)
@@ -103,7 +112,7 @@ input_action <- function(unit_df) {
 #'   Returns the `unit_df` with the chosen locs filled in.
 #' @param unit_df The tibble of units that's acting
 #' @export
-input_loc <- function(unit_df, game) {
+input_loc <- function(unit_df, game, .test = NULL) {
 
   # will this break Shiny?
   if (!interactive()) abort("Cannot call input_action() when NOT in interactive session", "input_moves_error")
@@ -129,6 +138,14 @@ input_loc <- function(unit_df, game) {
   } else {
     1
   }
+
+  ### TEST ###
+  assert_character(.test, null.ok = TRUE)
+  if (!is.null(.test) && length(.test) != num_moves) {
+    abort(glue("length(.test) {length(.test)} != num_moves {num_moves}"), "input_moves_test_error")
+  }
+  if (!is.null(.test)) test_opts <- list()
+  ###
 
   loc_picks <- c()
   current_loc <- orig_loc <- unique(movers_df$loc)
@@ -172,10 +189,18 @@ input_loc <- function(unit_df, game) {
 
       loc_opts <- unique(loc_opts)
 
-      # GET INPUT FROM USER (will switch to something Shiny-ish?)
-      ## need to figure out how we'll refactor this if we have to split it
-      ## into two functions to get the shiny input in the middle (and serve actions...)
-      new_loc <- loc_opts[utils::menu(loc_opts)]
+      ### TEST ###
+      if (!is.null(.test)) {
+        test_opts[[length(test_opts)+1]] <- loc_opts
+        new_loc <- .test[.i]
+        if (!(new_loc %in% loc_opts)) abort(glue("{new_loc} not in {paste(loc_opts, collapse = ', ')}"), "input_moves_test_error")
+      } else {
+        # GET INPUT FROM USER (will switch to something Shiny-ish?)
+        ## need to figure out how we'll refactor this if we have to split it
+        ## into two functions to get the shiny input in the middle (and serve actions...)
+        new_loc <- loc_opts[utils::menu(loc_opts)]
+      }
+
       current_loc <- new_loc
       loc_picks <- c(loc_picks, new_loc)
 
@@ -188,7 +213,18 @@ input_loc <- function(unit_df, game) {
   unit_ids <- paste(unit_df$unit_id, collapse = ', ')
   action <- unique(unit_df$action)
   loc_picks <- paste0("'", paste0(loc_picks, collapse = "', '"), "'")
-  glue("modify_unit('{player}', c({unit_ids}), '{action}', c({loc_picks})) %>%")
+  res <- glue("modify_unit('{player}', c({unit_ids}), '{action}', c({loc_picks})) %>%")
+
+  ### TEST ###
+  if (!is.null(.test)) {
+    return(list(
+      res = res,
+      test_opts = test_opts
+    ))
+  }
+  ###
+
+  return(res)
 }
 
 #' @keywords internal
