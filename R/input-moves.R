@@ -2,8 +2,11 @@
 # * big_grizz B4 bike squads
 # * eric H6 has a full plane soaring
 
+#' Input moves for one (group of) units.
+#' @name input_moves
+NULL
 
-#' Input player code to trigger move
+#' @describeIn input_moves Input player code to trigger move. Returns the name of the player.
 #' @export
 input_player_code <- function(game, player_code) {
   player_names <- get_player_names(game)
@@ -18,7 +21,7 @@ input_player_code <- function(game, player_code) {
   return(winner)
 }
 
-#' inputs unit(s) and returns legal actions
+#' @describeIn input_moves Takes player and .u and returns legal actions.
 #' @export
 input_unit <- function(game, .p, .u) {
 
@@ -53,9 +56,9 @@ input_unit <- function(game, .p, .u) {
 }
 
 
-#' @describeIn input_moves Takes units (from `input_units()`) and adds the chosen action
-#' @param unit_df The tibble of units that's acting
-#' @return The `unit_df` with the choosen action filled in
+#' @describeIn input_moves Takes units (from `input_units()`) and adds the chosen action.
+#'  Returns the `unit_df` with the chosen action filled in.
+#' @param unit_df The tibble of units that's actin
 #' @export
 input_action <- function(unit_df) {
 
@@ -97,8 +100,8 @@ input_action <- function(unit_df) {
 
 
 #' @describeIn input_moves Takes units with action (from `input_action()`) and adds the loc(s)
+#'   Returns the `unit_df` with the chosen locs filled in.
 #' @param unit_df The tibble of units that's acting
-#' @return The `unit_df` with the choosen locs filled in
 #' @export
 input_loc <- function(unit_df, game) {
 
