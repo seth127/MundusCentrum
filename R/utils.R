@@ -51,3 +51,11 @@ suppressSpecificWarning <- function(expr, regexpr) {
       invokeRestart("muffleWarning")
   })
 }
+
+#' Create an empty copy of a directory, deleting one that's there if necessary
+#' @importFrom fs dir_exists dir_delete dir_create
+#' @keywords internal
+dir_create_empty <- function(.path) {
+  if (dir_exists(.path)) dir_delete(.path)
+  dir_create(.path)
+}
