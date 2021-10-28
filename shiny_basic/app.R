@@ -64,8 +64,9 @@ server <- function(input, output, session) {
   #   draw_map(game(), player())
   # })
   output$map_png <- renderImage({
+    img_path <- game_img_path(game(), player())
     # Return a list containing the filename
-    list(src = game_img_path(game(), player()),
+    list(src = img_path,
          contentType = 'image/png',
          width = 800,
          height = 750,
