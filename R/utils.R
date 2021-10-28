@@ -59,3 +59,11 @@ dir_create_empty <- function(.path) {
   if (dir_exists(.path)) dir_delete(.path)
   dir_create(.path)
 }
+
+#' See tibble of unit attributes
+#' @param .u Character vector of unit types
+#' @keywords internal
+get_unit_attrs <- function(.u) {
+  assert_character(.u)
+  UNIT %>% filter(unit_type %in% map_chr(.u, sanitize_name))
+}
