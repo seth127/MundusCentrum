@@ -39,11 +39,11 @@ game_script_from_rmd <- function(game_name, run = FALSE) {
 
   script_lines <- str_replace(script_lines, "^print", "#print")
 
-  message(glue("Writing to {script_path} ..."))
+  verbose_message(glue("Writing to {script_path} ..."))
   write_lines(script_lines, script_path)
 
   if (isTRUE(run)) {
-    message(glue("Running to {script_path} ... Writing to"))
+    verbose_message(glue("Running to {script_path} ... Writing to"))
     source(script_path)
   }
 }

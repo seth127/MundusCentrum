@@ -45,7 +45,7 @@ render_game <- function(game_name, players = FALSE, html = FALSE) {
     )
 
     player_hash <- digest::digest(paste(game_name, .x), algo = "md5")
-    message(glue("{paste(game_name, .x)} -- {player_hash}"))
+    verbose_message(glue("{paste(game_name, .x)} -- {player_hash}"))
 
     # build Rmd string
     text <- template_string
@@ -77,7 +77,7 @@ render_game <- function(game_name, players = FALSE, html = FALSE) {
 
     if (isTRUE(html)) {
       rmd_file <- file.path(game_dir, paste0(player_hash, ".Rmd"))
-      message(glue("  Rendering html from {rmd_file}..."))
+      verbose_message(glue("  Rendering html from {rmd_file}..."))
       rmarkdown::render(
         rmd_file,
         output_format = "html_document",
@@ -86,7 +86,7 @@ render_game <- function(game_name, players = FALSE, html = FALSE) {
       )
     }
   })
-  message("All done rendering.")
+  verbose_message("All done rendering.")
 }
 
 #' Copy game HTML files to a new dir (for publishing and hosting)

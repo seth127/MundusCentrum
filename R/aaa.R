@@ -21,6 +21,6 @@ UNIT_KEYWORDS <- c(
 
 options("MC.games_dir" = system.file("games", package = "MundusCentrum"))
 options("MC.render_map" = TRUE)
-
+options("MC.verbose" = TRUE)
 
 TURN_TEMP_FILE <- "zzz_next_turn_.R"

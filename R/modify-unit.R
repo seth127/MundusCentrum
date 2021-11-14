@@ -34,7 +34,7 @@ modify_unit <- function(game, .p, .u, .a, .l = NULL) {
         pull(loc) %>%
         unique() # if unit in multiple battles they will be duplicated
     } else if (any(is.na(.l))) {
-      message(glue("Rest In Peace {.ux}, KIA"))
+      verbose_message(glue("Rest In Peace {.ux}, KIA"))
     }
 
 

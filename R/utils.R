@@ -67,3 +67,8 @@ get_unit_attrs <- function(.u) {
   assert_character(.u)
   UNIT %>% filter(unit_type %in% map_chr(.u, sanitize_name))
 }
+
+#' @keywords internal
+verbose_message <- function(msg) {
+  if (isTRUE(options("MC.verbose"))) message(msg)
+}

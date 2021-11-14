@@ -22,7 +22,7 @@ game_json_to_disk <- function(game) {
 #' Called internally by reconcile_player_moves()
 #' @export
 save_game <- function(game) {
-  message("Saving game to disk...")
+  verbose_message("Saving game to disk...")
   game_map_to_disk(game)
   game_df_to_disk(game)
   game_img_to_disk(game)
