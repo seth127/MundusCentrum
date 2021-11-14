@@ -24,13 +24,17 @@ make_new_move <- function(game, .p, .u, .a = NULL, .l = NULL) {
   loc_res <- input_loc(action_res$df, game, .test = .l)
 
   # write out
-  write_lines(loc_res$res, game_turnfile_path(game), append = TRUE)
-  return(move)
+  move <- loc_res$res
+  write_lines(move, game_turnfile_path(game), append = TRUE)
+  verbose_message(glue("Processed move:\n  {move}\nNext move... (press ENTER to end moves)\n"))
+  return(game)
 }
 
 # Start new turn
+#' @param .input Boolean; whether to ask for input from users. Defaults to
+#'   `TRUE`.
 #' @export
-start_turn_moves <- function(game) {
+start_turn_moves <- function(game, .input = TRUE) {
 
   .tf <- game_turnfile_path(game)
   if (fs::file_exists(.tf)) fs::file_delete(.tf)
@@ -40,10 +44,13 @@ start_turn_moves <- function(game) {
     glue("game <- load_game('{game$name}') %>%")
   ), .tf)
 
-  player_code <- enter_player_code(game)
+  player_code <- if (isTRUE(.input)) {
+    enter_player_code(game)
+  } else {
+    ""
+  }
   while(player_code != "") {
-    this_move <- input_new_move(game, player_code)
-    message(glue("Processed move:\n  {this_move}\nNext move... (press ENTER to end moves)\n"))
+    game <- input_new_move(game, player_code)
     player_code <- enter_player_code(game)
   }
 

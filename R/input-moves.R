@@ -153,10 +153,10 @@ input_loc <- function(unit_df, game, .test = NULL) {
 
   ### TEST ###
   assert_character(.test, null.ok = TRUE)
-  if (!is.null(.test) && length(.test) != num_moves) {
-    abort(glue("length(.test) {length(.test)} != num_moves {num_moves}"), "input_moves_test_error")
+  if (!is.null(.test) && length(.test) > num_moves) {
+    abort(glue("length(.test) {length(.test)} > num_moves {num_moves}"), "input_moves_test_error")
   }
-  if (!is.null(.test)) test_opts <- list()
+  test_opts <- list()
   ###
 
   loc_picks <- c()
@@ -202,8 +202,9 @@ input_loc <- function(unit_df, game, .test = NULL) {
       loc_opts <- unique(loc_opts)
 
       ### TEST ###
+      test_opts[[length(test_opts)+1]] <- loc_opts
       if (!is.null(.test)) {
-        test_opts[[length(test_opts)+1]] <- loc_opts
+        if (.i > length(.test)) break
         new_loc <- .test[.i]
         if (!(new_loc %in% loc_opts)) abort(glue("{new_loc} not in {paste(loc_opts, collapse = ', ')}"), "input_moves_test_error")
       } else {
@@ -211,6 +212,7 @@ input_loc <- function(unit_df, game, .test = NULL) {
         ## need to figure out how we'll refactor this if we have to split it
         ## into two functions to get the shiny input in the middle (and serve actions...)
         new_loc <- loc_opts[utils::menu(loc_opts)]
+        if (new_loc == "") break
       }
 
       current_loc <- new_loc

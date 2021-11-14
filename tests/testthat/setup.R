@@ -22,6 +22,18 @@ SMU <- c(
   "Storm Raven"
 )
 
+ERC <- c(
+  "Trazyn The Infinite",
+  "Illuminor Szeras",
+  "Technomancer",
+  "Lychgaurd",
+  "Cryptothralls",
+  "Cryptothralls",
+  "Canoptek Scarab Swarms",
+  "Canoptek Scarab Swarms",
+  "Canoptek Scarab Swarms"
+)
+
 #' create a temporary game
 #' @param game_name String to name the game
 #' @param ... `MC_bpl` objects, created by `MundusCentrum::bpl()`. One for each
@@ -74,9 +86,9 @@ expect_unit_move <- function(
   test_player,
   test_unit,
   test_action,
-  exp_action_opts,
   test_locs,
-  exp_loc_opts
+  exp_action_opts = NULL,
+  exp_loc_opts = NULL
 ) {
 
   # check units
@@ -85,14 +97,24 @@ expect_unit_move <- function(
 
   # check actions
   action_res <- input_action(udf, test_game, .test = test_action)
-  expect_equal(action_res$actions, exp_action_opts)
+  if (!all(is.null(exp_action_opts))) {
+    expect_equal(action_res$actions, exp_action_opts)
+  } else {
+    action_string <- paste(action_res$actions, collapse = "', '")
+    message(glue("exp_action_opts = c('{action_string}'),"))
+  }
+
 
   # check locations
   loc_res <- input_loc(action_res$df, test_game, .test = test_locs)
-  expect_equal(
-    loc_res$locations,
-    exp_loc_opts
-  )
+  if (!all(is.null(exp_loc_opts))) {
+    expect_equal(
+      loc_res$locations,
+      exp_loc_opts
+    )
+  } else {
+    message(glue("exp_loc_opts = list({paste(loc_res$locations, collapse = ', ')})"))
+  }
 
   # check final move
   test_unit_ids <- paste(test_unit, collapse = ', ')
