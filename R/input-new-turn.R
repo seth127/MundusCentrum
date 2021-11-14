@@ -7,13 +7,24 @@ input_new_move <- function(game, player_code) {
     stringr::str_split("[, ]+") %>%
     unlist()
 
-  move <- game %>%
-    input_unit(.p, .u) %>%
-    input_action(game) %>%
-    input_loc(game)
+  make_new_move(game, .p, .u)
+}
+
+#' Actually make the move
+#' @param game `MC_game` object to modify
+#' @param .p String; player name
+#' @param .u units; passed to input_units()
+#' @param .a action to take. If `NULL`, the default, ask the user.
+#' @param .l location to act. If `NULL`, the default, ask the user.
+#' @return The modified `MC_game` object passed to `game`
+#' @export
+make_new_move <- function(game, .p, .u, .a = NULL, .l = NULL) {
+  unit_df <- input_unit(game, .p, .u)
+  action_res <- input_action(unit_df, game, .test = .a)
+  loc_res <- input_loc(action_res$df, game, .test = .l)
 
   # write out
-  write_lines(move, game_turnfile_path(game), append = TRUE)
+  write_lines(loc_res$res, game_turnfile_path(game), append = TRUE)
   return(move)
 }
 

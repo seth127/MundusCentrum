@@ -22,7 +22,10 @@ SMU <- c(
   "Storm Raven"
 )
 
-# create a temporary game
+#' create a temporary game
+#' @param game_name String to name the game
+#' @param ... `MC_bpl` objects, created by `MundusCentrum::bpl()`. One for each
+#'   player in the game.
 temp_game <- function(game_name, ...) {
   # Start the game fresh
   if (fs::dir_exists(game_dir_path(game_name))) fs::dir_delete(game_dir_path(game_name))
@@ -87,7 +90,7 @@ expect_unit_move <- function(
   # check locations
   loc_res <- input_loc(action_res$df, test_game, .test = test_locs)
   expect_equal(
-    loc_res$test_opts,
+    loc_res$locations,
     exp_loc_opts
   )
 

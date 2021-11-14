@@ -100,29 +100,28 @@ input_action <- function(unit_df, game, .test = NULL) {
   }
 
   ### TEST ###
-  if (!is.null(.test)) {
+  pick <- if (!is.null(.test)) {
     assert_string(.test)
     if (!(.test %in% actions)) abort(glue("{.test} not in {paste(actions, collapse = ', ')}"), "input_moves_test_error")
-    return(list(
-      df = mutate(unit_df, action = .test),
-      actions = actions
-    ))
+    .test
+  } else {
+    # GET INPUT FROM USER (will switch to something Shiny-ish?)
+    ## need to figure out how we'll refactor this if we have to split it
+    ## into two functions to get the shiny input in the middle (and serve actions...)
+    actions[utils::menu(actions)]
   }
-  # GET INPUT FROM USER (will switch to something Shiny-ish?)
-  ## need to figure out how we'll refactor this if we have to split it
-  ## into two functions to get the shiny input in the middle (and serve actions...)
-  pick <- actions[utils::menu(actions)]
 
-  unit_df <- unit_df %>%
-    mutate(action = pick)
-
-  return(unit_df)
+  return(list(
+    df = mutate(unit_df, action = pick),
+    actions = actions
+  ))
 }
 
 
 
-#' @describeIn input_moves Takes units with action (from `input_action()`) and adds the loc(s)
-#'   Returns the `unit_df` with the chosen locs filled in.
+#' @describeIn input_moves Takes units with action (from `input_action()`) and
+#'   adds the loc(s), and returns code-gen strings to write to
+#'   [game_turnfile_path()]
 #' @param unit_df The tibble of units that's acting
 #' @export
 input_loc <- function(unit_df, game, .test = NULL) {
@@ -228,16 +227,10 @@ input_loc <- function(unit_df, game, .test = NULL) {
   loc_picks <- paste0("'", paste0(loc_picks, collapse = "', '"), "'")
   res <- glue("modify_unit('{player}', c({unit_ids}), '{action}', c({loc_picks})) %>%")
 
-  ### TEST ###
-  if (!is.null(.test)) {
-    return(list(
-      res = res,
-      test_opts = test_opts
-    ))
-  }
-  ###
-
-  return(res)
+  return(list(
+    res = res,
+    locations = test_opts
+  ))
 }
 
 #' @keywords internal

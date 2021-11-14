@@ -12,7 +12,7 @@ input_player_code(game, player_code)
 
 input_unit(game, .p, .u)
 
-input_action(unit_df, .test = NULL)
+input_action(unit_df, game, .test = NULL)
 
 input_loc(unit_df, game, .test = NULL)
 }
@@ -31,7 +31,8 @@ Input moves for one (group of) units.
 \item \code{input_action}: Takes units (from \code{input_units()}) and adds the chosen action.
 Returns the \code{unit_df} with the chosen action filled in.
 
-\item \code{input_loc}: Takes units with action (from \code{input_action()}) and adds the loc(s)
-Returns the \code{unit_df} with the chosen locs filled in.
+\item \code{input_loc}: Takes units with action (from \code{input_action()}) and
+adds the loc(s), and returns code-gen strings to write to
+\code{\link[=game_turnfile_path]{game_turnfile_path()}}
 }}
 
