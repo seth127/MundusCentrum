@@ -60,30 +60,43 @@ input_unit <- function(game, .p, .u) {
 #'  Returns the `unit_df` with the chosen action filled in.
 #' @param unit_df The tibble of units that's actin
 #' @export
-input_action <- function(unit_df, .test = NULL) {
+input_action <- function(unit_df, game, .test = NULL) {
 
-  actions <- c(
-    "move",
-    "defend",
-    "reinforce"
-  )
+  if (str_detect(game$turn, "A$")) {
+    # moves
+    actions <- c(
+      "move",
+      "defend",
+      "reinforce"
+    )
 
-  if (any(unit_df$control))    actions <- c(actions, "control")
-  if (any(unit_df$transport))  actions <- c(actions, "transport")
-  if (all(unit_df$deep))       actions <- c(actions, "deep") # do we need this here?
+    if (any(unit_df$control))    actions <- c(actions, "control")
+    if (any(unit_df$transport))  actions <- c(actions, "transport")
 
-  # if dead, they can only respawn
-  if (any(is.na(unit_df$loc))) {
-    if (!all(is.na(unit_df$loc))) {
-      abort(paste0(
-        "Must pass either all dead units or no dead units.",
-        "\nThe following are dead:  ",
-        paste(unit_df$unit_name[is.na(unit_df$loc)], collapse = ", "),
-        "\nThe following are alive: ",
-        paste(unit_df$unit_name[!is.na(unit_df$loc)], collapse = ", ")
-      ), "input_moves_error")
+  } else if (str_detect(game$turn, "B$")) {
+    # if dead, they can only respawn
+    if (any(is.na(unit_df$loc))) {
+      if (!all(is.na(unit_df$loc))) {
+        abort(paste0(
+          "Must pass either all dead units or no dead units.",
+          "\nThe following are dead:  ",
+          paste(unit_df$unit_name[is.na(unit_df$loc)], collapse = ", "),
+          "\nThe following are alive: ",
+          paste(unit_df$unit_name[!is.na(unit_df$loc)], collapse = ", ")
+        ), "input_moves_error")
+      }
+      actions <- "respawn"
     }
-    actions <- "respawn"
+
+    # retreats
+    actions <- c(
+      "retreat",
+      "rout",
+      "superrout"
+    )
+
+  } else {
+    abort("Oops, we should never get to phase C if we code legal retreats right...", class = "dev_error")
   }
 
   ### TEST ###

@@ -75,12 +75,13 @@ expect_unit_move <- function(
   test_locs,
   exp_loc_opts
 ) {
+
   # check units
   udf <- input_unit(test_game, test_player, test_unit)
   expect_equal(udf$unit_id, test_unit)
 
   # check actions
-  action_res <- input_action(udf, .test = test_action)
+  action_res <- input_action(udf, test_game, .test = test_action)
   expect_equal(action_res$actions, exp_action_opts)
 
   # check locations
