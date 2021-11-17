@@ -10,7 +10,7 @@ withr::local_options(list(
 
 
 #################
-# PHASE B
+# PHASE A
 #################
 
 test_that("first test - two units move F2 to F3", {
@@ -108,32 +108,3 @@ test_that("first multiplayer test", {
 
 })
 
-#################
-# PHASE B
-#################
-
-# test_that("first retreat test", {
-#   .g <- temp_game(
-#     "first retreat test",
-#     bpl(SFR, "F2", ERC),
-#     bpl(BGR, "C4", SMU)
-#   ) %>%
-#     start_turn_moves(.input = FALSE) %>%
-#     make_new_move(SFR, c(1,2,3), .a = "move", .l = "F3") %>%
-#     make_new_move(SFR, c(8), .a = "move", .l = "C3") %>%
-#     finalize_turn()
-#
-#   expect_unit_move(
-#     test_game = .g,
-#     test_player = SFR,
-#     test_unit = 7,
-#     test_action = "move",
-#     exp_action_opts = c("move", "defend", "reinforce", "transport"),
-#     test_locs = c("F2S", "E3S", "E1S"),
-#     exp_loc_opts = list(
-#       c("F1", "F3", "C3", "F2S"),
-#       c("F1S", "F3S", "C3S", "E3S"),
-#       c("E4S", "B11S", "E1S", "E2S", "E5S", "F2S", "F3S")
-#     )
-#   )
-# })
