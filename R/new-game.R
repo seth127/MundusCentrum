@@ -51,9 +51,9 @@ new_game <- function(name, players, points = NULL) {
   }
 
   player_colors <- if (length(ids) >= 3) {
-    brewer.pal(length(ids), "Spectral")
+    brewer.pal(length(ids), "Dark2")
   } else {
-    brewer.pal(3, "Spectral")[1:length(ids)]
+    brewer.pal(3, "Dark2")[1:length(ids)]
   }
 
   player_colors <- player_colors %>%
