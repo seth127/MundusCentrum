@@ -123,6 +123,8 @@ expect_unit_move <- function(
     loc_res$res,
     glue("modify_unit('{test_player}', c({test_unit_ids}), '{test_action}', c({test_loc_picks})) %>%")
   )
+
+  return(invisible(test_game))
 }
 
 

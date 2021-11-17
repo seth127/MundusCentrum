@@ -5,6 +5,8 @@
 * Added basic shiny app to show map and troops
 * Added basic interactive console move input
 * Added bare map img
+* Working on legal movements
+* Added unit tests for legal movements
 
 # 0.0.5
 

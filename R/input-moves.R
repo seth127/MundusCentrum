@@ -129,6 +129,9 @@ input_loc <- function(unit_df, game, .test = NULL) {
   # will this break Shiny?
   if (!interactive()) abort("Cannot call input_action() when NOT in interactive session", "input_moves_error")
 
+  .p <- unique(unit_df$player)
+  checkmate::assert_string(.p)
+
   .a <- unique(unit_df$action) # could just to assert_string, but this is better debugging
   if (length(.a) > 1) {
     abort(paste(
@@ -164,7 +167,65 @@ input_loc <- function(unit_df, game, .test = NULL) {
 
   if (.a %in% c("control", "defend")) {
     loc_picks <- current_loc
+  } else if (.a == "retreat") {
+
+    # if you can go back from whence (any of) you came, you must
+    loc_opts <- unit_df %>%
+      pull(.data$prev_loc) %>%
+      unique()
+
+    blocked <- game$map_df %>%
+      filter(
+        loc %in% loc_opts,
+        .data$player %in% get_other_players_names(game, .p)
+      ) %>%
+      pull(.data$loc) %>%
+      unique()
+
+    loc_opts <- setdiff(loc_opts, blocked)
+
+    if (length(loc_opts) == 0) {
+      verbose_message("can't go back, gotta go somewhere else")
+      # build move options
+      loc_opts <- unlist(game$map[[current_loc]][c("borders", "bridges")])
+
+      # cut off retreat from where attackers came from
+      blocked <- game$map_df %>%
+        filter(
+          loc == current_loc,
+          .data$player %in% get_other_players_names(game, .p)
+        ) %>%
+        pull(.data$prev_loc) %>%
+        unique()
+
+      # get all that are unoccupied or uncontrolled by enemies
+      loc_opts <- data.frame(loc = loc_opts) %>%
+        left_join(game$map_df, by = "loc") %>%
+        filter(
+          .data$loc %in% loc_opts,
+          !(.data$loc %in% blocked),
+          !(.data$player %in% get_other_players_names(game, .p))
+        ) %>%
+        pull(loc) %>%
+        unique()
+    }
+
+    ### MAKE CHOICE ###
+    test_opts[[length(test_opts)+1]] <- loc_opts
+    if (!is.null(.test)) {
+      checkmate::assert_string(.test)
+      loc_picks <- .test
+      if (!(loc_picks %in% loc_opts)) abort(glue("{loc_picks} not in {paste(loc_opts, collapse = ', ')}"), "input_moves_test_error")
+    } else {
+      # GET INPUT FROM USER (will switch to something Shiny-ish?)
+      ## need to figure out how we'll refactor this if we have to split it
+      ## into two functions to get the shiny input in the middle (and serve actions...)
+      loc_picks <- loc_opts[utils::menu(loc_opts)]
+      if (loc_picks == "") break
+    }
+    ######
   } else {
+    # This is the final path, for normal movement
     for (.i in 1:num_moves) {
       checkmate::assert_string(current_loc) # should be no way to fail this, but just in case
 
@@ -201,7 +262,7 @@ input_loc <- function(unit_df, game, .test = NULL) {
 
       loc_opts <- unique(loc_opts)
 
-      ### TEST ###
+      ### MAKE CHOICE ###
       test_opts[[length(test_opts)+1]] <- loc_opts
       if (!is.null(.test)) {
         if (.i > length(.test)) break
@@ -214,6 +275,7 @@ input_loc <- function(unit_df, game, .test = NULL) {
         new_loc <- loc_opts[utils::menu(loc_opts)]
         if (new_loc == "") break
       }
+      ######
 
       current_loc <- new_loc
       loc_picks <- c(loc_picks, new_loc)
